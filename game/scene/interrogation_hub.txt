@@ -1,0 +1,22 @@
+// Interrogation Hub - Choose Your Suspect
+
+label:interrogation_hub;
+  stopmusic;
+  playmusic:interrogation_hub.ogg -volume=0.4 -loop;
+  bg:police_station_hallway.png;
+
+  // Show timer overlay
+  showTimerOverlay:show;
+
+  narrator "Who do you want to interrogate?";
+  narrator "[Turns Remaining: {turnsLeft}/12]";
+
+  // Display suspect cards with stats
+  showStatOverlay:all;
+
+  menu:
+    "Interrogate Harper Lin (The Ex-Lover)" -> harper_intro
+    "Interrogate Marcus Hale (The Betrayed Friend)" -> marcus_intro
+    "Interrogate Rowan Adler (The Host)" -> rowan_intro
+    "Review Evidence Board" -> evidence_board
+    "Make Your Accusation" -> accusation_scene

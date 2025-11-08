@@ -1,0 +1,34 @@
+{
+  "name": "one-night-four-friends-webgal",
+  "version": "1.0.0",
+  "description": "WebGAL visual novel: One Night, Four Friends - A detective mystery game",
+  "author": "Your Name",
+  "license": "MIT",
+  "scripts": {
+    "setup": "bash setup.sh",
+    "dev": "cd WebGAL/packages/webgal && npm run dev",
+    "build": "cd WebGAL/packages/webgal && npm run build",
+    "preview": "cd WebGAL/packages/webgal && npm run preview",
+    "copy-scripts": "bash scripts/copy_scripts.sh",
+    "update-assets": "bash scripts/update_assets.sh",
+    "generate-assets": "python3 scripts/generate_placeholders.py",
+    "test": "bash scripts/test_game.sh",
+    "launch": "bash launch.sh"
+  },
+  "keywords": [
+    "webgal",
+    "visual-novel",
+    "detective",
+    "mystery",
+    "game"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MakinoharaShoko/WebGAL"
+  }
+}

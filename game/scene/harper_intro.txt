@@ -1,0 +1,8 @@
+changeBg:interrogation_room.png -next;
+changeFigure:harper_neutral.png -next;
+Detective:Ms. Lin, thank you for your cooperation. I know this has been a difficult night.;
+Harper:I just... I can't believe this is happening. Elias is really missing?;
+Detective:How do you want to approach Harper?;
+Choose-neutral:When did you last see Elias?|harper_neutral_path.txt;
+Choose-pressure:You and Elias had a complicated history. Let's talk about that.|harper_pressure_path.txt;
+Choose-calm:I need you to be completely honest with me. Can you do that?|harper_calm_path.txt;

@@ -1,0 +1,10 @@
+changeBg:police_station_hallway.png -next;
+THREE SUSPECTS IN CUSTODY;
+Harper Lin, age 31, The Ex-Lover;
+Marcus Hale, age 33, The Betrayed Friend;
+Rowan Adler, age 32, The Host;
+;
+The clock is ticking. Dawn breaks at 7 AM.;
+;
+What do you want to do next?;
+choose:Interrogate Harper Lin:harper_intro.txt|Interrogate Marcus Hale:marcus_intro.txt|Interrogate Rowan Adler:rowan_intro.txt|Review Evidence Board:evidence_board.txt|Make Your Accusation:accusation_and_endings.txt;

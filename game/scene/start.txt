@@ -1,0 +1,25 @@
+intro:
+changeBg:police_station_night.png -next;
+ONE NIGHT, FOUR FRIENDS;
+A reunion turned nightmare.|One missing. Three suspects.|Until dawn.;
+changeBg:evidence_board.png -next;
+VICTIM: Elias Moore, 32 years old;
+Charming entrepreneur who connected this friend group in college.|STATUS: MISSING;
+LAST SEEN: 11:00 PM on the lake house dock during argument with Marcus;
+changeBg:lake_house_exterior_storm.png -next;
+LOCATION: Remote New England lake house|TIME: 3:12 AM, Late October|WEATHER: Storm raging, fog rolling off lake;
+changeBg:evidence_board.png -next;
+INITIAL EVIDENCE:;
+• Shoe found on dock steps|• Blood on railing (Type O+, matches victim)|• Broken wineglass with lipstick;
+• Victim's car found idling at cliff overlook|• Boot prints near car (Size 11);
+;
+SUSPECTS:;
+• Harper Lin (31) - The Ex-Lover|• Marcus Hale (33) - The Betrayed Friend|• Rowan Adler (32) - The Host;
+;
+The clock is ticking. Dawn breaks at 7:00 AM.|Choose your interrogations wisely.;
+changeBg:police_station_hallway.png -next;
+Who do you want to interrogate?;
+Choose-Interrogate_Harper:Interrogate Harper Lin (The Ex-Lover)|harper_intro.txt;
+Choose-Interrogate_Marcus:Interrogate Marcus Hale (The Betrayed Friend)|marcus_intro.txt;
+Choose-Interrogate_Rowan:Interrogate Rowan Adler (The Host)|rowan_intro.txt;
+Choose-Evidence:Review Evidence Board|evidence.txt;

@@ -1,0 +1,56 @@
+{
+  "title": "One Night, Four Friends",
+  "subtitle": "A Detective Mystery",
+  "description": "3:12 AM. The storm hasn't let up. Three soaked suspects sit in separate rooms. One friend is missing. You have until dawn to find the truth.",
+  "author": "Generated with AI",
+  "version": "1.0.0",
+  "genre": "Mystery, Detective, Thriller",
+  "tags": ["mystery", "detective", "crime", "multiple-endings", "choices-matter"],
+  "releaseDate": "2025",
+  "language": "en-US",
+  "rating": "Teen",
+  "estimatedPlaytime": "45-60 minutes",
+  "features": [
+    "Multiple interrogation paths",
+    "Evidence-based deduction system",
+    "5 unique endings based on your choices",
+    "Dynamic stress and trust mechanics",
+    "Branching narrative structure"
+  ],
+  "characters": [
+    {
+      "name": "Harper Lin",
+      "age": 31,
+      "role": "The Ex-Lover",
+      "description": "Elias's former flame. Three years after their breakup, she's here seeking closure."
+    },
+    {
+      "name": "Marcus Hale",
+      "age": 33,
+      "role": "The Betrayed Friend",
+      "description": "College friend who built a company with Elias, only to be bought out for a fraction of its worth."
+    },
+    {
+      "name": "Rowan Adler",
+      "age": 32,
+      "role": "The Host",
+      "description": "The lake house owner who organized this reunion weekend."
+    },
+    {
+      "name": "Elias Moore",
+      "age": 32,
+      "role": "The Missing Victim",
+      "description": "Charming entrepreneur who connected this friend group in college. Known for making and breaking deals—and hearts."
+    }
+  ],
+  "settings": {
+    "location": "Remote New England lake house",
+    "time": "Late October, 3:12 AM",
+    "weather": "Storm raging, fog rolling off lake"
+  },
+  "credits": {
+    "writing": "AI-Generated from case structure",
+    "engine": "WebGAL by MakinoharaShoko",
+    "placeholders": "Auto-generated SVG assets"
+  }
+}

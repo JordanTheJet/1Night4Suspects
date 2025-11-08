@@ -1,0 +1,450 @@
+// Marcus Hale - Complete Interrogation Tree
+// The Betrayed Friend
+
+label:marcus_intro;
+  stopmusic;
+  playmusic:interrogation_tense.ogg -volume=0.5 -loop;
+  bg:interrogation_room.png;
+  show:marcus_nervous.png -position=right;
+  consumeTime:2;
+
+  detective "Mr. Hale. Have a seat. We need to talk about what happened tonight.";
+
+  marcus:marcus_defensive.png "[sits heavily] Look, I already told the officers. I don't know where Elias is. Can we make this quick? It's been a hell of a night.";
+  modifyStat:marcus_stress +10;
+
+  // First choice point
+  narrator "How do you approach Marcus?";
+
+  menu:
+    "I understand you're tired. Walk me through what happened." -> marcus_sympathetic_path
+    "You and Elias had quite the history. Let's start there." -> marcus_confrontation_path
+    "This will go faster if you're honest. When did you last see Elias?" -> marcus_direct_path
+
+// SYMPATHETIC PATH
+label:marcus_sympathetic_path;
+  modifyStat:marcus_trust +10;
+  modifyStat:marcus_stress -5;
+  marcus:marcus_tired.png "[exhales] Thanks. Okay. We all got to the lake house around 7 PM. Rowan made dinner. Everything was... tense but civil. Then it fell apart.";
+  modifyStat:marcus_trust +8;
+  jump:marcus_continue_01;
+
+// CONFRONTATION PATH
+label:marcus_confrontation_path;
+  modifyStat:marcus_stress +15;
+  modifyStat:marcus_trust -10;
+  marcus:marcus_angry.png "[jaw tightens] What do you want me to say? That Elias screwed me over? That he stole two million dollars from me? Yeah, he did. But that was two years ago.";
+  modifyStat:marcus_stress +18;
+  modifyStat:marcus_lies +1;
+  narrator "[He's pretending it doesn't still bother him. But the tremor in his voice says otherwise.]";
+  jump:marcus_continue_01;
+
+// DIRECT PATH
+label:marcus_direct_path;
+  modifyStat:marcus_trust +5;
+  modifyStat:marcus_stress +5;
+  marcus:marcus_guarded.png "At dinner. Around 9:30, maybe? Things got heated. I needed air. Went to my room. That's the last time I saw him.";
+  modifyStat:marcus_stress +8;
+  modifyStat:marcus_lies +1;
+  narrator "[This is a lie. The dock recording proves he saw Elias at 11 PM.]";
+  jump:marcus_continue_01;
+
+// Continue interrogation
+label:marcus_continue_01;
+  detective "Tell me about the argument at dinner. What specifically triggered it?";
+
+  marcus:marcus_bitter.png "It was stupid. Rowan asked about our old startup days. Trying to be nostalgic. I made a comment about 'creative accounting,' and Elias knew what I meant. It escalated from there.";
+  modifyStat:marcus_stress +12;
+
+  detective "How did Elias respond?";
+
+  marcus:marcus_angry.png "[sarcastic laugh] How do you think? He acted like I was being petty. Said I should 'thank him for the learning experience.' Like stealing my company was some kind of favor.";
+  modifyStat:marcus_stress +15;
+
+  // Second choice point
+  menu:
+    "That must have made you furious." -> marcus_empathetic
+    "Furious enough to hurt him?" -> marcus_accusatory
+    "What happened after you left the table?" -> marcus_neutral_02
+
+label:marcus_empathetic;
+  modifyStat:marcus_trust +12;
+  modifyStat:marcus_stress +5;
+  marcus:marcus_controlled.png "Furious doesn't even cover it. But I'm not an idiot. I walked away. Went upstairs, tried to calm down. I've spent two years building myself back up. I wasn't going to let him destroy that too.";
+  modifyStat:marcus_trust +15;
+  jump:marcus_continue_02;
+
+label:marcus_accusatory;
+  modifyStat:marcus_stress +20;
+  modifyStat:marcus_trust -15;
+  marcus:marcus_explosive.png "[stands up] Are you serious right now? You think I—no. I want a lawyer. We're done here.";
+  modifyStat:marcus_stress +30;
+  modifyStat:marcus_trust -20;
+
+  detective "[calmly] Sit down, Mr. Hale. I'm just asking questions. You're not under arrest. Yet.";
+
+  marcus:marcus_defensive.png "[sits back down, shaking] Fine. But no, I didn't hurt him. Despite everything.";
+  modifyStat:marcus_stress -5;
+  jump:marcus_continue_02;
+
+label:marcus_neutral_02;
+  modifyStat:marcus_trust +8;
+  marcus:marcus_tired.png "I went to my room. Took some of my anxiety meds—I've had a prescription since the whole company thing—and tried to sleep. The storm was getting worse.";
+  modifyStat:marcus_stress +8;
+  narrator "[He mentions the tranquilizers voluntarily. Interesting.]";
+  jump:marcus_continue_02;
+
+label:marcus_continue_02;
+  detective "What time did you go to your room?";
+
+  marcus "Maybe 10:30? Storm was really howling by then. I was exhausted from the drive up and all the tension. I just wanted the weekend to be over.";
+  modifyStat:marcus_stress +5;
+  modifyStat:marcus_lies +1;
+  narrator "[Lie. Witnesses and recording place him at dock at 11 PM.]";
+
+  detective "And you stayed in your room all night?";
+
+  marcus:marcus_firm.png "Yes. Until Harper started banging on doors around 2 AM saying Elias was missing. That's when we all went looking.";
+  modifyStat:marcus_lies +1;
+  narrator "[Another lie. Boot prints at overlook prove he left the house.]";
+
+  // Evidence presentation option
+  narrator "Challenge his alibi or move on?";
+
+  menu:
+    "Did you hear anything unusual during the night?" -> marcus_neutral_continue
+    "Present Evidence: Boot Prints at Overlook" -> marcus_boot_evidence
+    "Tell me about your tranquilizer prescription." -> marcus_meds_inquiry
+
+label:marcus_neutral_continue;
+  modifyStat:marcus_trust +5;
+  marcus "The storm was loud. Thunder, rain pounding the roof. Maybe some footsteps in the hall? I wasn't really paying attention. The meds made me groggy.";
+  modifyStat:marcus_stress +5;
+  jump:marcus_intro_end;
+
+label:marcus_boot_evidence;
+  modifyStat:marcus_stress +35;
+  modifyStat:marcus_trust -10;
+
+  detective "We found boot prints at the overlook where Elias's car was discovered. Size 11, Merrell brand. Same as yours. Care to explain?";
+  showEvidence:boot_prints;
+
+  marcus:marcus_panicked.png "[face goes white] I... that's... Lots of people wear Merrells. That doesn't prove anything.";
+  modifyStat:marcus_stress +40;
+
+  detective "Your boots are in your room right now. Still wet. With mud that matches the overlook soil. Want to try again?";
+
+  marcus:marcus_defeated.png "[long silence] ...I want a lawyer.";
+  modifyStat:marcus_stress +50;
+  modifyStat:marcus_trust -15;
+  narrator "[He's not ready to break yet. Need more evidence.]";
+  jump:marcus_intro_end;
+
+label:marcus_meds_inquiry;
+  modifyStat:marcus_stress +15;
+
+  detective "You mentioned anxiety medication. Lorazepam, prescribed after the company sale?";
+
+  marcus:marcus_defensive.png "Yeah. My therapist prescribed it. The whole thing with Elias... it messed me up. Panic attacks, couldn't sleep. It helps.";
+  modifyStat:marcus_stress +10;
+
+  detective "How many did you take last night?";
+
+  marcus "Just one. Around 10:30. I don't abuse them if that's what you're implying.";
+  modifyStat:marcus_stress +8;
+  narrator "[Pill count suggests two are missing. Where's the other one?]";
+  jump:marcus_intro_end;
+
+label:marcus_intro_end;
+  detective "That's all for now, Mr. Hale. Don't leave town.";
+  modifyStat:marcus_stress +10;
+  unlockDialogue:marcus_dock_confrontation;
+  unlockEvidence:tranquilizer_bottle;
+  jump:interrogation_hub;
+
+
+// ============================================
+// MARCUS DOCK CONFRONTATION
+// ============================================
+
+label:marcus_dock_confrontation;
+  conditionCheck:marcus_stress>=60 AND has_evidence:dock_argument;
+
+  stopmusic;
+  playmusic:tension_rising.ogg -volume=0.6 -loop;
+  bg:interrogation_room.png;
+  show:marcus_exhausted.png -position=right;
+  consumeTime:2;
+
+  detective "Marcus, we need to talk about what really happened at 11 PM.";
+
+  marcus:marcus_defensive.png "[wary] I already told you. I was in my room.";
+  modifyStat:marcus_stress +15;
+
+  detective "Let me save us both some time.";
+  showEvidence:dock_argument;
+
+  detective "Your phone pocket-dialed and recorded two minutes of audio at 11:03 PM. You and Elias on the dock. Want to hear it, or do you want to tell me yourself?";
+
+  marcus:marcus_caught.png "[face drains of color] ...Shit.";
+  modifyStat:marcus_stress +45;
+
+  detective "I'm listening.";
+
+  // Major choice point
+  menu:
+    "Just tell me the truth. What happened on that dock?" -> marcus_dock_truth
+    "The recording has Elias threatening you. What was he blackmailing you about?" -> marcus_dock_blackmail
+    "Did you push him into the water?" -> marcus_dock_aggressive
+
+label:marcus_dock_truth;
+  modifyStat:marcus_trust +20;
+  modifyStat:marcus_stress -10;
+  marcus:marcus_breaking.png "[takes shaky breath] Okay. Okay. I lied. I couldn't sleep. Around 11, I heard voices outside. I went down to the dock and... Elias was there. Alone. Looking at his phone.";
+  modifyStat:marcus_trust +25;
+  modifyStat:marcus_stress +15;
+  modifyStat:marcus_lies -1;
+  jump:marcus_dock_continue;
+
+label:marcus_dock_blackmail;
+  modifyStat:marcus_stress +25;
+  modifyStat:marcus_trust +5;
+  marcus:marcus_angry.png "[bitter laugh] Of course you heard that. Yeah, he was blackmailing me. Had evidence of some... questionable code I wrote at my current job. Said he'd send it to my boss if I didn't help him with something.";
+  modifyStat:marcus_stress +30;
+  modifyStat:marcus_trust +15;
+  jump:marcus_dock_continue;
+
+label:marcus_dock_aggressive;
+  modifyStat:marcus_stress +40;
+  modifyStat:marcus_trust -10;
+  marcus:marcus_desperate.png "[explosive] NO! Jesus Christ, no! I grabbed him, yeah, we scuffled, but I didn't—he was alive when I left! Bleeding from his hand where he hit the railing, but alive!";
+  modifyStat:marcus_stress +50;
+  jump:marcus_dock_continue;
+
+label:marcus_dock_continue;
+  detective "Walk me through the confrontation. Every detail.";
+
+  marcus:marcus_bitter.png "I went down there to... I don't know, maybe finally say everything I'd been holding back for two years. When I got there, Elias barely looked up. Like I wasn't even worth his attention.";
+  modifyStat:marcus_stress +18;
+
+  marcus "Then he said something like, 'Good timing. I need to discuss something with you.' And he pulls out this folder—printouts of my code from work. Stuff that could get me fired or worse.";
+  modifyStat:marcus_stress +20;
+
+  detective "What did he want?";
+
+  marcus:marcus_controlled_rage.png "Money. Of course. Said he needed $500K within three months or the code goes to my employer and the SEC. I told him to go to hell. That's when things got physical.";
+  modifyStat:marcus_stress +25;
+
+  detective "Define 'physical.'";
+
+  marcus:marcus_defensive.png "I grabbed his jacket. Shoved him. He shoved back, lost his balance, grabbed the railing. His hand scraped across a bolt or something—started bleeding. That's the blood you found.";
+  modifyStat:marcus_stress +30;
+  narrator "[This matches the blood evidence on the railing.]";
+
+  detective "Then what?";
+
+  marcus:marcus_exhausted.png "He laughed. Even bleeding, he laughed at me. Said 'You'll do what I say or lose everything.' Then he walked past me back toward the house. I stood there in the rain for... I don't know, ten minutes? Just shaking with rage.";
+  modifyStat:marcus_stress +20;
+
+  // Critical choice
+  narrator "This is crucial. Press for more:";
+
+  menu:
+    "Is that when you decided to follow him?" -> marcus_follow_admit
+    "Why were your boots at the overlook where his car was found?" -> marcus_overlook_confront
+    "What did you do after he left?" -> marcus_neutral_03
+
+label:marcus_follow_admit;
+  modifyStat:marcus_stress +30;
+  marcus:marcus_quiet.png "[long pause] ...I didn't follow him that night. But I did follow his car about an hour later when I saw him leaving.";
+  modifyStat:marcus_stress +35;
+  modifyStat:marcus_lies -1;
+  jump:marcus_overlook_story;
+
+label:marcus_overlook_confront;
+  conditionCheck:has_evidence:boot_prints;
+  modifyStat:marcus_stress +45;
+  modifyStat:marcus_trust -15;
+
+  marcus:marcus_broken.png "[defeated] Because I followed him, okay? I saw him get in his car around midnight. I thought... I don't know what I thought. That maybe I could reason with him away from everyone else.";
+  modifyStat:marcus_stress +50;
+  modifyStat:marcus_trust +10;
+  modifyStat:marcus_lies -2;
+  jump:marcus_overlook_story;
+
+label:marcus_neutral_03;
+  modifyStat:marcus_trust +15;
+  marcus:marcus_ashamed.png "I went back to my room. Paced. Couldn't stop thinking about that smug look on his face. Then around midnight, I heard a car start. I looked out—it was Elias leaving. And I... I followed him.";
+  modifyStat:marcus_stress +30;
+  modifyStat:marcus_trust +20;
+  modifyStat:marcus_lies -1;
+  jump:marcus_overlook_story;
+
+label:marcus_overlook_story;
+  detective "You followed him to the overlook.";
+
+  marcus "Yes. I stayed back, didn't turn my headlights on. When he parked at the overlook, I pulled off the road and walked up. He was just... sitting there in his car. Looking at his phone.";
+  modifyStat:marcus_stress +25;
+
+  detective "Did you confront him again?";
+
+  marcus:marcus_tense.png "I walked up to his window. Knocked. He rolled it down, still smiling that goddamn smile. Said, 'Change your mind already?' I almost... [trails off]";
+  modifyStat:marcus_stress +40;
+
+  detective "You almost what?";
+
+  marcus "I almost dragged him out of that car. But then... headlights. Another car coming up the road. Elias saw them too. Told me to 'get lost' before his 'ride' arrived. So I... I left. Ran back to my car and drove back to the house.";
+  modifyStat:marcus_stress +35;
+  narrator "[This matches Elias's burner phone text about a pickup.]";
+
+  detective "Did you see who was in the other car?";
+
+  marcus:marcus_breaking.png "No. It was dark, raining. I didn't wait around. I thought... maybe he really was just leaving. Running away from whatever mess he'd created. I didn't think... [voice breaks] ...I didn't think he was actually missing.";
+  modifyStat:marcus_stress +45;
+
+  // End of dock confrontation
+  modifyStat:marcus_stress +75;
+  modifyStat:marcus_trust +40;
+  unlockDialogue:marcus_financial_motive;
+  setVar:major_revelation="marcus_followed_to_overlook";
+  narrator "[Marcus admits to following Elias but claims he left before anything happened. Did someone else show up?]";
+  jump:interrogation_hub;
+
+
+// ============================================
+// MARCUS FINANCIAL MOTIVE
+// ============================================
+
+label:marcus_financial_motive;
+  conditionCheck:marcus_stress>=70 AND has_evidence:business_documents AND has_evidence:threatening_texts;
+
+  stopmusic;
+  playmusic:emotional_piano.ogg -volume=0.5 -loop;
+  bg:interrogation_room.png;
+  show:marcus_broken.png -position=right;
+  consumeTime:2;
+
+  detective "Marcus, I want to talk about StreamMetrics. The real story.";
+
+  marcus:marcus_bitter.png "[looks exhausted] You want to know if I'm capable of murder? Because that's what this is really about, isn't it?";
+  modifyStat:marcus_stress +30;
+
+  detective "I want to understand why you've spent two years rebuilding your life, only to show up at a reunion with the man who destroyed it.";
+
+  marcus:marcus_defeated.png "[long silence] I thought I could handle it. Rowan convinced me it would be... closure. That we could all move past what happened. I was an idiot to believe that.";
+  modifyStat:marcus_stress +20;
+
+  showEvidence:business_documents;
+
+  detective "We found these in Elias's bag. Your original partnership agreement. Your equity breakdown. And a new document—a proposal for another venture. 'StreamMetrics 2.0.' He wanted you back.";
+
+  marcus:marcus_angry.png "[bitter laugh] Wanted me back? He wanted my code. My expertise. Same as before. Except this time, he was going to 'make it right.' Give me 50-50 equity. Like that would erase what he did.";
+  modifyStat:marcus_stress +25;
+
+  // Major choice
+  menu:
+    "Were you considering his offer?" -> marcus_offer_neutral
+    "He wasn't offering partnership. He was blackmailing you into it." -> marcus_offer_sympathetic
+    "Present Evidence: Threatening Texts" -> marcus_texts_evidence
+
+label:marcus_offer_neutral;
+  modifyStat:marcus_trust +15;
+  marcus "God, no. I wouldn't touch anything Elias was involved in with a ten-foot pole. But he wasn't asking. That's what the blackmail was about—forcing me into another 'partnership' where he'd inevitably screw me again.";
+  modifyStat:marcus_stress +20;
+  jump:marcus_betrayal_story;
+
+label:marcus_offer_sympathetic;
+  modifyStat:marcus_trust +25;
+  modifyStat:marcus_stress -10;
+  marcus:marcus_exhausted.png "[looks at you with tired gratitude] Yeah. Exactly. It was never about making things right. It was about control. He had dirt on me—code from my current job that could be... misinterpreted. He was going to use it.";
+  modifyStat:marcus_trust +30;
+  modifyStat:marcus_stress +15;
+  jump:marcus_betrayal_story;
+
+label:marcus_texts_evidence;
+  conditionCheck:has_evidence:threatening_texts;
+  modifyStat:marcus_stress +35;
+  showEvidence:threatening_texts;
+
+  detective "Let's talk about these texts. 'You're not getting a second chance.' 'Say goodbye to everything you've built.' 'Three months, Marcus. Tick tock.'";
+
+  marcus:marcus_breaking.png "[head in hands] Those started two weeks before the reunion. Every day, another threat. Another reminder that he owned me. That I'd never be free of him.";
+  modifyStat:marcus_stress +40;
+  jump:marcus_betrayal_story;
+
+label:marcus_betrayal_story;
+  detective "Tell me about the original betrayal. Not the sanitized version. The truth.";
+
+  marcus:marcus_distant.png "We built StreamMetrics together. 50-50 partners. Two years of 18-hour days, maxed credit cards, ramen dinners. It was going to change everything. Then we got an acquisition offer—$2.3 million.";
+  modifyStat:marcus_stress +20;
+
+  marcus "I wanted to hold out for more. Build the company bigger. Elias said we should wait, negotiate together. Then one day I show up to the office and there are locks on the door. Elias sold everything without telling me.";
+  modifyStat:marcus_stress +25;
+
+  marcus:marcus_bitter.png "Turned out he'd been restructuring equity behind my back. By the time the sale went through, I owned 12% instead of 50%. I got $200K after lawyers. He got over two million. And the whole industry knew he'd outmaneuvered me.";
+  modifyStat:marcus_stress +30;
+
+  detective "That must have destroyed you.";
+
+  marcus:marcus_vulnerable.png "[voice breaks] It did. I spent six months not able to get out of bed. Lost my apartment. My girlfriend left. I couldn't trust anyone. That's when I started the medication. Therapy. Slowly pieced myself back together.";
+  modifyStat:marcus_stress +35;
+  modifyStat:marcus_trust +35;
+
+  marcus:marcus_exhausted.png "And just when I was finally okay again, he comes back. With threats and smiles and offers to 'partner' again. Like I was supposed to be grateful. Like he didn't steal my entire future.";
+  modifyStat:marcus_stress +20;
+
+  // Final choice
+  narrator "This is the moment. Choose carefully:";
+
+  menu:
+    "So you decided to end it. One way or another." -> marcus_final_leading
+    "Did someone help you? Harper? Rowan?" -> marcus_final_investigative
+    "What happened at the overlook after you saw the other car?" -> marcus_final_direct
+
+label:marcus_final_leading;
+  modifyStat:marcus_stress +45;
+  modifyStat:marcus_trust -20;
+  marcus:marcus_desperate.png "[looks up sharply] No. No, I thought about it—God, did I think about it—but I didn't. I'm not a killer. Even after everything, I'm not that person.";
+  modifyStat:marcus_stress +50;
+  jump:marcus_final_statement;
+
+label:marcus_final_investigative;
+  modifyStat:marcus_stress +30;
+  modifyStat:marcus_trust +5;
+  marcus:marcus_confused.png "What? No! Harper barely spoke to me all weekend. Rowan was... I don't know, Rowan was playing host, trying to keep everything civilized. This was all between me and Elias.";
+  modifyStat:marcus_stress +30;
+  jump:marcus_final_statement;
+
+label:marcus_final_direct;
+  modifyStat:marcus_trust +25;
+  modifyStat:marcus_stress +25;
+  marcus:marcus_guilty.png "I told you—I left before they arrived. I ran. Like a coward. I let someone else deal with him because I couldn't... I couldn't face him anymore. Maybe if I'd stayed...";
+  modifyStat:marcus_stress +35;
+  modifyStat:marcus_trust +30;
+  jump:marcus_final_statement;
+
+label:marcus_final_statement;
+  detective "Marcus, I need you to be absolutely clear. Did you harm Elias Moore?";
+
+  marcus:marcus_firm.png "[meets your eyes] I shoved him on the dock. That's it. He was alive when he walked away. He was alive when I saw him at the overlook. If something happened to him after that... it wasn't me.";
+  modifyStat:marcus_trust +40;
+
+  marcus:marcus_honest.png "But I understand why I'm your main suspect. I had motive. Opportunity. I was the last person to see him. And honestly? Part of me is glad he's gone. But I didn't kill him.";
+  modifyStat:marcus_stress +40;
+  modifyStat:marcus_trust +45;
+
+  detective "If you didn't, then who did?";
+
+  marcus:marcus_thoughtful.png "I don't know. Harper still had feelings for him—I could see it in how she looked at him. Rowan was nervous all weekend, like he was hiding something. Or maybe... maybe Elias really did just disappear. Fake his death. He'd do that.";
+  modifyStat:marcus_stress +25;
+
+  marcus:marcus_exhausted.png "All I know is that Elias Moore destroyed my life once. I wasn't going to let him do it again. Even if that meant walking away and letting someone else... whatever. I just wanted to be free of him.";
+  modifyStat:marcus_stress +35;
+
+  // End of financial motive
+  modifyStat:marcus_stress +85;
+  modifyStat:marcus_trust +55;
+  modifyStat:marcus_lies -3;
+  setVar:major_revelation="marcus_full_story";
+  narrator "[Marcus has revealed everything. He had the strongest motive but claims innocence. The mysterious car at the overlook is key.]";
+  jump:interrogation_hub;

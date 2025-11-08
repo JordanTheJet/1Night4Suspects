@@ -1,0 +1,44 @@
+# Node modules
+node_modules/
+package-lock.json
+
+# Build output
+dist/
+build/
+*.log
+
+# Environment files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# WebGAL generated files
+WebGAL/packages/*/dist/
+WebGAL/packages/*/node_modules/
+WebGAL/.git/
+
+# Temporary files
+*.tmp
+temp/
+tmp/
+
+# Cache
+.cache/
+.parcel-cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python

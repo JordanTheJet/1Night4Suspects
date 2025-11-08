@@ -1,0 +1,58 @@
+================================================================================
+ONE NIGHT, FOUR FRIENDS - COMMAND REFERENCE
+================================================================================
+
+FIRST TIME SETUP (Run once)
+----------------------------
+cd /Users/jordantian/Documents/hacknation/webgal-game
+./setup.sh
+
+START GAME
+----------
+./launch.sh
+→ Opens at http://localhost:5173
+→ Press Ctrl+C to stop
+
+DEVELOPMENT WORKFLOW
+--------------------
+npm run copy-scripts     # Update scripts from source
+npm run update-assets    # Regenerate placeholder assets
+npm test                 # Validate everything
+npm run dev              # Start dev server (alternative to launch.sh)
+
+PRODUCTION
+----------
+npm run build            # Build for production
+npm run preview          # Preview production build
+
+TROUBLESHOOTING
+---------------
+npm test                 # Check for issues
+./setup.sh               # Re-run setup if needed
+rm -rf WebGAL && ./setup.sh  # Full reinstall
+
+FILE LOCATIONS
+--------------
+Edit scripts:    /Users/jordantian/Documents/hacknation/output/one_night_four_friends/scripts/
+Game content:    game/scene/
+Backgrounds:     game/background/
+Characters:      game/figure/
+Music:           game/bgm/
+
+DOCUMENTATION
+-------------
+README.md            - Project overview
+QUICKSTART.md        - Detailed guide
+SETUP_GUIDE.md       - Visual walkthrough
+TROUBLESHOOTING.md   - Problem solving
+PROJECT_SUMMARY.md   - Complete features
+
+HELP
+----
+For issues, check TROUBLESHOOTING.md
+For setup help, check QUICKSTART.md
+For WebGAL docs: https://docs.openwebgal.com/
+
+================================================================================
+Quick Start: ./setup.sh → ./launch.sh → http://localhost:5173
+================================================================================

@@ -1,0 +1,74 @@
+// Evidence Board - Review All Evidence
+
+label:evidence_board;
+  stopmusic;
+  playmusic:contemplative.ogg -volume=0.3 -loop;
+  bg:evidence_board.png;
+  consumeTime:1;
+
+  narrator "EVIDENCE BOARD - Review what you've discovered";
+
+  showEvidence:all;
+
+  narrator "Select evidence to examine in detail, or return to interrogations.";
+
+  menu:
+    "Shoe on Dock Steps" -> evidence_shoe
+    "Cracked Grandfather's Watch" -> evidence_watch
+    "Broken Wineglass" -> evidence_glass
+    "Unsent Text Drafts (Harper)" -> evidence_texts
+    "Boot Prints at Overlook" -> evidence_boots
+    "Tranquilizer Bottle (Marcus)" -> evidence_pills
+    "Security Camera Logs" -> evidence_cameras
+    "Burner Phone" -> evidence_phone
+    "Insurance Policy ($2M)" -> evidence_insurance
+    "Dock Argument Recording" -> evidence_recording
+    "Blood on Railing" -> evidence_blood
+    "Car at Overlook (Running)" -> evidence_car
+    "Return to Interrogations" -> interrogation_hub
+
+// Individual evidence examination scenes
+label:evidence_shoe;
+  showEvidence:shoe_on_steps -zoom;
+  narrator "ELIAS'S SHOE - Left loafer, untied laces";
+  narrator "Found on dock steps at 3:00 AM. Still wet from storm.";
+  narrator "Suggests Elias was at the dock. But why only one shoe?";
+  narrator "Relevance: Marcus 70%, Harper 30%, Rowan 40%";
+  jump:evidence_board;
+
+label:evidence_watch;
+  showEvidence:cracked_watch -zoom;
+  narrator "GRANDFATHER'S WATCH - Silver, cracked face, still ticking";
+  narrator "Found hidden in boathouse under tarp.";
+  narrator "Engraved: 'Time reveals all truths - J.M. 1952'";
+  narrator "Elias NEVER took this off. Why was it hidden?";
+  narrator "Relevance: Rowan 85%, Harper 55%, Marcus 45%";
+  jump:evidence_board;
+
+label:evidence_texts;
+  checkEvidence:unsent_texts;
+  showEvidence:unsent_texts -zoom;
+  narrator "UNSENT TEXTS - Harper's phone, 11:47 PM";
+  narrator "'You deserved this.'";
+  narrator "'I hope you suffer.'";
+  narrator "'This ends tonight.'";
+  narrator "Never sent. Premeditation or just venting?";
+  narrator "Relevance: Harper 95%, Marcus 10%, Rowan 30%";
+  jump:evidence_board;
+
+label:evidence_insurance;
+  checkEvidence:insurance_policy;
+  showEvidence:insurance_policy -zoom;
+  narrator "LIFE INSURANCE POLICY - $2 Million";
+  narrator "Taken out 6 months ago by Elias.";
+  narrator "Beneficiaries:";
+  narrator "• Harper Lin: 40% ($800K)";
+  narrator "• Marcus Hale: 30% ($600K)";
+  narrator "• Rowan Adler: 30% ($600K)";
+  narrator "Why would Elias do this? Fake death scheme?";
+  narrator "THIS CHANGES EVERYTHING.";
+  narrator "Relevance: ALL SUSPECTS 80-95%";
+  jump:evidence_board;
+
+// Return from any evidence view
+jump:evidence_board;

@@ -1,0 +1,272 @@
+// Harper Lin - Complete Interrogation Tree
+// The Ex-Lover
+
+label:harper_intro;
+  stopmusic;
+  playmusic:interrogation_tense.ogg -volume=0.5 -loop;
+  bg:interrogation_room.png;
+  show:harper_neutral.png -position=right;
+  consumeTime:2;
+
+  detective "Ms. Lin, thank you for your cooperation. I know this has been a difficult night.";
+
+  harper:harper_worried.png "I just... I can't believe this is happening. Elias is really missing?";
+  modifyStat:harper_stress +5;
+
+  // First choice point
+  narrator "How do you want to approach Harper?";
+
+  menu:
+    "When did you last see Elias?" -> harper_neutral_path
+    "You and Elias had a complicated history. Let's talk about that." -> harper_pressure_path
+    "I need you to be completely honest with me. Can you do that?" -> harper_calm_path
+
+// NEUTRAL PATH
+label:harper_neutral_path;
+  modifyStat:harper_trust +5;
+  harper:harper_guarded.png "Around... I don't know, maybe 9:30? We had dinner, things got tense, people scattered. I went to my room.";
+  modifyStat:harper_stress +3;
+  narrator "[She's lying. Cell tower data shows activity near the dock at 9:00 PM.]";
+  jump:harper_continue_01;
+
+// PRESSURE PATH
+label:harper_pressure_path;
+  modifyStat:harper_stress +10;
+  modifyStat:harper_trust -5;
+  harper:harper_defensive.png "[stiffens] That was three years ago. I'm over it. I only came this weekend because Rowan convinced me it would be... healing. Clearly, I was wrong.";
+  modifyStat:harper_lies +1;
+  narrator "[She's minimizing her feelings. The unsent texts suggest otherwise.]";
+  jump:harper_continue_01;
+
+// CALM PATH
+label:harper_calm_path;
+  modifyStat:harper_trust +10;
+  harper:harper_vulnerable.png "[takes a breath] I'll try. This is just... overwhelming. I came here hoping for closure, not... whatever this is.";
+  jump:harper_continue_01;
+
+// Continue interrogation
+label:harper_continue_01;
+  detective "Walk me through your evening. Start from when you arrived.";
+
+  harper "We got there around 7. Rowan made dinner—something fancy, trying too hard. We drank wine, talked about old times. Then... Marcus brought up the company. Elias got defensive.";
+  modifyStat:harper_stress +5;
+
+  detective "The company Elias sold?";
+
+  harper:harper_bitter.png "StreamMetrics. Yeah. Marcus never forgave him. Can you blame him? Elias made millions while Marcus got... what, two hundred thousand? It was theft, really.";
+  modifyStat:harper_stress +3;
+  narrator "[She's deflecting blame onto Marcus.]";
+
+  // Second choice point
+  menu:
+    "Sounds like Marcus had a strong motive to hurt Elias." -> harper_deflect
+    "But you must have had your own feelings about Elias." -> harper_redirect
+    "What happened after the argument?" -> harper_neutral_02
+
+label:harper_deflect;
+  modifyStat:harper_stress -5;
+  modifyStat:harper_trust +3;
+  harper "I'm not saying Marcus did anything. I'm just... yes, he was angry. We all saw it.";
+  jump:harper_continue_02;
+
+label:harper_redirect;
+  modifyStat:harper_stress +8;
+  modifyStat:harper_trust -3;
+  harper:harper_cold.png "[pause] I did. Past tense. Whatever I felt died a long time ago.";
+  modifyStat:harper_lies +1;
+  narrator "[Another lie. Check her phone records.]";
+  jump:harper_continue_02;
+
+label:harper_neutral_02;
+  modifyStat:harper_trust +5;
+  harper "Marcus left the table. I think he went outside. I... I went to my room. I needed to be alone.";
+  jump:harper_continue_02;
+
+label:harper_continue_02;
+  detective "You said you went to your room around 9:30. Did you stay there?";
+
+  harper "Yes. Well... I came out around midnight. I heard something outside and got worried. That's when I saw... I thought I saw someone by the dock.";
+  modifyStat:harper_stress +8;
+
+  detective "Someone? Can you describe them?";
+
+  harper:harper_anxious.png "It was dark. The storm... I couldn't see clearly. Just a silhouette. I called out but no one answered. Then I went to find Rowan.";
+  modifyStat:harper_stress +10;
+
+  // Evidence presentation option
+  narrator "Do you want to present evidence now?";
+
+  menu:
+    "Present Evidence: Broken Wineglass" -> harper_present_glass
+    "Continue questioning" -> harper_end_intro
+
+label:harper_present_glass;
+  showEvidence:broken_wineglass;
+  detective "Before you went to your room, something happened near the fireplace. This wineglass—it has your lipstick on it. And blood.";
+
+  harper:harper_panicked.png "[face goes pale] I... I dropped it. It was an accident. I cut my hand. See? [shows small bandage on palm]";
+  modifyStat:harper_stress +25;
+  modifyStat:harper_lies +1;
+  narrator "[She's telling the truth about the cut, but hiding context.]";
+
+  detective "When did this happen?";
+
+  harper:harper_defensive.png "I told you—before I went to my room. Around 9:30. I was upset and I... I wasn't paying attention.";
+  modifyStat:harper_stress +10;
+  narrator "[Timeline doesn't quite match. Pressure her more later.]";
+  jump:harper_end_intro;
+
+label:harper_end_intro;
+  detective "We'll revisit some of these details later, Ms. Lin. For now, that's all.";
+
+  harper "Can I go?";
+
+  detective "Not yet. Stay here.";
+
+  hideStatOverlay;
+  unlockDialogue:harper_relationship;
+  narrator "[INTERROGATION COMPLETE: Harper Lin - Initial]";
+  narrator "[NEW DIALOGUE UNLOCKED: Requires unsent texts evidence + stress >50]";
+
+  jump:interrogation_hub;
+
+// ADVANCED INTERROGATION - Relationship Deep Dive
+label:harper_relationship;
+  checkEvidence:unsent_texts;
+  checkStat:harper_stress>50;
+
+  bg:interrogation_room.png;
+  show:harper_tired.png -position=right;
+  consumeTime:2;
+
+  detective "Harper, I need to talk to you about your relationship with Elias. The real story.";
+
+  harper "[sighs] What do you want to know? I already told you—we broke up three years ago. He cheated. I left. End of story.";
+  modifyStat:harper_stress +10;
+
+  // CRITICAL EVIDENCE PRESENTATION
+  showEvidence:unsent_texts;
+  detective "We examined your phone, Harper. At 11:47 PM last night, you drafted five text messages. You want to tell me what they said?";
+
+  harper:harper_breaking.png "[face crumbles] Oh god. You read those? I never sent them. I would never—";
+  modifyStat:harper_stress +35;
+
+  detective "'You deserved this.' 'I hope you suffer.' 'This ends tonight.' Those don't sound like the words of someone who's 'over it.'";
+
+  harper:harper_crying.png "[crying] I was angry! I didn't mean... He promised me things that night. He said he wanted to explain everything, make things right. Then he twisted it all around again.";
+  modifyStat:harper_stress +40;
+  modifyStat:harper_trust +15;
+  narrator "[She's being honest now. Emotions are real.]";
+
+  detective "What happened at 9 PM, Harper? Before dinner. You and Elias spoke privately.";
+  unlockEvidence:private_meeting_log;
+
+  harper "[looks down] How did you... Fine. Yes. We talked by the dock. He wanted to explain about the affair. Said it was a mistake, that he never stopped thinking about me.";
+  modifyStat:harper_stress +15;
+  modifyStat:harper_lies -1;
+
+  detective "And what did you say?";
+
+  harper "I told him it was too late. That I didn't trust him. But then he... he asked me for help with something. Said he needed me to trust him one more time.";
+  modifyStat:harper_stress +20;
+
+  narrator "This is crucial. Choose carefully.";
+
+  menu:
+    "Help with what?" -> harper_reveal_plan
+    "Did you help him disappear?" -> harper_accusatory
+    "Take your time. I know this is hard." -> harper_supportive
+
+label:harper_reveal_plan;
+  modifyStat:harper_trust +10;
+  harper "He said he was in trouble. That he owed money to some people and needed to... disappear for a while. He wanted me to help make it look real.";
+  modifyStat:harper_stress +25;
+  modifyStat:harper_trust +20;
+  jump:harper_confession;
+
+label:harper_accusatory;
+  modifyStat:harper_stress +30;
+  modifyStat:harper_trust -10;
+  harper:harper_defensive.png "[defensive] No! I mean... he asked me to, but I didn't! I told him I wanted no part of whatever scheme he was planning!";
+  modifyStat:harper_lies +1;
+  narrator "[She's lying. She DID help.]";
+  jump:harper_confession;
+
+label:harper_supportive;
+  modifyStat:harper_trust +20;
+  modifyStat:harper_stress -10;
+  harper:harper_breaking.png "[tears up] He wanted to fake his death. Insurance money. He said he'd give me half if I helped leave clues—his shoe, his watch. Make it look like something happened.";
+  modifyStat:harper_trust +30;
+  modifyStat:harper_stress +20;
+  narrator "[FULL CONFESSION. She's telling everything.]";
+  jump:harper_confession;
+
+label:harper_confession;
+  detective "So you agreed to help him?";
+
+  harper "[whispers] Yes. I know how it sounds. But he said it was just insurance fraud, no one would get hurt. He'd disappear, I'd get money to start over. I'm drowning in gallery debt.";
+  modifyStat:harper_stress +35;
+  modifyStat:harper_trust +25;
+  modifyStat:harper_lies -2;
+
+  detective "Where is Elias now?";
+
+  harper:harper_frightened.png "I don't know! That's the truth! He was supposed to text me after midnight, tell me where to meet him. He never did. Something went wrong. I think... I think someone else knew about the plan.";
+  modifyStat:harper_stress +40;
+
+  detective "Who else knew?";
+
+  harper "Rowan, maybe? Elias said he was 'handling Rowan.' Marcus definitely didn't know—Elias was afraid he'd call the police. But now Elias is actually missing and I don't know if this is part of his plan or if something really happened to him.";
+  modifyStat:harper_stress +45;
+
+  unlockDialogue:harper_breakdown;
+  unlockEvidence:insurance_policy;
+  setFlag:harper_confession_complete;
+
+  narrator "[MAJOR REVELATION: Insurance Fraud Plot]";
+  narrator "[Harper has confessed to conspiracy. She's not guilty of murder, but guilty of coverup.]";
+  narrator "[NEW DIALOGUE UNLOCKED: Final Breakdown]";
+
+  jump:interrogation_hub;
+
+// FINAL BREAKDOWN - Maximum Stress
+label:harper_breakdown;
+  checkStat:harper_stress>75;
+  checkStat:harper_trust>60;
+
+  bg:interrogation_room.png;
+  show:harper_broken.png -position=right;
+  consumeTime:1;
+
+  harper:harper_crying.png "[crying] I can't do this anymore. I'll tell you everything. Just... please believe me when I say I didn't know it would end like this.";
+  modifyStat:harper_stress +50;
+
+  detective "I'm listening, Harper.";
+
+  harper "[Full confession of entire insurance fraud plot]";
+  narrator "Harper reveals the complete timeline:";
+  narrator "• Elias contacted her 2 months ago";
+  narrator "• Threatened her with gallery financial scandal";
+  narrator "• Pitched $2M insurance fraud scheme";
+  narrator "• Harper agreed to plant evidence (shoe, watch)";
+  narrator "• Fight at 11 PM when she had second thoughts";
+  narrator "• Still went through with staging, awaited escape text";
+  narrator "• Text never came—something went wrong";
+
+  detective "Do you think Elias is alive?";
+
+  harper:harper_uncertain.png "I don't know. Part of me thinks he's out there laughing at all of us. But the blood on the dock... that wasn't part of the plan. Something went wrong.";
+
+  detective "Who else could have known about the plan?";
+
+  harper "Rowan knew something. Elias mentioned 'bringing Rowan on board' earlier that week. And Marcus... if Marcus found out, he'd be furious enough to do something. He already hated Elias for the company thing.";
+
+  setFlag:harper_full_confession;
+  unlockEnding:insurance_fraud;
+  unlockEnding:harper_revenge;
+
+  narrator "[COMPLETE CONFESSION OBTAINED]";
+  narrator "[Harper Lin: Not guilty of murder, guilty of insurance fraud conspiracy]";
+  narrator "[New endings unlocked based on this evidence]";
+
+  jump:interrogation_hub;

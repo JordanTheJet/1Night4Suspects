@@ -1,0 +1,197 @@
+// Accusation Scene - Make Your Final Decision
+
+label:accusation_scene;
+  stopmusic;
+  playmusic:accusation_dramatic.ogg -volume=0.6;
+  bg:interrogation_room_dawn.png;
+
+  narrator "The first light of dawn breaks through the window.";
+  narrator "It's 6:30 AM. The lawyers will arrive in 30 minutes.";
+  narrator "You must make your accusation NOW.";
+
+  showEvidence:all;
+  narrator "Review your evidence one last time.";
+  narrator "Who is responsible for Elias Moore's disappearance?";
+
+  menu:
+    "Accuse Marcus Hale (Manslaughter)" -> ending_marcus
+    "Elias is Alive (Insurance Fraud)" -> ending_elias_alive
+    "Insufficient Evidence (Decline to Charge)" -> ending_cold_case
+    "[Other Suspects - Not Available in MVP]" -> mvp_limited_endings
+
+// MVP LIMITED MESSAGE
+label:mvp_limited_endings;
+  bg:black.png;
+  narrator "═══════════════════════════";
+  narrator "MVP PROTOTYPE LIMITATION";
+  narrator "═══════════════════════════";
+  narrator "";
+  narrator "This ending path is not fully implemented in the MVP build.";
+  narrator "";
+  narrator "Available endings in this version:";
+  narrator "• Marcus Hale (Manslaughter) - Grade B";
+  narrator "• Elias is Alive (Insurance Fraud) - Grade A";
+  narrator "• Insufficient Evidence (Cold Case) - Grade D";
+  narrator "";
+  narrator "Other endings (Harper/Rowan/Conspiracy) require full Rowan interrogation content";
+  narrator "and will be available in the complete version.";
+  narrator "";
+  narrator "Thank you for testing the MVP!";
+  wait:3000;
+  jump:accusation_scene;
+
+// ═══════════════════════════════════════════════════════════
+// MVP ENDINGS (FULLY PLAYABLE)
+// ═══════════════════════════════════════════════════════════
+
+// ENDING 1: Marcus Manslaughter (GRADE B) - MVP
+label:ending_marcus;
+  checkEvidence:boot_prints;
+  checkEvidence:dock_argument;
+  bg:black.png;
+  stopmusic;
+
+  narrator "You accuse Marcus Hale of manslaughter.";
+  narrator "Your theory: He confronted Elias at the overlook after their dock fight.";
+  narrator "Physical struggle. Elias fell from the cliff.";
+  narrator "Marcus panicked and staged a suicide scene.";
+  wait:2000;
+
+  playmusic:resolution_somber.ogg;
+  bg:cliff_overlook_day.png;
+  narrator "SIX WEEKS LATER...";
+  narrator "Elias Moore's body is recovered at the base of the cliff.";
+  narrator "Injuries consistent with a fall.";
+  narrator "Marcus confesses to involuntary manslaughter.";
+  narrator "Sentenced to 8 years.";
+  wait:2000;
+
+  bg:evidence_board.png;
+  narrator "CASE CLOSED: Solved";
+  narrator "GRADE: B";
+  narrator "JUSTICE: Full";
+  narrator "Sometimes the truth comes too late.";
+
+  jump:debrief_screen;
+
+// ENDING 2: Elias Alive - Insurance Fraud (GRADE A) - MVP
+label:ending_elias_alive;
+  checkEvidence:burner_phone;
+  checkEvidence:insurance_policy;
+  checkFlag:harper_confession_complete;
+  bg:black.png;
+  stopmusic;
+
+  narrator "You theorize that Elias is ALIVE.";
+  narrator "He faked his death for the insurance money.";
+  narrator "Harper and Rowan were accomplices.";
+  narrator "Marcus was framed.";
+  wait:2000;
+
+  playmusic:resolution_triumphant.ogg;
+  bg:airport.png;
+  narrator "THREE MONTHS LATER...";
+  narrator "Interpol flags a passport match: Elias Moore.";
+  narrator "San José, Costa Rica. Living under assumed name.";
+  narrator "He's arrested attempting to access offshore accounts.";
+  narrator "Harper and Rowan charged with insurance fraud.";
+  narrator "Marcus cleared of all charges.";
+  wait:2000;
+
+  bg:evidence_board.png;
+  narrator "CASE CLOSED: Solved";
+  narrator "GRADE: A";
+  narrator "JUSTICE: Partial (Fraud charges, no murder)";
+  narrator "The perfect crime... almost.";
+
+  jump:debrief_screen;
+
+// ENDING 3: Cold Case (GRADE D) - MVP
+label:ending_cold_case;
+  bg:black.png;
+  stopmusic;
+
+  narrator "You decline to file charges.";
+  narrator "Insufficient evidence for prosecution.";
+  wait:2000;
+
+  playmusic:resolution_failure.ogg;
+  bg:police_station_day.png;
+  narrator "7:00 AM - The lawyers arrive.";
+  narrator "All three suspects are released.";
+  narrator "The case goes cold.";
+  narrator "Elias Moore is never found.";
+  wait:2000;
+
+  bg:evidence_board.png;
+  narrator "CASE CLOSED: Unsolved";
+  narrator "GRADE: D";
+  narrator "JUSTICE: None";
+  narrator "Sometimes the truth stays hidden forever.";
+
+  jump:debrief_screen;
+
+// ═══════════════════════════════════════════════════════════
+// NON-MVP ENDINGS (Not fully implemented)
+// ═══════════════════════════════════════════════════════════
+
+// ENDING: Harper Revenge (NOT IN MVP)
+label:ending_harper;
+  // This ending requires full Rowan interrogation paths
+  jump:mvp_limited_endings;
+
+// ENDING: Rowan Protection (NOT IN MVP)
+label:ending_rowan;
+  // This ending requires full Rowan deep dive paths
+  jump:mvp_limited_endings;
+
+// ENDING: Conspiracy (NOT IN MVP)
+label:ending_conspiracy;
+  // This ending requires full investigation of all three suspects
+  jump:mvp_limited_endings;
+
+// Debrief Screen
+label:debrief_screen;
+  bg:evidence_board.png;
+
+  narrator "═══════════════════════════";
+  narrator "CASE DEBRIEF";
+  narrator "═══════════════════════════";
+  narrator "";
+  narrator "Evidence Collected: {evidenceCount}/12";
+  narrator "Interrogations Completed: {interrogationCount}/9";
+  narrator "Confessions Obtained: {confessionCount}";
+  narrator "Turns Used: {turnsUsed}/12";
+  narrator "";
+  narrator "What You Found:";
+  // List key evidence and revelations
+  narrator "";
+  narrator "What You Missed:";
+  // Show any evidence or dialogue not discovered
+  narrator "";
+  narrator "The Truth:";
+  // Reveal actual events regardless of player choice
+  narrator "";
+  narrator "═══════════════════════════";
+
+  menu:
+    "Play Again (New Game)" -> start
+    "Main Menu" -> main_menu
+    "Credits" -> credits
+
+label:credits;
+  bg:black.png;
+  narrator "ONE NIGHT, FOUR FRIENDS";
+  narrator "";
+  narrator "A DAWNLINE Production";
+  narrator "";
+  narrator "Case Design: AI + Human Collaboration";
+  narrator "Dialogue: GPT-4 + Claude 3.5 Sonnet";
+  narrator "WebGAL Implementation: Custom Tools";
+  narrator "";
+  narrator "Thank you for playing!";
+  narrator "";
+  narrator "This is an MVP prototype to validate core gameplay.";
+  narrator "Full version will feature procedurally generated cases.";
+  wait:5000;
+  jump:main_menu;
