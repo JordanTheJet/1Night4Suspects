@@ -43,7 +43,7 @@ label:marcus_confrontation_path;
 label:marcus_direct_path;
   modifyStat:marcus_trust +5;
   modifyStat:marcus_stress +5;
-  marcus:marcus_guarded.png "At dinner. Around 9:30, maybe? Things got heated. I needed air. Went to my room. That's the last time I saw him.";
+  marcus:marcus_guarded.png "At dinner. Around 9\:30, maybe? Things got heated. I needed air. Went to my room. That's the last time I saw him.";
   modifyStat:marcus_stress +8;
   modifyStat:marcus_lies +1;
   narrator "[This is a lie. The dock recording proves he saw Elias at 11 PM.]";
@@ -97,7 +97,7 @@ label:marcus_neutral_02;
 label:marcus_continue_02;
   detective "What time did you go to your room?";
 
-  marcus "Maybe 10:30? Storm was really howling by then. I was exhausted from the drive up and all the tension. I just wanted the weekend to be over.";
+  marcus "Maybe 10\:30? Storm was really howling by then. I was exhausted from the drive up and all the tension. I just wanted the weekend to be over.";
   modifyStat:marcus_stress +5;
   modifyStat:marcus_lies +1;
   narrator "[Lie. Witnesses and recording place him at dock at 11 PM.]";
@@ -150,7 +150,7 @@ label:marcus_meds_inquiry;
 
   detective "How many did you take last night?";
 
-  marcus "Just one. Around 10:30. I don't abuse them if that's what you're implying.";
+  marcus "Just one. Around 10\:30. I don't abuse them if that's what you're implying.";
   modifyStat:marcus_stress +8;
   narrator "[Pill count suggests two are missing. Where's the other one?]";
   jump:marcus_intro_end;
@@ -184,7 +184,7 @@ label:marcus_dock_confrontation;
   detective "Let me save us both some time.";
   showEvidence:dock_argument;
 
-  detective "Your phone pocket-dialed and recorded two minutes of audio at 11:03 PM. You and Elias on the dock. Want to hear it, or do you want to tell me yourself?";
+  detective "Your phone pocket-dialed and recorded two minutes of audio at 11\:03 PM. You and Elias on the dock. Want to hear it, or do you want to tell me yourself?";
 
   marcus:marcus_caught.png "[face drains of color] ...Shit.";
   modifyStat:marcus_stress +45;

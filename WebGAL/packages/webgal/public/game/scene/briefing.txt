@@ -5,7 +5,7 @@ start:
   playmusic:menu.ogg -volume=0.5 -loop;
   bg:police_station_night.png;
 
-  narrator "3:12 AM. The storm hasn't let up.";
+  narrator "3\:12 AM. The storm hasn't let up.";
   narrator "Three soaked suspects sit in separate rooms. One friend is missing.";
   narrator "You have until dawn to find the truth.";
 
@@ -13,13 +13,13 @@ start:
   bg:evidence_board.png;
   narrator "VICTIM: Elias Moore, 32 years old";
   narrator "Charming entrepreneur who connected this friend group in college. Known for making and breaking deals—and hearts.";
-  narrator "LAST SEEN: Approximately 11:00 PM on the lake house dock during argument with Marcus";
+  narrator "LAST SEEN\: Approximately 11\:00 PM on the lake house dock during argument with Marcus";
   narrator "STATUS: MISSING";
 
   // Scene description
   bg:lake_house_exterior_storm.png;
   narrator "LOCATION: Remote New England lake house";
-  narrator "TIME: 3:12 AM, Late October";
+  narrator "TIME\: 3\:12 AM, Late October";
   narrator "WEATHER: Storm raging, fog rolling off lake";
 
   // Evidence overview
@@ -37,7 +37,7 @@ start:
   narrator "• Marcus Hale (33) - The Betrayed Friend";
   narrator "• Rowan Adler (32) - The Host";
 
-  narrator "The clock is ticking. Dawn breaks at 7:00 AM.";
+  narrator "The clock is ticking. Dawn breaks at 7\:00 AM.";
   narrator "Choose your interrogations wisely.";
 
   jump:interrogation_hub;

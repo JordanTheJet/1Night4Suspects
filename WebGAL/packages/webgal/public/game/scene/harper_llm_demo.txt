@@ -1,0 +1,26 @@
+; ====================================
+; Harper Lin - AI-Powered Interrogation
+; ====================================
+; This is a special interrogation mode powered by Claude AI
+; The suspect will respond dynamically to your questions
+; Smart suggestions will guide your investigation
+
+changeBg:interrogation_room.png -next;
+EXPERIMENTAL: AI-POWERED INTERROGATION MODE;
+This interrogation uses Claude AI to generate realistic responses.;
+Harper will react naturally to your questions.;
+The AI will suggest strategic follow-up questions.;
+You can also type custom questions at any time.;
+Watch Harper's stress and trust levels - they affect her cooperation.;
+llmInterrogate:Harper Lin;
+
+; After interrogation ends, continue with the story
+changeBg:police_station_hallway.png -next;
+;
+The interrogation is complete.;
+;
+You've gathered valuable information from Harper.;
+;
+What will you do next?;
+;
+choose:Review evidence:evidence_review.txt|Interrogate another suspect:start.txt|Write final report:end.txt;

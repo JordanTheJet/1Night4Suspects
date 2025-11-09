@@ -101,17 +101,20 @@ export class InterrogationController {
     emotionalState: 'calm' | 'nervous' | 'defensive' | 'angry' | 'breaking';
   } {
     try {
-      // Try to parse structured format
-      const responseMatch = content.match(/RESPONSE:\s*(.+?)(?=\s*\|\s*SUGGESTIONS:|\s*$)/s);
-      const suggestionsMatch = content.match(/SUGGESTIONS:\s*(.+?)(?=\s*\|\s*STATE:|\s*$)/s);
+      // Try to parse structured format with more flexible regex
+      const responseMatch = content.match(/RESPONSE:\s*(.+?)(?=\s*SUGGESTIONS:)/s);
+      const suggestionsMatch = content.match(/SUGGESTIONS:\s*(.+?)(?=\s*STATE:)/s);
       const stateMatch = content.match(/STATE:\s*(\w+)/);
 
       if (responseMatch && suggestionsMatch) {
         const response = responseMatch[1].trim();
         const suggestionsText = suggestionsMatch[1].trim();
+
+        // Split suggestions and clean them
         const suggestions = suggestionsText
           .split('|')
           .map(s => s.trim())
+          .map(s => s.replace(/^["']|["']$/g, '')) // Remove quotes
           .filter(s => s.length > 0)
           .slice(0, 4); // Max 4 suggestions
 
@@ -166,7 +169,10 @@ export class InterrogationController {
     customQuestion?: string
   ): Promise<{
     response: string;
+    suggestions: string[];
+    emotionalState: 'calm' | 'nervous' | 'defensive' | 'angry' | 'breaking';
     stats: { stress: number; trust: number; lies: number; contradictions: number };
+    tokens: { input: number; output: number };
   }> {
     const evidence = this.harperState.getState().allEvidence.find(e => e.id === evidenceId);
     if (!evidence) {

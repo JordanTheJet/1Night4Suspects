@@ -6,7 +6,7 @@ The evidence is circumstantial. Too many contradictions. Not enough to prosecute
 ;
 changeBg:police_station_hallway.png -next;
 ;
-7:00 AM - DAWN ARRIVES;
+7\:00 AM - DAWN ARRIVES;
 ;
 The lawyers enter the building—expensive suits, briefcases full of objections. | All three suspects are released.;
 Harper Lin returns to New York. Marcus Hale goes back to Boston. | Rowan Adler retreats to his family estate. None of them speak to each other again.;

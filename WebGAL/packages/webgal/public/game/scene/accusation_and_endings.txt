@@ -3,7 +3,7 @@ changeBg:interrogation_room.png -next;
 MAKE YOUR ACCUSATION;
 ;
 The first light of dawn breaks through the window.;
-It is 6:30 AM. The lawyers will arrive in 30 minutes.;
+It is 6\:30 AM. The lawyers will arrive in 30 minutes.;
 ;
 You must make your accusation NOW.;
 ;

@@ -86,16 +86,16 @@ label:rowan_challenge_dock;
 
 label:rowan_cameras;
   modifyStat:rowan_stress +25;
-  rowan:rowan_regretful.png "[shifts slightly] It's a standard system. Covers the main entrances, the dock, the driveway. Unfortunately, the storm knocked out the power around 10:45. We lost all the footage.";
+  rowan:rowan_regretful.png "[shifts slightly] It's a standard system. Covers the main entrances, the dock, the driveway. Unfortunately, the storm knocked out the power around 10\:45. We lost all the footage.";
   modifyStat:rowan_stress +22;
   modifyStat:rowan_lies +1;
-  narrator "[He's lying. System logs will show manual shutdown at 10:03.]";
+  narrator "[He's lying. System logs will show manual shutdown at 10\:03.]";
   jump:rowan_continue_02;
 
 label:rowan_continue_02;
   detective "When did you realize Elias was missing?";
 
-  rowan:rowan_grave.png "Harper woke me around 2:15 AM. She was frantic, said she'd checked Elias's room and he wasn't there. We searched the house, then outside. That's when we found his shoe on the dock.";
+  rowan:rowan_grave.png "Harper woke me around 2\:15 AM. She was frantic, said she'd checked Elias's room and he wasn't there. We searched the house, then outside. That's when we found his shoe on the dock.";
   modifyStat:rowan_stress +12;
 
   detective "What did you think when you saw the shoe?";
@@ -170,7 +170,7 @@ label:rowan_camera_system;
 
   showEvidence:camera_logs;
 
-  detective "Our tech team pulled the logs from your NAS server. The system didn't fail. It was manually shut down at 10:03 PM. Using your admin password. Forty-two minutes before the storm knocked out power.";
+  detective "Our tech team pulled the logs from your NAS server. The system didn't fail. It was manually shut down at 10\:03 PM. Using your admin password. Forty-two minutes before the storm knocked out power.";
 
   rowan:rowan_calculating.png "[long pause] ...I see.";
   modifyStat:rowan_stress +35;

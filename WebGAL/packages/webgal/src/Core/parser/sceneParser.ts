@@ -36,6 +36,7 @@ import { showVars } from '../gameScripts/showVars';
 import { defineScripts, IConfigInterface, ScriptConfig, ScriptFunction, scriptRegistry } from './utils';
 import { applyStyle } from '@/Core/gameScripts/applyStyle';
 import { wait } from '@/Core/gameScripts/wait';
+import { llmInterrogate } from '@/Core/gameScripts/llmInterrogate';
 
 export const SCRIPT_TAG_MAP = defineScripts({
   say: ScriptConfig(commandType.say, say),
@@ -72,6 +73,7 @@ export const SCRIPT_TAG_MAP = defineScripts({
   getUserInput: ScriptConfig(commandType.getUserInput, getUserInput),
   applyStyle: ScriptConfig(commandType.applyStyle, applyStyle, { next: true }),
   wait: ScriptConfig(commandType.wait, wait),
+  llmInterrogate: ScriptConfig(commandType.llmInterrogate, llmInterrogate),
 });
 
 export const SCRIPT_CONFIG: IConfigInterface[] = Object.values(SCRIPT_TAG_MAP);

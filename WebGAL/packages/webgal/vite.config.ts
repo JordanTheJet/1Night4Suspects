@@ -67,4 +67,6 @@ export default defineConfig({
   build: {
     // sourcemap: true,
   },
+  // Explicitly load .env file from parent directory
+  envDir: '../../../',
 });

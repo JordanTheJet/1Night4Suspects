@@ -58,11 +58,13 @@ class ChooseOption {
 export const choose = (sentence: ISentence): IPerform => {
   const chooseOptionScripts = sentence.content.split(/(?<!\\)\|/);
   const chooseOptions = chooseOptionScripts.map((e) => ChooseOption.parse(e.trim()));
+  // Add timestamp to force React to re-render all options on every invocation
+  const renderTimestamp = Date.now();
 
   // eslint-disable-next-line react/no-deprecated
   ReactDOM.render(
     <Provider store={webgalStore}>
-      <Choose chooseOptions={chooseOptions} />
+      <Choose chooseOptions={chooseOptions} renderKey={renderTimestamp} />
     </Provider>,
     document.getElementById('chooseContainer'),
   );
@@ -80,7 +82,7 @@ export const choose = (sentence: ISentence): IPerform => {
   };
 };
 
-function Choose(props: { chooseOptions: ChooseOption[] }) {
+function Choose(props: { chooseOptions: ChooseOption[]; renderKey: number }) {
   const fontFamily = webgalStore.getState().userData.optionData.textboxFont;
   const font = fontFamily === textFont.song ? '"思源宋体", serif' : '"WebgalUI", serif';
   const { playSeEnter, playSeClick } = useSEByWebgalStore();
@@ -105,8 +107,9 @@ function Choose(props: { chooseOptions: ChooseOption[] }) {
               WebGAL.gameplay.performController.unmountPerform('choose');
             }
           : () => {};
+        // Use renderKey timestamp to ensure unique keys on every render
         return (
-          <div className={applyStyle('Choose_item_outer', styles.Choose_item_outer)} key={e.jump + i}>
+          <div className={applyStyle('Choose_item_outer', styles.Choose_item_outer)} key={`${props.renderKey}-${e.jump}-${i}`}>
             <div className={className} style={{ fontFamily: font }} onClick={onClick} onMouseEnter={playSeEnter}>
               {e.text}
             </div>

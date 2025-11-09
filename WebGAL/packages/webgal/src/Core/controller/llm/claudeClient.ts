@@ -1,10 +1,10 @@
 import Anthropic from '@anthropic-ai/sdk';
 
-// Claude Haiku 4.5 model configuration
+// Claude Haiku 3.5 model configuration (current stable version)
 const MODEL = 'claude-3-5-haiku-20241022';
-const MAX_TOKENS = 300;
+const MAX_TOKENS = 8000; // Increased for detailed responses and suggestions
 const TEMPERATURE = 0.7;
-const TIMEOUT_MS = 10000;
+const TIMEOUT_MS = 30000; // Increased timeout for longer responses
 
 export interface ClaudeMessage {
   role: 'user' | 'assistant';
@@ -28,19 +28,18 @@ export class ClaudeClient {
   private apiKey: string;
 
   constructor(apiKey?: string) {
-    // Try to get API key from parameter, environment variable, or import.meta.env
-    this.apiKey = apiKey ||
-                  process.env.ANTHROPIC_API_KEY ||
-                  (import.meta.env?.VITE_ANTHROPIC_API_KEY as string) ||
-                  '';
+    // Get API key from parameter or import.meta.env (browser context)
+    // Note: process.env doesn't exist in browser, only in Node.js
+    this.apiKey = apiKey || (import.meta.env?.VITE_ANTHROPIC_API_KEY as string) || '';
 
     if (!this.apiKey) {
-      console.error('❌ ANTHROPIC_API_KEY not found');
-      throw new Error('ANTHROPIC_API_KEY is required');
+      console.error('❌ VITE_ANTHROPIC_API_KEY not found in environment');
+      throw new Error('VITE_ANTHROPIC_API_KEY is required in .env file');
     }
 
     this.client = new Anthropic({
       apiKey: this.apiKey,
+      dangerouslyAllowBrowser: true, // Required for browser environments
     });
 
     console.log('✅ Claude client initialized');

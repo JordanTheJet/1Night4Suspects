@@ -1,0 +1,16 @@
+changeBg:police_station_dawn.png -next;
+CASE CLOSED;
+;
+Dawn has broken. Time to write your report.;
+;
+Based on your interrogations and the evidence...;
+What conclusion have you reached?;
+;
+[This is a demo - Full game would have multiple endings];
+;
+Thanks for playing the AI-Powered Interrogation Demo!;
+;
+This demo showcases how LLMs can create dynamic, realistic conversations.;
+Harper's responses adapted to your questions in real-time.;
+;
+choose:Return to Start:start.txt;
