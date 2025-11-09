@@ -1,6 +1,10 @@
 import { ClaudeClient, ClaudeMessage, getClaudeClient } from './claudeClient';
 import { HarperInterrogationState, getHarperState, resetHarperState } from './interrogationState';
 import { buildHarperSystemPrompt } from './harperPrompt';
+import { buildMarcusSystemPrompt } from './marcusPrompt';
+import { buildRowanSystemPrompt } from './rowanPrompt';
+
+type SuspectName = 'Harper Lin' | 'Marcus Hale' | 'Rowan Adler';
 
 /**
  * Main controller for LLM-powered interrogations
@@ -8,15 +12,57 @@ import { buildHarperSystemPrompt } from './harperPrompt';
 export class InterrogationController {
   private claudeClient: ClaudeClient;
   private harperState: HarperInterrogationState;
+  private currentSuspect: SuspectName;
 
-  constructor(apiKey?: string) {
+  constructor(apiKey?: string, suspectName: SuspectName = 'Harper Lin') {
     this.claudeClient = getClaudeClient(apiKey);
     this.harperState = getHarperState();
-    console.log('✅ Interrogation Controller initialized');
+    this.currentSuspect = suspectName;
+    console.log(`✅ Interrogation Controller initialized for ${suspectName}`);
   }
 
   /**
-   * Ask Harper a question and get dynamic response with suggested follow-up questions
+   * Set the current suspect being interrogated
+   */
+  setSuspect(suspectName: SuspectName): void {
+    this.currentSuspect = suspectName;
+    console.log(`🔄 Switched to interrogating ${suspectName}`);
+  }
+
+  /**
+   * Get the appropriate system prompt builder based on current suspect
+   */
+  private getSystemPromptBuilder(): (state: any, includeSuggestions: boolean) => string {
+    switch (this.currentSuspect) {
+      case 'Harper Lin':
+        return buildHarperSystemPrompt;
+      case 'Marcus Hale':
+        return buildMarcusSystemPrompt;
+      case 'Rowan Adler':
+        return buildRowanSystemPrompt;
+      default:
+        return buildHarperSystemPrompt;
+    }
+  }
+
+  /**
+   * Get initial stats for each suspect
+   */
+  private getInitialStats(suspectName: SuspectName): { stress: number; trust: number } {
+    switch (suspectName) {
+      case 'Harper Lin':
+        return { stress: 35, trust: 25 };
+      case 'Marcus Hale':
+        return { stress: 40, trust: 45 };
+      case 'Rowan Adler':
+        return { stress: 25, trust: 40 };
+      default:
+        return { stress: 35, trust: 25 };
+    }
+  }
+
+  /**
+   * Ask the current suspect a question and get dynamic response with suggested follow-up questions
    */
   async askHarper(
     question: string,
@@ -25,7 +71,7 @@ export class InterrogationController {
   ): Promise<{
     response: string;
     suggestions: string[];
-    emotionalState: 'calm' | 'nervous' | 'defensive' | 'angry' | 'breaking';
+    emotionalState: string;
     stats: { stress: number; trust: number; lies: number; contradictions: number };
     tokens: { input: number; output: number };
   }> {
@@ -42,7 +88,8 @@ export class InterrogationController {
       const state = this.harperState.getState();
 
       // Build system prompt with current context - includes instruction for suggestions
-      const systemPrompt = buildHarperSystemPrompt(state, true); // true = include suggestions
+      const promptBuilder = this.getSystemPromptBuilder();
+      const systemPrompt = promptBuilder(state, true); // true = include suggestions
 
       // Build conversation messages for Claude
       const messages: ClaudeMessage[] = [
@@ -98,7 +145,7 @@ export class InterrogationController {
   private parseStructuredResponse(content: string): {
     response: string;
     suggestions: string[];
-    emotionalState: 'calm' | 'nervous' | 'defensive' | 'angry' | 'breaking';
+    emotionalState: string;
   } {
     try {
       // Try to parse structured format with more flexible regex
@@ -162,7 +209,7 @@ export class InterrogationController {
   }
 
   /**
-   * Present evidence to Harper
+   * Present evidence to current suspect
    */
   async presentEvidence(
     evidenceId: string,
@@ -170,7 +217,7 @@ export class InterrogationController {
   ): Promise<{
     response: string;
     suggestions: string[];
-    emotionalState: 'calm' | 'nervous' | 'defensive' | 'angry' | 'breaking';
+    emotionalState: string;
     stats: { stress: number; trust: number; lies: number; contradictions: number };
     tokens: { input: number; output: number };
   }> {
@@ -179,6 +226,7 @@ export class InterrogationController {
       throw new Error(`Evidence not found: ${evidenceId}`);
     }
 
+    const suspectFirstName = this.currentSuspect.split(' ')[0];
     const question = customQuestion || `I have ${evidence.name} here. ${evidence.description}. What do you have to say about this?`;
 
     return this.askHarper(question, evidenceId);
@@ -221,9 +269,11 @@ let interrogationControllerInstance: InterrogationController | null = null;
 /**
  * Get or create interrogation controller singleton
  */
-export function getInterrogationController(apiKey?: string): InterrogationController {
+export function getInterrogationController(apiKey?: string, suspectName?: SuspectName): InterrogationController {
   if (!interrogationControllerInstance) {
-    interrogationControllerInstance = new InterrogationController(apiKey);
+    interrogationControllerInstance = new InterrogationController(apiKey, suspectName);
+  } else if (suspectName) {
+    interrogationControllerInstance.setSuspect(suspectName);
   }
   return interrogationControllerInstance;
 }
@@ -231,9 +281,9 @@ export function getInterrogationController(apiKey?: string): InterrogationContro
 /**
  * Initialize interrogation system
  */
-export async function initializeInterrogation(apiKey?: string): Promise<boolean> {
+export async function initializeInterrogation(apiKey?: string, suspectName?: SuspectName): Promise<boolean> {
   try {
-    const controller = getInterrogationController(apiKey);
+    const controller = getInterrogationController(apiKey, suspectName);
     console.log('✅ Interrogation system ready');
     return true;
   } catch (error) {

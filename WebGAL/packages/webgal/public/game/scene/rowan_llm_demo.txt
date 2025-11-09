@@ -1,5 +1,5 @@
 ; ====================================
-; Harper Lin - AI-Powered Interrogation
+; Rowan Adler - AI-Powered Interrogation
 ; ====================================
 ; This is a special interrogation mode powered by Claude AI
 ; The suspect will respond dynamically to your questions
@@ -8,18 +8,19 @@
 changeBg:interrogation_room.png -next;
 EXPERIMENTAL: AI-POWERED INTERROGATION MODE;
 This interrogation uses Claude AI to generate realistic responses.;
-Harper will react naturally to your questions.;
+Rowan will react naturally to your questions with calculated composure and strategic evasion.;
 The AI will suggest strategic follow-up questions.;
 You can also type custom questions at any time.;
-Watch Harper's stress and trust levels - they affect her cooperation.;
-llmInterrogate:Harper Lin;
+Watch Rowan's stress and trust levels - they affect his cooperation and willingness to reveal the truth.;
+Rowan is extremely controlled and intelligent - breaking through his defenses requires skill.;
+llmInterrogate:Rowan Adler;
 
 ; After interrogation ends, return to hub
 changeBg:police_station_hallway.png -next;
 ;
 AI INTERROGATION COMPLETE;
 ;
-You've gathered valuable information from Harper using the AI interrogation system.;
+You've gathered valuable information from Rowan using the AI interrogation system.;
 ;
 The interrogation data has been recorded.;
 ;

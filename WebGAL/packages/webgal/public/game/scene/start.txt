@@ -31,4 +31,4 @@ The clock is ticking. Dawn breaks at 7 AM.;
 Choose your interrogations wisely.;
 ;
 Who do you want to interrogate?;
-choose:Harper Lin (Static Mode):harper_intro.txt|Harper Lin (AI Mode):harper_llm_demo.txt|Marcus Hale:marcus_intro.txt|Rowan Adler:rowan_intro.txt;
+choose:Harper Lin (Story Mode):harper_intro.txt|Harper Lin (AI Mode):harper_llm_demo.txt|Marcus Hale (Story Mode):marcus_intro.txt|Marcus Hale (AI Mode):marcus_llm_demo.txt|Rowan Adler (Story Mode):rowan_intro.txt|Rowan Adler (AI Mode):rowan_llm_demo.txt;

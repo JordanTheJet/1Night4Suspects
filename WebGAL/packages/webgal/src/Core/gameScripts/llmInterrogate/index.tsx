@@ -17,13 +17,11 @@ import { nextSentence } from '@/Core/controller/gamePlay/nextSentence';
  */
 export const llmInterrogate = (sentence: ISentence): IPerform => {
   console.log('🎮 llmInterrogate command called!');
-  const suspectName = sentence.content.toString().trim() || 'Harper';
+  const suspectName = sentence.content.toString().trim() || 'Harper Lin';
   // Only use import.meta.env in browser context (process.env doesn't exist in browser)
   const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
   console.log('🔑 API Key present:', !!apiKey);
   console.log('🔑 API Key length:', apiKey?.length);
-  console.log('🔑 API Key first 20 chars:', apiKey?.substring(0, 20));
-  console.log('🔍 All import.meta.env:', import.meta.env);
   console.log('👤 Suspect name:', suspectName);
 
   const container = document.getElementById('chooseContainer');
@@ -58,10 +56,22 @@ function LLMInterrogation(props: LLMInterrogationProps) {
   const { suspectName, apiKey } = props;
   const [loading, setLoading] = useState(true); // Start with loading true
   const [error, setError] = useState<string | null>(null);
-  const [response, setResponse] = useState<string>('Waiting for Harper to enter...');
+  const [response, setResponse] = useState<string>(`Waiting for ${suspectName} to enter...`);
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [emotionalState, setEmotionalState] = useState<'calm' | 'nervous' | 'defensive' | 'angry' | 'breaking'>('nervous');
-  const [stats, setStats] = useState({ stress: 35, trust: 50, lies: 0, contradictions: 0 }); // Start with some stress
+  const [emotionalState, setEmotionalState] = useState<string>('nervous');
+  // Set initial stats based on suspect
+  const getInitialStats = () => {
+    switch (suspectName) {
+      case 'Marcus Hale':
+        return { stress: 40, trust: 45, lies: 0, contradictions: 0 };
+      case 'Rowan Adler':
+        return { stress: 25, trust: 40, lies: 0, contradictions: 0 };
+      case 'Harper Lin':
+      default:
+        return { stress: 35, trust: 25, lies: 0, contradictions: 0 };
+    }
+  };
+  const [stats, setStats] = useState(getInitialStats());
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [customQuestion, setCustomQuestion] = useState('');
   const [isInitialized, setIsInitialized] = useState(false);
@@ -106,7 +116,7 @@ function LLMInterrogation(props: LLMInterrogationProps) {
       console.log('🔄 Initializing interrogation with suspect:', suspectName);
       console.log('🔑 API Key available:', !!apiKey, 'Length:', apiKey?.length);
 
-      const controller = getInterrogationController(apiKey);
+      const controller = getInterrogationController(apiKey, suspectName as any);
       console.log('🎮 Controller created, sending initial question...');
 
       const result = await controller.askHarper('Begin the interrogation. Introduce yourself.');
@@ -158,7 +168,7 @@ function LLMInterrogation(props: LLMInterrogationProps) {
     setShowCustomInput(false);
 
     try {
-      const controller = getInterrogationController(apiKey);
+      const controller = getInterrogationController(apiKey, suspectName as any);
       const result = await controller.askHarper(question);
 
       // Check if component is still mounted before updating state
@@ -214,21 +224,132 @@ function LLMInterrogation(props: LLMInterrogationProps) {
     );
   }
 
-  // Map emotional states to animation files
-  const getHarperAnimation = (state: typeof emotionalState): string => {
-    const animationMap = {
-      'calm': 'Harper_Calm.webp',
-      'nervous': 'Harper_nervous.webp',
-      'defensive': 'Harper_lookingDown.webp',
-      'angry': 'Harper_angry.webp',
-      'breaking': 'Harper_breaking.webp'
-    };
-    return `/game/figure/${animationMap[state]}`;
+  // Map emotional states to animation files with intelligent fallbacks
+  const getSuspectAnimation = (state: typeof emotionalState): string => {
+    // Normalize state to lowercase for comparison
+    const normalizedState = state.toLowerCase().trim();
+
+    // Get suspect prefix (Harper, Marcus, Rowan)
+    const suspectPrefix = suspectName.split(' ')[0].toLowerCase();
+
+    // Define state mappings based on suspect
+    let primaryStates: Record<string, string>;
+    let fallbackStates: Record<string, string>;
+    let defaultState: string;
+
+    if (suspectPrefix === 'harper') {
+      primaryStates = {
+        'calm': 'Harper_Calm.webp',
+        'nervous': 'Harper_nervous.webp',
+        'defensive': 'Harper_defensive.webp',
+        'angry': 'Harper_Angry.webp',
+        'breaking': 'Harper_breaking.webp',
+        'surprised': 'Harper_surprised.webp',
+        'agreeing': 'Harper_Agreeing.webp',
+        'lookingdown': 'Harper_lookingDown.webp'
+      };
+      fallbackStates = {
+        'confused': 'Harper_surprised.webp',
+        'worried': 'Harper_nervous.webp',
+        'panicked': 'Harper_breaking.webp',
+        'cooperative': 'Harper_Agreeing.webp',
+        'hostile': 'Harper_Angry.webp',
+        'crying': 'Harper_breaking.webp',
+        'evasive': 'Harper_defensive.webp',
+        'shocked': 'Harper_surprised.webp',
+        'composed': 'Harper_Calm.webp'
+      };
+      defaultState = 'Harper_nervous.webp';
+    } else if (suspectPrefix === 'marcus') {
+      primaryStates = {
+        'neutral': 'marcus_neutral.png',
+        'nervous': 'marcus_nervous.png',
+        'defensive': 'marcus_defensive.png',
+        'bitter': 'marcus_bitter.png',
+        'angry': 'marcus_angry.png',
+        'controlled': 'marcus_controlled.png',
+        'resigned': 'marcus_resigned.png'
+      };
+      fallbackStates = {
+        'calm': 'marcus_controlled.png',
+        'exhausted': 'marcus_resigned.png',
+        'panicked': 'marcus_nervous.png',
+        'desperate': 'marcus_nervous.png',
+        'guilty': 'marcus_resigned.png',
+        'firm': 'marcus_controlled.png',
+        'tense': 'marcus_defensive.png',
+        'explosive': 'marcus_angry.png',
+        'defeated': 'marcus_resigned.png',
+        'breaking': 'marcus_nervous.png',
+        'honest': 'marcus_neutral.png',
+        'ashamed': 'marcus_resigned.png',
+        'thoughtful': 'marcus_neutral.png'
+      };
+      defaultState = 'marcus_defensive.png';
+    } else { // rowan
+      primaryStates = {
+        'calm': 'rowan_calm.png',
+        'neutral': 'rowan_neutral.png',
+        'cold': 'rowan_cold.png',
+        'calculating': 'rowan_calculating.png',
+        'controlled': 'rowan_controlled.png',
+        'sharp': 'rowan_sharp.png',
+        'tense': 'rowan_tense.png'
+      };
+      fallbackStates = {
+        'composed': 'rowan_calm.png',
+        'measured': 'rowan_controlled.png',
+        'analytical': 'rowan_calculating.png',
+        'careful': 'rowan_controlled.png',
+        'regretful': 'rowan_neutral.png',
+        'dismissive': 'rowan_cold.png',
+        'grave': 'rowan_tense.png',
+        'somber': 'rowan_neutral.png',
+        'honest': 'rowan_neutral.png',
+        'methodical': 'rowan_calculating.png',
+        'precise': 'rowan_controlled.png',
+        'cynical': 'rowan_cold.png',
+        'revealing': 'rowan_neutral.png',
+        'firm': 'rowan_sharp.png',
+        'serious': 'rowan_tense.png',
+        'defensive': 'rowan_tense.png',
+        'conflicted': 'rowan_tense.png',
+        'uncertain': 'rowan_neutral.png',
+        'offended': 'rowan_sharp.png',
+        'resigned': 'rowan_neutral.png',
+        'vulnerable': 'rowan_neutral.png',
+        'thoughtful': 'rowan_calm.png',
+        'weary': 'rowan_tense.png',
+        'exposed': 'rowan_tense.png',
+        'quiet': 'rowan_calm.png'
+      };
+      defaultState = 'rowan_calm.png';
+    }
+
+    // Try primary mapping first
+    if (primaryStates[normalizedState]) {
+      const basePath = import.meta.env.DEV ? '' : '.';
+      return `${basePath}/game/figure/${primaryStates[normalizedState]}`;
+    }
+
+    // Try fallback mapping
+    if (fallbackStates[normalizedState]) {
+      const basePath = import.meta.env.DEV ? '' : '.';
+      return `${basePath}/game/figure/${fallbackStates[normalizedState]}`;
+    }
+
+    // Default fallback
+    console.warn(`Unknown emotional state: "${state}" for ${suspectName}. Using default animation.`);
+    const basePath = import.meta.env.DEV ? '' : '.';
+    return `${basePath}/game/figure/${defaultState}`;
   };
 
   // Detective uses talking animation when asking, questioning when listening
   const getDetectiveAnimation = (): string => {
-    return loading ? '/game/figure/Detective_Questioning.gif' : '/game/figure/Detective_Talking.gif';
+    const basePath = import.meta.env.DEV ? '' : '.';
+    return loading
+      ? `${basePath}/game/figure/Detective_Questioning.gif`
+      : `${basePath}/game/figure/Detective_Talking.gif`;
   };
 
   // Main render with defensive checks
@@ -275,10 +396,10 @@ function LLMInterrogation(props: LLMInterrogationProps) {
             <div className={styles.LLM_Character_Label}>Detective</div>
           </div>
 
-          {/* Harper on right */}
+          {/* Suspect on right */}
           <div className={styles.LLM_Character_Right}>
             <img
-              src={getHarperAnimation(emotionalState)}
+              src={getSuspectAnimation(emotionalState)}
               alt={suspectName}
               className={styles.LLM_Character_Image}
             />
