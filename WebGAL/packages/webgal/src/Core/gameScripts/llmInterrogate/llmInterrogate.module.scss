@@ -8,7 +8,7 @@
   align-items: center;
   z-index: 13;
   background: rgba(0, 0, 0, 0.85);
-  padding: 2em;
+  padding: 1em;
   box-sizing: border-box;
 }
 
@@ -17,14 +17,14 @@
   max-width: 1200px;
   display: flex;
   flex-flow: column;
-  gap: 1.5em;
+  gap: 0.75em;
 }
 
 .LLM_Header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1em;
+  padding: 0.75em 1em;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   border: 2px solid rgba(142, 53, 74, 0.5);
@@ -40,6 +40,55 @@
   display: flex;
   gap: 2em;
   align-items: center;
+}
+
+// Character Animation Styles
+.LLM_Characters_Container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 1em 2em;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  min-height: 300px; // Reduced from 400px to save vertical space
+  gap: 2em;
+}
+
+.LLM_Character_Left,
+.LLM_Character_Right {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 0.5em;
+  flex: 1;
+  max-width: 400px;
+}
+
+.LLM_Character_Image {
+  max-height: 280px; // Reduced from 350px to save vertical space
+  max-width: 100%;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+  transition: opacity 0.5s ease-in-out, transform 0.3s ease;
+  filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.LLM_Character_Label {
+  font-size: 120%;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 0.5em 1em;
+  background: rgba(142, 53, 74, 0.6);
+  border-radius: 6px;
+  border: 2px solid rgba(142, 53, 74, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 .LLM_Stat {
@@ -164,39 +213,101 @@
   font-weight: 500;
 }
 
-.LLM_Suggestions_Container {
+// Compact Questions Section
+.LLM_Questions_Section {
   display: flex;
   flex-flow: column;
   gap: 0.75em;
 }
 
-.LLM_Suggestions_Title {
+.LLM_Questions_Header {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 0.5em;
+}
+
+.LLM_Questions_Title {
   font-size: 120%;
   color: rgba(255, 255, 255, 0.9);
   font-weight: bold;
-  margin-bottom: 0.5em;
   text-transform: uppercase;
   letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.LLM_Custom_Input_Form_Inline {
+  display: flex;
+  gap: 0.5em;
+  flex: 1;
+}
+
+.LLM_Custom_Input_Inline {
+  flex: 1;
+  padding: 0.6em 1em;
+  font-size: 100%;
+  border: 2px solid rgba(142, 53, 74, 0.5);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+
+  &:focus {
+    outline: none;
+    border-color: #8E354A;
+    background: rgba(255, 255, 255, 1);
+  }
+
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+    font-style: italic;
+  }
+}
+
+.LLM_Custom_Submit_Inline {
+  padding: 0.6em 1.5em;
+  font-size: 100%;
+  background: #8E354A;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+  white-space: nowrap;
+
+  &:hover {
+    background: #6d2838;
+  }
+
+  &:disabled {
+    background: rgba(142, 53, 74, 0.5);
+    cursor: not-allowed;
+  }
+}
+
+.LLM_Suggestions_Grid {
+  display: flex;
+  flex-flow: column;
+  gap: 0.75em;
 }
 
 .LLM_Suggestion_Button {
   font-family: "WebgalUI", serif;
   cursor: pointer;
   width: 100%;
-  padding: 1em 1.5em;
-  font-size: 130%;
+  padding: 0.6em 1em;
+  font-size: 110%;
   color: #8E354A;
   text-align: left;
   border-radius: 6px;
-  border: 3px solid rgba(142, 53, 74, 0.3);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(142, 53, 74, 0.3);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   background: rgba(255, 255, 255, 0.85);
   transition: all 0.3s ease;
 
   &:hover {
     background: rgba(255, 255, 255, 1);
-    box-shadow: 0 0 25px rgba(142, 53, 74, 0.5);
-    border: 3px solid #8E354A;
+    box-shadow: 0 0 20px rgba(142, 53, 74, 0.5);
+    border: 2px solid #8E354A;
     transform: translateX(5px);
   }
 

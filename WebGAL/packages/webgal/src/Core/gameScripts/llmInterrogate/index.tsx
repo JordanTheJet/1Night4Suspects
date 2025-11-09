@@ -214,6 +214,23 @@ function LLMInterrogation(props: LLMInterrogationProps) {
     );
   }
 
+  // Map emotional states to animation files
+  const getHarperAnimation = (state: typeof emotionalState): string => {
+    const animationMap = {
+      'calm': 'Harper_Calm.webp',
+      'nervous': 'Harper_nervous.webp',
+      'defensive': 'Harper_lookingDown.webp',
+      'angry': 'Harper_angry.webp',
+      'breaking': 'Harper_breaking.webp'
+    };
+    return `/game/figure/${animationMap[state]}`;
+  };
+
+  // Detective uses talking animation when asking, questioning when listening
+  const getDetectiveAnimation = (): string => {
+    return loading ? '/game/figure/Detective_Questioning.gif' : '/game/figure/Detective_Talking.gif';
+  };
+
   // Main render with defensive checks
   try {
     return (
@@ -246,6 +263,29 @@ function LLMInterrogation(props: LLMInterrogationProps) {
           </div>
         </div>
 
+        {/* Character Animations */}
+        <div className={styles.LLM_Characters_Container}>
+          {/* Detective on left */}
+          <div className={styles.LLM_Character_Left}>
+            <img
+              src={getDetectiveAnimation()}
+              alt="Detective"
+              className={styles.LLM_Character_Image}
+            />
+            <div className={styles.LLM_Character_Label}>Detective</div>
+          </div>
+
+          {/* Harper on right */}
+          <div className={styles.LLM_Character_Right}>
+            <img
+              src={getHarperAnimation(emotionalState)}
+              alt={suspectName}
+              className={styles.LLM_Character_Image}
+            />
+            <div className={styles.LLM_Character_Label}>{suspectName}</div>
+          </div>
+        </div>
+
         {/* Response Section */}
         <div className={styles.LLM_Response_Container}>
           {loading ? (
@@ -270,55 +310,46 @@ function LLMInterrogation(props: LLMInterrogationProps) {
           )}
         </div>
 
-        {/* Suggestions Section */}
-        {!loading && suggestions.length > 0 && (
-          <div className={styles.LLM_Suggestions_Container}>
-            <div className={styles.LLM_Suggestions_Title}>
-              Suggested Questions:
-            </div>
-            {suggestions.map((suggestion, index) => (
-              <button
-                key={index}
-                className={styles.LLM_Suggestion_Button}
-                onClick={() => handleSuggestionClick(suggestion)}
-                onMouseEnter={playSeEnter}
-              >
-                {suggestion}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Custom Input Section */}
+        {/* Questions Section - Compact Layout */}
         {!loading && (
-          <div className={styles.LLM_Custom_Input_Container}>
-            {!showCustomInput ? (
-              <div
-                className={styles.LLM_Custom_Input_Toggle}
-                onClick={() => setShowCustomInput(true)}
-                onMouseEnter={playSeEnter}
-              >
-                Ask something else...
-              </div>
-            ) : (
-              <form className={styles.LLM_Custom_Input_Form} onSubmit={handleCustomSubmit}>
+          <div className={styles.LLM_Questions_Section}>
+            {/* Header with inline custom input */}
+            <div className={styles.LLM_Questions_Header}>
+              <div className={styles.LLM_Questions_Title}>Questions:</div>
+              <form className={styles.LLM_Custom_Input_Form_Inline} onSubmit={handleCustomSubmit}>
                 <input
-                  className={styles.LLM_Custom_Input}
+                  className={styles.LLM_Custom_Input_Inline}
                   type="text"
-                  placeholder="Type your question..."
+                  placeholder="Enter your own question..."
                   value={customQuestion}
                   onChange={(e) => setCustomQuestion(e.target.value)}
-                  autoFocus
+                  onMouseEnter={playSeEnter}
                 />
                 <button
                   type="submit"
-                  className={styles.LLM_Custom_Submit}
+                  className={styles.LLM_Custom_Submit_Inline}
                   disabled={!customQuestion.trim()}
                   onMouseEnter={playSeEnter}
                 >
                   Ask
                 </button>
               </form>
+            </div>
+
+            {/* Suggested Questions - Show only first 2 */}
+            {suggestions.length > 0 && (
+              <div className={styles.LLM_Suggestions_Grid}>
+                {suggestions.slice(0, 2).map((suggestion, index) => (
+                  <button
+                    key={index}
+                    className={styles.LLM_Suggestion_Button}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    onMouseEnter={playSeEnter}
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
             )}
           </div>
         )}
