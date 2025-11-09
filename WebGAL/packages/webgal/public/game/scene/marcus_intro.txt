@@ -7,7 +7,7 @@ Detective:Tell me again. When did you last see Elias?;
 Marcus:Dinner. Around 9, maybe 9:30. Things got heated, I left the table. Went to my room.;
 Detective:What were you and Elias arguing about?;
 changeFigure:marcus_angry.png -next;
-Marcus:You want the short version or the therapy session? He stole my company. StreamMetrics. We built it together, and he sold it without telling me. Two point three million dollars. I got two hundred thousand after lawyers. You do the math.;
+Marcus:You want the short version or the therapy session? He stole my company. StreamMetrics. | We built it together, and he sold it without telling me. Two point three million dollars. | I got two hundred thousand after lawyers. You do the math.;
 Detective:That must have been difficult.;
 changeFigure:marcus_bitter.png -next;
 Marcus:Difficult? It destroyed my life. But that was three years ago. I came this weekend because... I don't know. Rowan said Elias wanted to apologize or something. Fat lot of good that did.;
