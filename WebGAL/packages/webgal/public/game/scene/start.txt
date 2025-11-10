@@ -1,3 +1,4 @@
+bgm:flashback.mp3 -volume=50;
 changeBg:title_screen.png -next;
 ONE NIGHT, FOUR FRIENDS | A reunion turned nightmare. | One missing. Three suspects. Until dawn.;
 ;

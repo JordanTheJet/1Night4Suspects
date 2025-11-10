@@ -1,3 +1,4 @@
+bgm:confession.mp3 -volume=50;
 changeBg:black.png -next;
 ;
 YOU ACCUSE MARCUS HALE OF MANSLAUGHTER;

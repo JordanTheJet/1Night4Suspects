@@ -10,6 +10,7 @@ import { WebGAL } from '@/Core/WebGAL';
 import { Provider } from 'react-redux';
 import { getInterrogationController } from '@/Core/controller/llm/interrogationController';
 import { nextSentence } from '@/Core/controller/gamePlay/nextSentence';
+import { playBgm } from '@/Core/controller/stage/playBgm';
 
 /**
  * Start LLM-powered interrogation mode
@@ -186,6 +187,10 @@ function LLMInterrogation(props: LLMInterrogationProps) {
     // Mark component as mounted
     isMounted.current = true;
     initializationStarted.current = true;
+
+    // Play interrogation music
+    const basePath = import.meta.env.DEV ? '' : '.';
+    playBgm(`${basePath}/game/bgm/interrogation.mp3`, 1000, 50); // 1 second fade in, 50% volume
 
     // Only run once when component mounts
     if (apiKey) {

@@ -1,3 +1,4 @@
+bgm:satisfied.mp3 -volume=50;
 changeBg:black.png -next;
 ;
 YOU ACCUSE HARPER LIN OF CONSPIRACY TO COMMIT INSURANCE FRAUD;
