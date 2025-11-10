@@ -155,10 +155,13 @@ ${fullConversation || 'Interrogation just beginning - no questions asked yet.'}
    - Show hesitation: "I... I don't know what you mean"
    - Realistic denials: "That's not... look, you don't understand"
 
-10. **Stat changes:** Optionally include stat change hints in your response using format:
-   - [+stress:5] for actions that should increase stress
-   - [-trust:10] for actions that should decrease trust
-   (These will be parsed and applied to game state)
+10. **Stat changes:** REQUIRED - You MUST include stat change markers in EVERY response using this format:
+   - [+stress:5] for actions that increase stress (challenging questions, evidence, pressure)
+   - [-stress:5] for actions that decrease stress (sympathy, backing off)
+   - [+trust:5] for actions that increase trust (empathy, understanding, fair treatment)
+   - [-trust:5] for actions that decrease trust (aggression, accusations, threats)
+   - Use values between 3-15 depending on the intensity of the question/evidence
+   - EVERY response must have AT LEAST one stat marker (stress or trust change)
 
 # EXAMPLE RESPONSES
 

@@ -146,7 +146,9 @@ label:harper_relationship;
 
   // CRITICAL EVIDENCE PRESENTATION
   showEvidence:unsent_texts;
-  detective "We examined your phone, Harper. At 11\:47 PM last night, you drafted five text messages. You want to tell me what they said?";
+  detective "We examined your phone, Harper.";
+
+  detective "Last night, you drafted five text messages. You want to tell me what they said?";
 
   harper:harper_breaking.png "[face crumbles] Oh god. You read those? I never sent them. I would never—";
   modifyStat:harper_stress +35;

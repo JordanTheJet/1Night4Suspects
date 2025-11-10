@@ -189,10 +189,13 @@ ${fullConversation || 'Interrogation just beginning - no questions asked yet.'}
    - Bitter about money: "While he bought a Tesla, I was eating ramen for dinner"
    - Show exhaustion: "I'm tired, okay? I've been tired for three years."
 
-10. **Stat changes:** Optionally include stat change hints in your response:
-   - [+stress:10] for actions that spike stress (evidence presented, accusations)
-   - [-trust:5] for actions that reduce trust (aggressive questioning)
-   - [+trust:10] for empathetic approaches
+10. **Stat changes:** REQUIRED - You MUST include stat change markers in EVERY response using this format:
+   - [+stress:5] for actions that increase stress (challenging questions, evidence, pressure)
+   - [-stress:5] for actions that decrease stress (sympathy, backing off)
+   - [+trust:5] for actions that increase trust (empathy, understanding, fair treatment)
+   - [-trust:5] for actions that decrease trust (aggression, accusations, threats)
+   - Use values between 3-15 depending on the intensity of the question/evidence
+   - EVERY response must have AT LEAST one stat marker (stress or trust change)
 
 # EXAMPLE RESPONSES
 

@@ -1,5 +1,5 @@
 import { ClaudeClient, ClaudeMessage, getClaudeClient } from './claudeClient';
-import { HarperInterrogationState, getHarperState, resetHarperState } from './interrogationState';
+import { HarperInterrogationState, getSuspectState, resetSuspectState, SuspectId } from './interrogationState';
 import { buildHarperSystemPrompt } from './harperPrompt';
 import { buildMarcusSystemPrompt } from './marcusPrompt';
 import { buildRowanSystemPrompt } from './rowanPrompt';
@@ -11,14 +11,39 @@ type SuspectName = 'Harper Lin' | 'Marcus Hale' | 'Rowan Adler';
  */
 export class InterrogationController {
   private claudeClient: ClaudeClient;
-  private harperState: HarperInterrogationState;
+  private currentState: HarperInterrogationState;
   private currentSuspect: SuspectName;
 
   constructor(apiKey?: string, suspectName: SuspectName = 'Harper Lin') {
     this.claudeClient = getClaudeClient(apiKey);
-    this.harperState = getHarperState();
     this.currentSuspect = suspectName;
+    this.currentState = this.loadSuspectState(suspectName);
     console.log(`✅ Interrogation Controller initialized for ${suspectName}`);
+  }
+
+  /**
+   * Load the appropriate state for a suspect
+   */
+  private loadSuspectState(suspectName: SuspectName): HarperInterrogationState {
+    const suspectId = this.getSuspectId(suspectName);
+    const initialStats = this.getInitialStats(suspectName);
+    return getSuspectState(suspectId, initialStats);
+  }
+
+  /**
+   * Convert suspect name to suspect ID
+   */
+  private getSuspectId(suspectName: SuspectName): SuspectId {
+    switch (suspectName) {
+      case 'Harper Lin':
+        return 'harper';
+      case 'Marcus Hale':
+        return 'marcus';
+      case 'Rowan Adler':
+        return 'rowan';
+      default:
+        return 'harper';
+    }
   }
 
   /**
@@ -26,6 +51,7 @@ export class InterrogationController {
    */
   setSuspect(suspectName: SuspectName): void {
     this.currentSuspect = suspectName;
+    this.currentState = this.loadSuspectState(suspectName);
     console.log(`🔄 Switched to interrogating ${suspectName}`);
   }
 
@@ -77,15 +103,15 @@ export class InterrogationController {
   }> {
     try {
       // Add detective's question to conversation history
-      this.harperState.addTurn('detective', question, evidenceId);
+      this.currentState.addTurn('detective', question, evidenceId);
 
       // If evidence was presented, mark it
       if (evidenceId) {
-        this.harperState.presentEvidence(evidenceId);
+        this.currentState.presentEvidence(evidenceId);
       }
 
       // Get current state
-      const state = this.harperState.getState();
+      const state = this.currentState.getState();
 
       // Build system prompt with current context - includes instruction for suggestions
       const promptBuilder = this.getSystemPromptBuilder();
@@ -110,18 +136,18 @@ export class InterrogationController {
       const parsed = this.parseStructuredResponse(result.content);
 
       // Parse response for stat changes
-      this.harperState.parseStatChanges(parsed.response);
+      this.currentState.parseStatChanges(parsed.response);
 
       // Clean response (remove stat change markers)
       const cleanedResponse = parsed.response
         .replace(/\[([+-])(stress|trust):\d+\]/g, '')
         .trim();
 
-      // Add Harper's response to history
-      this.harperState.addTurn('suspect', cleanedResponse);
+      // Add suspect's response to history
+      this.currentState.addTurn('suspect', cleanedResponse);
 
       // Return response with suggestions and updated stats
-      const updatedState = this.harperState.getState();
+      const updatedState = this.currentState.getState();
       return {
         response: cleanedResponse,
         suggestions: parsed.suggestions,
@@ -185,7 +211,7 @@ export class InterrogationController {
    * Generate fallback suggestions based on current state
    */
   private getFallbackSuggestions(): string[] {
-    const state = this.harperState.getState();
+    const state = this.currentState.getState();
     const suggestions: string[] = [];
 
     // Generic interrogation tactics
@@ -201,9 +227,10 @@ export class InterrogationController {
       suggestions.push(`Present evidence: ${unpresentedEvidence[0].name}`);
     }
 
-    // Generic follow-ups
-    suggestions.push("Ask about her relationship with Elias");
-    suggestions.push("Question her alibi details");
+    // Generic follow-ups based on suspect
+    const suspectFirstName = this.currentSuspect.split(' ')[0];
+    suggestions.push(`Ask about their relationship with Elias`);
+    suggestions.push(`Question their alibi details`);
 
     return suggestions.slice(0, 3);
   }
@@ -221,7 +248,7 @@ export class InterrogationController {
     stats: { stress: number; trust: number; lies: number; contradictions: number };
     tokens: { input: number; output: number };
   }> {
-    const evidence = this.harperState.getState().allEvidence.find(e => e.id === evidenceId);
+    const evidence = this.currentState.getState().allEvidence.find(e => e.id === evidenceId);
     if (!evidence) {
       throw new Error(`Evidence not found: ${evidenceId}`);
     }
@@ -236,30 +263,31 @@ export class InterrogationController {
    * Get current interrogation state
    */
   getState() {
-    return this.harperState.getState();
+    return this.currentState.getState();
   }
 
   /**
-   * Reset interrogation (for demo restart)
+   * Reset interrogation for current suspect
    */
   reset() {
-    resetHarperState();
-    this.harperState = getHarperState();
-    console.log('✅ Interrogation reset');
+    const suspectId = this.getSuspectId(this.currentSuspect);
+    resetSuspectState(suspectId);
+    this.currentState = this.loadSuspectState(this.currentSuspect);
+    console.log(`✅ Interrogation reset for ${this.currentSuspect}`);
   }
 
   /**
    * Get conversation history formatted for display
    */
   getConversationHistory() {
-    return this.harperState.getState().conversationHistory;
+    return this.currentState.getState().conversationHistory;
   }
 
   /**
    * Update stats manually (for testing)
    */
   updateStats(changes: { stress?: number; trust?: number; lies?: number; contradictions?: number }) {
-    this.harperState.updateStats(changes);
+    this.currentState.updateStats(changes);
   }
 }
 

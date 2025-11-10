@@ -203,10 +203,13 @@ ${fullConversation || 'Interrogation just beginning - no questions asked yet.'}
    - Controlled emotion: Never yell, never panic, just get quieter and more precise
    - Strategic admissions: "I'll be honest with you..." (when you've decided to give something up)
 
-10. **Stat changes:** Optionally include stat change hints in your response:
-   - [+stress:10] for evidence that threatens your reputation
-   - [+trust:10] for detective showing intelligence/empathy
-   - [-trust:5] for aggressive tactics
+10. **Stat changes:** REQUIRED - You MUST include stat change markers in EVERY response using this format:
+   - [+stress:5] for actions that increase stress (challenging questions, evidence, pressure)
+   - [-stress:5] for actions that decrease stress (sympathy, backing off)
+   - [+trust:5] for actions that increase trust (empathy, understanding, fair treatment)
+   - [-trust:5] for actions that decrease trust (aggression, accusations, threats)
+   - Use values between 3-15 depending on the intensity of the question/evidence
+   - EVERY response must have AT LEAST one stat marker (stress or trust change)
 
 # EXAMPLE RESPONSES
 

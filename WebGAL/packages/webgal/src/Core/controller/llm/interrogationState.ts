@@ -25,8 +25,10 @@ export interface EvidenceItem {
   suspectReaction?: string;
 }
 
+export type SuspectId = 'harper' | 'marcus' | 'rowan';
+
 export interface InterrogationState {
-  suspectId: 'harper' | 'marcus' | 'rowan';
+  suspectId: SuspectId;
   stats: SuspectStats;
   conversationHistory: ConversationTurn[];
   evidencePresented: string[];
@@ -201,17 +203,27 @@ export class HarperInterrogationState {
    * Looks for patterns like [+stress:10] or [-trust:5]
    */
   parseStatChanges(response: string): void {
+    console.log('🔎 Parsing stat changes from response:', response.substring(0, 200));
+
     const stressMatch = response.match(/\[([+-])stress:(\d+)\]/);
     const trustMatch = response.match(/\[([+-])trust:(\d+)\]/);
 
+    console.log('🎯 Regex matches:', { stressMatch, trustMatch });
+
     if (stressMatch) {
       const change = parseInt(stressMatch[2]) * (stressMatch[1] === '+' ? 1 : -1);
+      console.log('📊 Applying stress change:', change);
       this.updateStats({ stress: change });
+    } else {
+      console.log('⚠️  No stress marker found in response');
     }
 
     if (trustMatch) {
       const change = parseInt(trustMatch[2]) * (trustMatch[1] === '+' ? 1 : -1);
+      console.log('📊 Applying trust change:', change);
       this.updateStats({ trust: change });
+    } else {
+      console.log('⚠️  No trust marker found in response');
     }
   }
 
@@ -241,26 +253,55 @@ export class HarperInterrogationState {
   }
 }
 
-// Singleton instance
-let harperStateInstance: HarperInterrogationState | null = null;
+// Store separate state instances for each suspect
+const suspectStates: Map<SuspectId, HarperInterrogationState> = new Map();
 
 /**
- * Get or create Harper state singleton
+ * Get or create state for a specific suspect
+ */
+export function getSuspectState(suspectId: SuspectId, initialStats?: { stress: number; trust: number }): HarperInterrogationState {
+  if (!suspectStates.has(suspectId)) {
+    const state = new HarperInterrogationState();
+    // Update the suspect ID and initial stats
+    const stateData = state.getState();
+    stateData.suspectId = suspectId;
+    if (initialStats) {
+      stateData.stats.stress = initialStats.stress;
+      stateData.stats.trust = initialStats.trust;
+    }
+    suspectStates.set(suspectId, state);
+  }
+  return suspectStates.get(suspectId)!;
+}
+
+/**
+ * Get or create Harper state (backward compatibility)
  */
 export function getHarperState(): HarperInterrogationState {
-  if (!harperStateInstance) {
-    harperStateInstance = new HarperInterrogationState();
-  }
-  return harperStateInstance;
+  return getSuspectState('harper', { stress: 35, trust: 25 });
 }
 
 /**
  * Reset Harper state (useful for demo restarts)
  */
 export function resetHarperState(): void {
-  if (harperStateInstance) {
-    harperStateInstance.reset();
-  } else {
-    harperStateInstance = new HarperInterrogationState();
+  const state = getSuspectState('harper');
+  state.reset();
+}
+
+/**
+ * Reset all suspect states (for new game)
+ */
+export function resetAllSuspectStates(): void {
+  suspectStates.clear();
+}
+
+/**
+ * Reset a specific suspect's state
+ */
+export function resetSuspectState(suspectId: SuspectId): void {
+  const state = suspectStates.get(suspectId);
+  if (state) {
+    state.reset();
   }
 }
