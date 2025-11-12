@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import { getInterrogationController } from '@/Core/controller/llm/interrogationController';
 import { nextSentence } from '@/Core/controller/gamePlay/nextSentence';
 import { playBgm } from '@/Core/controller/stage/playBgm';
+import { sceneParser } from '@/Core/parser/sceneParser';
 
 /**
  * Start LLM-powered interrogation mode
@@ -65,7 +66,7 @@ function LLMInterrogation(props: LLMInterrogationProps) {
     switch (suspectName) {
       case 'Marcus Hale':
         return { stress: 40, trust: 45, lies: 0, contradictions: 0 };
-      case 'Rowan Adler':
+      case 'Roman Adler':
         return { stress: 25, trust: 40, lies: 0, contradictions: 0 };
       case 'Harper Lin':
       default:
@@ -190,7 +191,7 @@ function LLMInterrogation(props: LLMInterrogationProps) {
 
     // Play interrogation music
     const basePath = import.meta.env.DEV ? '' : '.';
-    playBgm(`${basePath}/game/bgm/interrogation.mp3`, 1000, 50); // 1 second fade in, 50% volume
+    playBgm(`${basePath}/game/bgm/interrogation.mp3`, 1000, 100); // 1 second fade in, 50% volume
 
     // Only run once when component mounts
     if (apiKey) {
@@ -223,7 +224,7 @@ function LLMInterrogation(props: LLMInterrogationProps) {
       console.log('🎮 Controller created, sending initial question...');
 
       const result = await controller.askHarper('Begin the interrogation. Introduce yourself.');
-      console.log('✅ Got response from Claude:', result);
+      console.log('✅ Got response from AI:', result);
 
       // Check if component is still mounted before updating state
       if (!isMounted.current) {
@@ -255,7 +256,7 @@ function LLMInterrogation(props: LLMInterrogationProps) {
       if (!isMounted.current) return;
       setLoading(false);
       const errorMessage = err instanceof Error ? err.message : String(err);
-      setError(`Failed to initialize Claude AI: ${errorMessage}. Check console for details.`);
+      setError(`Failed to initialize AI: ${errorMessage}. Check console for details.`);
     }
   };
 
@@ -317,15 +318,35 @@ function LLMInterrogation(props: LLMInterrogationProps) {
     nextSentence();
   };
 
+  const handleSwitchToStoryMode = async () => {
+    playSeClick();
+    WebGAL.gameplay.performController.unmountPerform('llmInterrogate');
+
+    // Switch to story mode hub
+    WebGAL.sceneManager.sceneData.currentSentenceId = 0;
+    const sceneUrl = 'hub_story.txt';
+    const rawScene = await fetch(`game/scene/${sceneUrl}`);
+    const sceneText = await rawScene.text();
+    WebGAL.sceneManager.sceneData.currentScene = sceneParser(sceneText, sceneUrl, sceneText);
+    nextSentence();
+  };
+
   // Error state
   if (error) {
     return (
       <div className={styles.LLM_Main}>
         <div className={styles.LLM_Error}>
+          <div style={{ marginBottom: '1em', fontWeight: 'bold' }}>AI Mode Error</div>
           {error}
-          <div style={{ marginTop: '1em' }}>
+          <div style={{ marginTop: '0.5em', fontSize: '0.9em', opacity: 0.8 }}>
+            This could be due to network issues, insufficient API balance, or API service problems.
+          </div>
+          <div style={{ marginTop: '1.5em', display: 'flex', gap: '1em', justifyContent: 'center' }}>
+            <button className={styles.LLM_Action_Button} onClick={handleSwitchToStoryMode}>
+              Switch to Story Mode
+            </button>
             <button className={styles.LLM_Action_Button} onClick={handleEndInterrogation}>
-              Return to Game
+              Return to Hub
             </button>
           </div>
         </div>
@@ -338,7 +359,7 @@ function LLMInterrogation(props: LLMInterrogationProps) {
     // Normalize state to lowercase for comparison
     const normalizedState = state.toLowerCase().trim();
 
-    // Get suspect prefix (Harper, Marcus, Rowan)
+    // Get suspect prefix (Harper, Marcus, Roman)
     const suspectPrefix = suspectName.split(' ')[0].toLowerCase();
 
     // Define state mappings based on suspect
@@ -402,44 +423,44 @@ function LLMInterrogation(props: LLMInterrogationProps) {
         'composed': 'Marcus_Calm.webp'
       };
       defaultState = 'Marcus_defensive.webp';
-    } else { // rowan
+    } else { // roman
       primaryStates = {
-        'calm': 'Rowan_calm.webp',
-        'neutral': 'Rowan_neutral.webp',
-        'cold': 'rowan_cold.webp',
-        'calculating': 'Rowan_calculating.webp',
-        'controlled': 'Rowan_controlled.webp',
-        'sharp': 'Rowan_sharp.webp',
-        'tense': 'Rowan_tense.webp'
+        'calm': 'Roman_calm.webp',
+        'neutral': 'Roman_neutral.webp',
+        'cold': 'roman_cold.webp',
+        'calculating': 'Roman_calculating.webp',
+        'controlled': 'Roman_controlled.webp',
+        'sharp': 'Roman_sharp.webp',
+        'tense': 'Roman_tense.webp'
       };
       fallbackStates = {
-        'composed': 'Rowan_calm.webp',
-        'measured': 'Rowan_controlled.webp',
-        'analytical': 'Rowan_calculating.webp',
-        'careful': 'Rowan_controlled.webp',
-        'regretful': 'Rowan_neutral.webp',
-        'dismissive': 'rowan_cold.webp',
-        'grave': 'Rowan_tense.webp',
-        'somber': 'Rowan_neutral.webp',
-        'honest': 'Rowan_neutral.webp',
-        'methodical': 'Rowan_calculating.webp',
-        'precise': 'Rowan_controlled.webp',
-        'cynical': 'rowan_cold.webp',
-        'revealing': 'Rowan_neutral.webp',
-        'firm': 'Rowan_sharp.webp',
-        'serious': 'Rowan_tense.webp',
-        'defensive': 'Rowan_tense.webp',
-        'conflicted': 'Rowan_tense.webp',
-        'uncertain': 'Rowan_neutral.webp',
-        'offended': 'Rowan_sharp.webp',
-        'resigned': 'Rowan_neutral.webp',
-        'vulnerable': 'Rowan_neutral.webp',
-        'thoughtful': 'Rowan_calm.webp',
-        'weary': 'Rowan_tense.webp',
-        'exposed': 'Rowan_tense.webp',
-        'quiet': 'Rowan_calm.webp'
+        'composed': 'Roman_calm.webp',
+        'measured': 'Roman_controlled.webp',
+        'analytical': 'Roman_calculating.webp',
+        'careful': 'Roman_controlled.webp',
+        'regretful': 'Roman_neutral.webp',
+        'dismissive': 'roman_cold.webp',
+        'grave': 'Roman_tense.webp',
+        'somber': 'Roman_neutral.webp',
+        'honest': 'Roman_neutral.webp',
+        'methodical': 'Roman_calculating.webp',
+        'precise': 'Roman_controlled.webp',
+        'cynical': 'roman_cold.webp',
+        'revealing': 'Roman_neutral.webp',
+        'firm': 'Roman_sharp.webp',
+        'serious': 'Roman_tense.webp',
+        'defensive': 'Roman_tense.webp',
+        'conflicted': 'Roman_tense.webp',
+        'uncertain': 'Roman_neutral.webp',
+        'offended': 'Roman_sharp.webp',
+        'resigned': 'Roman_neutral.webp',
+        'vulnerable': 'Roman_neutral.webp',
+        'thoughtful': 'Roman_calm.webp',
+        'weary': 'Roman_tense.webp',
+        'exposed': 'Roman_tense.webp',
+        'quiet': 'Roman_calm.webp'
       };
-      defaultState = 'Rowan_calm.webp';
+      defaultState = 'Roman_calm.webp';
     }
 
     // Try primary mapping first

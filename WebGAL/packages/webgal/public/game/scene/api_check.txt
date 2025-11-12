@@ -1,0 +1,4 @@
+changeBg:police_station_hallway.png -next;
+Checking AI connection...;
+;
+llmApiCheck:validate;

@@ -25,7 +25,7 @@ export interface EvidenceItem {
   suspectReaction?: string;
 }
 
-export type SuspectId = 'harper' | 'marcus' | 'rowan';
+export type SuspectId = 'harper' | 'marcus' | 'roman';
 
 export interface InterrogationState {
   suspectId: SuspectId;

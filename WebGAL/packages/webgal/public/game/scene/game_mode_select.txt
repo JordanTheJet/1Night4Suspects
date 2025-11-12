@@ -9,6 +9,4 @@ One friend is missing. | You have until dawn to find the truth.;
 changeBg:police_station_hallway.png -next;
 SELECT YOUR GAME MODE;
 ;
-AI Mode features dynamic, unpredictable interrogations powered by advanced AI. | Story Mode offers a classic, carefully crafted narrative experience.;
-;
-choose:Start (AI Mode):api_check.txt|Start (Story Mode):start_story.txt;
+choose:Start (AI Mode) - Dynamic AI-powered interrogations:start_ai.txt|Start (Story Mode) - Classic story-driven experience:start_story.txt;

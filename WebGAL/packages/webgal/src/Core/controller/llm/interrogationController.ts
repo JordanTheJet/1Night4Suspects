@@ -2,9 +2,9 @@ import { ClaudeClient, ClaudeMessage, getClaudeClient } from './claudeClient';
 import { HarperInterrogationState, getSuspectState, resetSuspectState, SuspectId } from './interrogationState';
 import { buildHarperSystemPrompt } from './harperPrompt';
 import { buildMarcusSystemPrompt } from './marcusPrompt';
-import { buildRowanSystemPrompt } from './rowanPrompt';
+import { buildRomanSystemPrompt } from './romanPrompt';
 
-type SuspectName = 'Harper Lin' | 'Marcus Hale' | 'Rowan Adler';
+type SuspectName = 'Harper Lin' | 'Marcus Hale' | 'Roman Adler';
 
 /**
  * Main controller for LLM-powered interrogations
@@ -39,8 +39,8 @@ export class InterrogationController {
         return 'harper';
       case 'Marcus Hale':
         return 'marcus';
-      case 'Rowan Adler':
-        return 'rowan';
+      case 'Roman Adler':
+        return 'roman';
       default:
         return 'harper';
     }
@@ -64,8 +64,8 @@ export class InterrogationController {
         return buildHarperSystemPrompt;
       case 'Marcus Hale':
         return buildMarcusSystemPrompt;
-      case 'Rowan Adler':
-        return buildRowanSystemPrompt;
+      case 'Roman Adler':
+        return buildRomanSystemPrompt;
       default:
         return buildHarperSystemPrompt;
     }
@@ -80,7 +80,7 @@ export class InterrogationController {
         return { stress: 35, trust: 25 };
       case 'Marcus Hale':
         return { stress: 40, trust: 45 };
-      case 'Rowan Adler':
+      case 'Roman Adler':
         return { stress: 25, trust: 40 };
       default:
         return { stress: 35, trust: 25 };

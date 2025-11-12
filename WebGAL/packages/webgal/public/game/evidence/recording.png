@@ -1,0 +1,6 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#2a2a3e"/>
+  <rect x="40" y="40" width="120" height="100" fill="#444" stroke="#4ecdc4" stroke-width="2" rx="10"/>
+  <text x="100" y="180" font-family="Arial" font-size="14" fill="#fff" text-anchor="middle" text-transform="uppercase">recording</text>
+  <text x="100" y="95" font-family="Arial" font-size="24" fill="#4ecdc4" text-anchor="middle">?</text>
+</svg>

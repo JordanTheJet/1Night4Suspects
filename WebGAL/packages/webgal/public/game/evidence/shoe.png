@@ -1,0 +1,5 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#2a2a3e"/>
+  <path d="M50 120 Q80 100 120 105 L130 140 Q100 145 70 140 Z" fill="#8b4513" stroke="#4a2511" stroke-width="2"/>
+  <text x="100" y="180" font-family="Arial" font-size="16" fill="#fff" text-anchor="middle">SHOE</text>
+</svg>

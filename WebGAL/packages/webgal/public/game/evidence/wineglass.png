@@ -1,0 +1,6 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#2a2a3e"/>
+  <path d="M70 50 L80 100 L100 120 L100 140 L90 140 L90 145 L110 145 L110 140 L100 140 L100 120 L120 100 L130 50 Z" fill="none" stroke="#aaa" stroke-width="2"/>
+  <line x1="85" y1="75" x2="115" y2="85" stroke="#ff4444" stroke-width="2"/>
+  <text x="100" y="180" font-family="Arial" font-size="16" fill="#fff" text-anchor="middle">GLASS</text>
+</svg>

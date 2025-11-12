@@ -36,13 +36,13 @@ The "Harper Lin (AI Mode)" button appears in the suspect selection menu on first
 **File:** `/Users/jordantian/Documents/hacknation/webgal-game/WebGAL/packages/webgal/public/game/scene/start.txt` (Line 34)
 
 ```
-choose:Harper Lin (Static Mode):harper_intro.txt|Harper Lin (AI Mode):harper_llm_demo.txt|Marcus Hale:marcus_intro.txt|Rowan Adler:rowan_intro.txt;
+choose:Harper Lin (Static Mode):harper_intro.txt|Harper Lin (AI Mode):harper_llm_demo.txt|Marcus Hale:marcus_intro.txt|Roman Adler:roman_intro.txt;
 ```
 
 **File:** `/Users/jordantian/Documents/hacknation/webgal-game/WebGAL/packages/webgal/public/game/scene/hub.txt` (Line 7)
 
 ```
-choose:Interrogate Harper Lin:harper_intro.txt|Interrogate Marcus Hale:marcus_intro.txt|Interrogate Rowan Adler:rowan_intro.txt|Review Evidence Board:evidence_board.txt|Make Your Accusation:accusation_and_endings.txt;
+choose:Interrogate Harper Lin:harper_intro.txt|Interrogate Marcus Hale:marcus_intro.txt|Interrogate Roman Adler:roman_intro.txt|Review Evidence Board:evidence_board.txt|Make Your Accusation:accusation_and_endings.txt;
 ```
 
 **Issue:** The `hub.txt` scene (interrogation hub) uses a different choose menu that lacks the AI Mode option. When players return from interrogations, they go to `hub.txt` instead of `start.txt`, losing access to the AI mode.
@@ -88,7 +88,7 @@ The choose command creates a fresh menu each time based on the scene file conten
 1. Launch game
 2. Progress through intro to suspect selection menu
 3. Verify "Harper Lin (AI Mode)" button is present
-4. Click any suspect interrogation (Harper Static, Marcus, or Rowan)
+4. Click any suspect interrogation (Harper Static, Marcus, or Roman)
 5. Complete interrogation
 6. Click "Return to interrogation hub"
 7. Observe: Only "Interrogate Harper Lin" appears, no AI Mode option
@@ -97,7 +97,7 @@ The choose command creates a fresh menu each time based on the scene file conten
 Update `hub.txt` line 7 to include both Harper options:
 
 ```
-choose:Interrogate Harper Lin (Static):harper_intro.txt|Interrogate Harper Lin (AI Mode):harper_llm_demo.txt|Interrogate Marcus Hale:marcus_intro.txt|Interrogate Rowan Adler:rowan_intro.txt|Review Evidence Board:evidence_board.txt|Make Your Accusation:accusation_and_endings.txt;
+choose:Interrogate Harper Lin (Static):harper_intro.txt|Interrogate Harper Lin (AI Mode):harper_llm_demo.txt|Interrogate Marcus Hale:marcus_intro.txt|Interrogate Roman Adler:roman_intro.txt|Review Evidence Board:evidence_board.txt|Make Your Accusation:accusation_and_endings.txt;
 ```
 
 **Test Cases to Add After Fix:**
@@ -164,8 +164,8 @@ From grep results, all these lines have potential colon-splitting issues:
 evidence_board.txt:10:• Unsent Texts - Harper's phone, 11:47 PM, vengeful
 harper_intro.txt:8:Around... I don't know, maybe 9:30?
 harper_interrogation.txt:149:At 11:47 PM last night, you drafted five text messages
-rowan_intro.txt:7:The storm knocked out power around 10:45
-rowan_intro.txt:8:manually disabled at 10:03 PM
+roman_intro.txt:7:The storm knocked out power around 10:45
+roman_intro.txt:8:manually disabled at 10:03 PM
 marcus_intro.txt:7:Around 9, maybe 9:30
 start.txt:16:TIME - Currently 3.12 AM, Late October
 ```
@@ -860,7 +860,7 @@ Different interrogation scenes return to different locations, causing inconsiste
 
 - `harper_intro.txt` line 26: Returns to `hub.txt`
 - `marcus_intro.txt` line 26: Returns to `hub.txt`
-- `rowan_intro.txt` line 22: Returns to `hub.txt`
+- `roman_intro.txt` line 22: Returns to `hub.txt`
 - `harper_llm_demo.txt` line 26: Returns to `start.txt` (inconsistent!)
 
 **Expected:** All interrogations should return to the same hub
@@ -1548,7 +1548,7 @@ The "One Night, Four Friends" game demonstrates ambitious integration of LLM tec
 - `/Users/jordantian/Documents/hacknation/webgal-game/WebGAL/packages/webgal/public/game/scene/harper_intro.txt`
 - `/Users/jordantian/Documents/hacknation/webgal-game/WebGAL/packages/webgal/public/game/scene/harper_llm_demo.txt`
 - `/Users/jordantian/Documents/hacknation/webgal-game/WebGAL/packages/webgal/public/game/scene/marcus_intro.txt`
-- `/Users/jordantian/Documents/hacknation/webgal-game/WebGAL/packages/webgal/public/game/scene/rowan_intro.txt`
+- `/Users/jordantian/Documents/hacknation/webgal-game/WebGAL/packages/webgal/public/game/scene/roman_intro.txt`
 - `/Users/jordantian/Documents/hacknation/webgal-game/WebGAL/packages/webgal/public/game/scene/evidence_board.txt`
 
 ### Source Files (8):

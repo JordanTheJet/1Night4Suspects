@@ -19,4 +19,4 @@ KEY OBSERVATIONS;
 • Harper's unsent threats | • Roman hiding camera truth | • Elias planning to disappear?;
 ;
 What do you want to do?;
-choose:Continue Interrogations:hub.txt|Make Your Accusation:accusation_and_endings.txt;
+choose:Continue Interrogations:hub_story.txt|Make Your Accusation:accusation_and_endings_story.txt;

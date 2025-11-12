@@ -1,8 +1,8 @@
 bgm:walking.mp3 -volume=50;
 changeBg:police_station_hallway.png -next;
-THREE SUSPECTS IN CUSTODY | Harper Lin, age 31 - The Ex-Lover | Marcus Hale, age 33 - The Betrayed Friend | Rowan Adler, age 32 - The Host;
+THREE SUSPECTS IN CUSTODY | Harper Lin, age 31 - The Ex-Lover | Marcus Hale, age 33 - The Betrayed Friend | Roman Adler, age 32 - The Host;
 ;
 The clock is ticking. Dawn breaks at 7 AM.;
 ;
 What do you want to do next?;
-choose:Interrogate Harper Lin (Story Mode):harper_intro.txt|Interrogate Harper Lin (AI Mode):harper_llm_demo.txt|Interrogate Marcus Hale (Story Mode):marcus_intro.txt|Interrogate Marcus Hale (AI Mode):marcus_llm_demo.txt|Interrogate Rowan Adler (Story Mode):rowan_intro.txt|Interrogate Rowan Adler (AI Mode):rowan_llm_demo.txt|Review Evidence Board:evidence_board.txt|Make Your Accusation:accusation_and_endings.txt;
+choose:Interrogate Harper Lin (Story Mode):harper_intro.txt|Interrogate Harper Lin (AI Mode):harper_llm_demo.txt|Interrogate Marcus Hale (Story Mode):marcus_intro.txt|Interrogate Marcus Hale (AI Mode):marcus_llm_demo.txt|Interrogate Roman Adler (Story Mode):roman_intro.txt|Interrogate Roman Adler (AI Mode):roman_llm_demo.txt|Review Evidence Board:evidence_board.txt|Make Your Accusation:accusation_and_endings.txt;

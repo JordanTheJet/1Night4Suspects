@@ -20,4 +20,4 @@ FINANCIAL EVIDENCE;
 2 million insurance policy | All three are beneficiaries | Missing tranquilizers;
 ;
 Who is responsible for Elias Moore's disappearance?;
-choose:Accuse Harper Lin (Insurance Fraud):ending_harper.txt|Accuse Marcus Hale (Manslaughter):ending_marcus.txt|Accuse Roman Adler (Coverup):ending_roman.txt|Elias is Alive (Staged Disappearance):ending_elias_alive.txt|Insufficient Evidence (Cold Case):ending_cold_case.txt|Return to Interrogations:hub.txt;
+choose:Accuse Harper Lin (Insurance Fraud):ending_harper.txt|Accuse Marcus Hale (Manslaughter):ending_marcus.txt|Accuse Roman Adler (Coverup):ending_roman.txt|Elias is Alive (Staged Disappearance):ending_elias_alive.txt|Insufficient Evidence (Cold Case):ending_cold_case.txt|Return to Interrogations:hub_ai.txt;

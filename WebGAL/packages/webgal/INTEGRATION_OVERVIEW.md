@@ -112,7 +112,7 @@ Player starts game
     │   ├─ Harper Lin (Static Mode)    ◄── Original
     │   ├─ Harper Lin (AI Mode)        ◄── NEW!
     │   ├─ Marcus Hale
-    │   └─ Rowan Adler
+    │   └─ Roman Adler
     │
     ├─► Selects "Harper Lin (AI Mode)"
     │

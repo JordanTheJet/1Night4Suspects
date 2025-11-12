@@ -33,7 +33,7 @@ label:harper_neutral_path;
 label:harper_pressure_path;
   modifyStat:harper_stress +10;
   modifyStat:harper_trust -5;
-  harper:harper_defensive.png "[stiffens] That was three years ago. I'm over it. I only came this weekend because Rowan convinced me it would be... healing. Clearly, I was wrong.";
+  harper:harper_defensive.png "[stiffens] That was three years ago. I'm over it. I only came this weekend because Roman convinced me it would be... healing. Clearly, I was wrong.";
   modifyStat:harper_lies +1;
   narrator "[She's minimizing her feelings. The unsent texts suggest otherwise.]";
   jump:harper_continue_01;
@@ -48,7 +48,7 @@ label:harper_calm_path;
 label:harper_continue_01;
   detective "Walk me through your evening. Start from when you arrived.";
 
-  harper "We got there around 7. Rowan made dinner—something fancy, trying too hard. We drank wine, talked about old times. Then... Marcus brought up the company. Elias got defensive.";
+  harper "We got there around 7. Roman made dinner—something fancy, trying too hard. We drank wine, talked about old times. Then... Marcus brought up the company. Elias got defensive.";
   modifyStat:harper_stress +5;
 
   detective "The company Elias sold?";
@@ -90,7 +90,7 @@ label:harper_continue_02;
 
   detective "Someone? Can you describe them?";
 
-  harper:harper_anxious.png "It was dark. The storm... I couldn't see clearly. Just a silhouette. I called out but no one answered. Then I went to find Rowan.";
+  harper:harper_anxious.png "It was dark. The storm... I couldn't see clearly. Just a silhouette. I called out but no one answered. Then I went to find Roman.";
   modifyStat:harper_stress +10;
 
   // Evidence presentation option
@@ -218,7 +218,7 @@ label:harper_confession;
 
   detective "Who else knew?";
 
-  harper "Rowan, maybe? Elias said he was 'handling Rowan.' Marcus definitely didn't know—Elias was afraid he'd call the police. But now Elias is actually missing and I don't know if this is part of his plan or if something really happened to him.";
+  harper "Roman, maybe? Elias said he was 'handling Roman.' Marcus definitely didn't know—Elias was afraid he'd call the police. But now Elias is actually missing and I don't know if this is part of his plan or if something really happened to him.";
   modifyStat:harper_stress +45;
 
   unlockDialogue:harper_breakdown;
@@ -261,7 +261,7 @@ label:harper_breakdown;
 
   detective "Who else could have known about the plan?";
 
-  harper "Rowan knew something. Elias mentioned 'bringing Rowan on board' earlier that week. And Marcus... if Marcus found out, he'd be furious enough to do something. He already hated Elias for the company thing.";
+  harper "Roman knew something. Elias mentioned 'bringing Roman on board' earlier that week. And Marcus... if Marcus found out, he'd be furious enough to do something. He already hated Elias for the company thing.";
 
   setFlag:harper_full_confession;
   unlockEnding:insurance_fraud;

@@ -37,6 +37,7 @@ import { defineScripts, IConfigInterface, ScriptConfig, ScriptFunction, scriptRe
 import { applyStyle } from '@/Core/gameScripts/applyStyle';
 import { wait } from '@/Core/gameScripts/wait';
 import { llmInterrogate } from '@/Core/gameScripts/llmInterrogate';
+import { llmApiCheck } from '@/Core/gameScripts/llmApiCheck';
 
 export const SCRIPT_TAG_MAP = defineScripts({
   say: ScriptConfig(commandType.say, say),
@@ -74,6 +75,7 @@ export const SCRIPT_TAG_MAP = defineScripts({
   applyStyle: ScriptConfig(commandType.applyStyle, applyStyle, { next: true }),
   wait: ScriptConfig(commandType.wait, wait),
   llmInterrogate: ScriptConfig(commandType.llmInterrogate, llmInterrogate),
+  llmApiCheck: ScriptConfig(commandType.llmApiCheck, llmApiCheck, { next: true }),
 });
 
 export const SCRIPT_CONFIG: IConfigInterface[] = Object.values(SCRIPT_TAG_MAP);

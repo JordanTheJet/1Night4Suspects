@@ -17,6 +17,6 @@ label:interrogation_hub;
   menu:
     "Interrogate Harper Lin (The Ex-Lover)" -> harper_intro
     "Interrogate Marcus Hale (The Betrayed Friend)" -> marcus_intro
-    "Interrogate Rowan Adler (The Host)" -> rowan_intro
+    "Interrogate Roman Adler (The Host)" -> roman_intro
     "Review Evidence Board" -> evidence_board
     "Make Your Accusation" -> accusation_scene

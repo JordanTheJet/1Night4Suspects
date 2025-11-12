@@ -1,13 +1,13 @@
 ; ====================================
 ; Marcus Hale - AI-Powered Interrogation
 ; ====================================
-; This is a special interrogation mode powered by Claude AI
+; This is a special interrogation mode powered by AI
 ; The suspect will respond dynamically to your questions
 ; Smart suggestions will guide your investigation
 
 changeBg:interrogation_room.png -next;
 EXPERIMENTAL: AI-POWERED INTERROGATION MODE;
-This interrogation uses Claude AI to generate realistic responses.;
+This interrogation uses advanced AI to generate realistic responses.;
 Marcus will react naturally to your questions with anger, defensiveness, and potential breakdowns.;
 The AI will suggest strategic follow-up questions.;
 You can also type custom questions at any time.;
@@ -26,4 +26,4 @@ The interrogation data has been recorded.;
 ;
 What do you want to do next?;
 ;
-choose:Return to Interrogation Hub:hub.txt|Review Evidence Board:evidence_board.txt|Make Your Accusation:accusation_and_endings.txt;
+choose:Return to Interrogation Hub:hub_ai.txt|Review Evidence Board:evidence_board_ai.txt|Make Your Accusation:accusation_and_endings_ai.txt;

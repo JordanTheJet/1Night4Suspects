@@ -35,7 +35,7 @@ start:
   narrator "SUSPECTS:";
   narrator "• Harper Lin (31) - The Ex-Lover";
   narrator "• Marcus Hale (33) - The Betrayed Friend";
-  narrator "• Rowan Adler (32) - The Host";
+  narrator "• Roman Adler (32) - The Host";
 
   narrator "The clock is ticking. Dawn breaks at 7\:00 AM.";
   narrator "Choose your interrogations wisely.";

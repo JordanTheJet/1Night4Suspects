@@ -25,7 +25,7 @@ label:marcus_intro;
 label:marcus_sympathetic_path;
   modifyStat:marcus_trust +10;
   modifyStat:marcus_stress -5;
-  marcus:marcus_tired.png "[exhales] Thanks. Okay. We all got to the lake house around 7 PM. Rowan made dinner. Everything was... tense but civil. Then it fell apart.";
+  marcus:marcus_tired.png "[exhales] Thanks. Okay. We all got to the lake house around 7 PM. Roman made dinner. Everything was... tense but civil. Then it fell apart.";
   modifyStat:marcus_trust +8;
   jump:marcus_continue_01;
 
@@ -53,7 +53,7 @@ label:marcus_direct_path;
 label:marcus_continue_01;
   detective "Tell me about the argument at dinner. What specifically triggered it?";
 
-  marcus:marcus_bitter.png "It was stupid. Rowan asked about our old startup days. Trying to be nostalgic. I made a comment about 'creative accounting,' and Elias knew what I meant. It escalated from there.";
+  marcus:marcus_bitter.png "It was stupid. Roman asked about our old startup days. Trying to be nostalgic. I made a comment about 'creative accounting,' and Elias knew what I meant. It escalated from there.";
   modifyStat:marcus_stress +12;
 
   detective "How did Elias respond?";
@@ -331,7 +331,7 @@ label:marcus_financial_motive;
 
   detective "I want to understand why you've spent two years rebuilding your life, only to show up at a reunion with the man who destroyed it.";
 
-  marcus:marcus_defeated.png "[long silence] I thought I could handle it. Rowan convinced me it would be... closure. That we could all move past what happened. I was an idiot to believe that.";
+  marcus:marcus_defeated.png "[long silence] I thought I could handle it. Roman convinced me it would be... closure. That we could all move past what happened. I was an idiot to believe that.";
   modifyStat:marcus_stress +20;
 
   showEvidence:business_documents;
@@ -398,7 +398,7 @@ label:marcus_betrayal_story;
 
   menu:
     "So you decided to end it. One way or another." -> marcus_final_leading
-    "Did someone help you? Harper? Rowan?" -> marcus_final_investigative
+    "Did someone help you? Harper? Roman?" -> marcus_final_investigative
     "What happened at the overlook after you saw the other car?" -> marcus_final_direct
 
 label:marcus_final_leading;
@@ -411,7 +411,7 @@ label:marcus_final_leading;
 label:marcus_final_investigative;
   modifyStat:marcus_stress +30;
   modifyStat:marcus_trust +5;
-  marcus:marcus_confused.png "What? No! Harper barely spoke to me all weekend. Rowan was... I don't know, Rowan was playing host, trying to keep everything civilized. This was all between me and Elias.";
+  marcus:marcus_confused.png "What? No! Harper barely spoke to me all weekend. Roman was... I don't know, Roman was playing host, trying to keep everything civilized. This was all between me and Elias.";
   modifyStat:marcus_stress +30;
   jump:marcus_final_statement;
 
@@ -435,7 +435,7 @@ label:marcus_final_statement;
 
   detective "If you didn't, then who did?";
 
-  marcus:marcus_thoughtful.png "I don't know. Harper still had feelings for him—I could see it in how she looked at him. Rowan was nervous all weekend, like he was hiding something. Or maybe... maybe Elias really did just disappear. Fake his death. He'd do that.";
+  marcus:marcus_thoughtful.png "I don't know. Harper still had feelings for him—I could see it in how she looked at him. Roman was nervous all weekend, like he was hiding something. Or maybe... maybe Elias really did just disappear. Fake his death. He'd do that.";
   modifyStat:marcus_stress +25;
 
   marcus:marcus_exhausted.png "All I know is that Elias Moore destroyed my life once. I wasn't going to let him do it again. Even if that meant walking away and letting someone else... whatever. I just wanted to be free of him.";
