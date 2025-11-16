@@ -17,6 +17,11 @@ import { sceneParser } from '@/Core/parser/sceneParser';
  * Start LLM-powered interrogation mode
  * @param sentence
  */
+// Track if the component is currently active to prevent premature unmounting
+let isLLMInterrogationActive = false;
+// Shared ref to track mounting state - accessed by stopFunction before React cleanup
+let sharedIsMountedRef: { current: boolean } | null = null;
+
 export const llmInterrogate = (sentence: ISentence): IPerform => {
   console.log('🎮 llmInterrogate command called!');
   const suspectName = sentence.content.toString().trim() || 'Harper Lin';
@@ -29,19 +34,51 @@ export const llmInterrogate = (sentence: ISentence): IPerform => {
   const container = document.getElementById('chooseContainer');
   console.log('📦 Container found:', !!container);
 
-  ReactDOM.render(
-    <Provider store={webgalStore}>
-      <LLMInterrogation suspectName={suspectName} apiKey={apiKey} />
-    </Provider>,
-    container,
-  );
+  if (container) {
+    isLLMInterrogationActive = true;
+    ReactDOM.render(
+      <Provider store={webgalStore}>
+        <LLMInterrogation suspectName={suspectName} apiKey={apiKey} />
+      </Provider>,
+      container,
+    );
+  }
 
   return {
     performName: 'llmInterrogate',
     duration: 1000 * 60 * 60 * 24, // Long duration
     isHoldOn: false,
     stopFunction: () => {
-      ReactDOM.render(<div />, document.getElementById('chooseContainer'));
+      console.log('🛑 Stop function called - unmounting LLM interrogation');
+      if (!isLLMInterrogationActive) {
+        console.log('⚠️ Component already unmounted, skipping cleanup');
+        return;
+      }
+      isLLMInterrogationActive = false;
+
+      // CRITICAL: Set isMounted to false IMMEDIATELY to prevent race condition
+      // This must happen before React's cleanup to stop any in-flight API callbacks
+      if (sharedIsMountedRef) {
+        sharedIsMountedRef.current = false;
+        console.log('✅ Set sharedIsMountedRef to false - blocking any pending state updates');
+      }
+
+      // Defensive cleanup: Use setTimeout to ensure React finishes current render cycle
+      const container = document.getElementById('chooseContainer');
+      if (container) {
+        // Use requestAnimationFrame to defer cleanup until after paint
+        requestAnimationFrame(() => {
+          try {
+            ReactDOM.render(<div />, container);
+          } catch (err) {
+            console.warn('⚠️ Cleanup warning (safe to ignore):', err);
+            // Fallback: directly clear innerHTML if React unmount fails
+            if (container) {
+              container.innerHTML = '';
+            }
+          }
+        });
+      }
     },
     blockingNext: () => true,
     blockingAuto: () => true,
@@ -59,6 +96,7 @@ function LLMInterrogation(props: LLMInterrogationProps) {
   const [loading, setLoading] = useState(true); // Start with loading true
   const [error, setError] = useState<string | null>(null);
   const [response, setResponse] = useState<string>(`Waiting for ${suspectName} to enter...`);
+  const [currentQuestion, setCurrentQuestion] = useState<string>(''); // Track detective's current question
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [emotionalState, setEmotionalState] = useState<string>('nervous');
   // Set initial stats based on suspect
@@ -94,8 +132,16 @@ function LLMInterrogation(props: LLMInterrogationProps) {
       audioContext.current = new (window as any).AudioContext();
     }
     return () => {
+      // Defer audio context cleanup to avoid conflicts with React unmounting
       if (audioContext.current) {
-        audioContext.current.close();
+        const ctx = audioContext.current;
+        setTimeout(() => {
+          try {
+            ctx.close();
+          } catch (err) {
+            console.warn('AudioContext cleanup warning:', err);
+          }
+        }, 0);
       }
     };
   }, []);
@@ -184,6 +230,14 @@ function LLMInterrogation(props: LLMInterrogationProps) {
   const initializationStarted = React.useRef(false);
   const isMounted = React.useRef(true);
 
+  // Connect to shared ref so stopFunction can access it
+  React.useEffect(() => {
+    sharedIsMountedRef = isMounted;
+    return () => {
+      sharedIsMountedRef = null;
+    };
+  }, []);
+
   useEffect(() => {
     // Mark component as mounted
     isMounted.current = true;
@@ -238,7 +292,10 @@ function LLMInterrogation(props: LLMInterrogationProps) {
       console.log('😐 Emotional state:', result.emotionalState);
       console.log('📊 Stats:', result.stats);
 
-      setResponse(result.response);
+      // Clean response text - remove bracketed emotional state tags like [Defensive], [Nervous], etc.
+      const cleanedResponse = result.response ? result.response.replace(/^\s*\[.*?\]\s*/, '').trim() : '';
+
+      setResponse(cleanedResponse);
       setSuggestions(result.suggestions);
       setEmotionalState(result.emotionalState);
       setStats(result.stats);
@@ -261,11 +318,21 @@ function LLMInterrogation(props: LLMInterrogationProps) {
   };
 
   const handleAskQuestion = async (question: string) => {
+    console.log('📤 Asking question:', question);
+
     if (!apiKey) {
       setError('API Key not configured');
       return;
     }
 
+    // Double-check component is still active before proceeding
+    if (!isMounted.current || !isLLMInterrogationActive) {
+      console.warn('⚠️ Component unmounted or inactive, canceling question');
+      return;
+    }
+
+    // Save the detective's question to display while loading
+    setCurrentQuestion(question);
     setLoading(true);
     setError(null);
     setCustomQuestion('');
@@ -281,26 +348,40 @@ function LLMInterrogation(props: LLMInterrogationProps) {
       console.log('  Stats from LLM:', result.stats);
       console.log('  Suggestions:', result.suggestions);
 
-      // Check if component is still mounted before updating state
-      if (!isMounted.current) return;
+      // Check if component is still mounted AND active before updating state
+      if (!isMounted.current || !isLLMInterrogationActive) {
+        console.warn('⚠️ Component unmounted during API call, skipping state update');
+        return;
+      }
 
-      setResponse(result.response);
+      // Clean response text - remove bracketed emotional state tags like [Defensive], [Nervous], etc.
+      const cleanedResponse = result.response ? result.response.replace(/^\s*\[.*?\]\s*/, '').trim() : '';
+
+      setResponse(cleanedResponse);
       setSuggestions(result.suggestions);
       setEmotionalState(result.emotionalState);
       setStats(result.stats);
     } catch (err) {
       console.error('Failed to ask question:', err);
-      if (!isMounted.current) return;
+      if (!isMounted.current || !isLLMInterrogationActive) return;
       setError(`Failed to get response: ${err instanceof Error ? err.message : 'Unknown error'}`);
     } finally {
-      if (isMounted.current) {
+      if (isMounted.current && isLLMInterrogationActive) {
         setLoading(false);
       }
     }
   };
 
   const handleSuggestionClick = (suggestion: string) => {
+    console.log('🖱️ Suggestion clicked:', suggestion);
     playSeClick();
+
+    // Prevent any potential unmounting by ensuring the component stays active
+    if (!isLLMInterrogationActive) {
+      console.error('❌ Component not active, cannot ask question');
+      return;
+    }
+
     handleAskQuestion(suggestion);
   };
 
@@ -313,13 +394,23 @@ function LLMInterrogation(props: LLMInterrogationProps) {
   };
 
   const handleEndInterrogation = () => {
+    console.log('🏁 Ending interrogation');
     playSeClick();
+
+    // Mark as inactive before unmounting
+    isLLMInterrogationActive = false;
+
     WebGAL.gameplay.performController.unmountPerform('llmInterrogate');
     nextSentence();
   };
 
   const handleSwitchToStoryMode = async () => {
+    console.log('📖 Switching to story mode');
     playSeClick();
+
+    // Mark as inactive before unmounting
+    isLLMInterrogationActive = false;
+
     WebGAL.gameplay.performController.unmountPerform('llmInterrogate');
 
     // Switch to story mode hub
@@ -535,7 +626,7 @@ function LLMInterrogation(props: LLMInterrogationProps) {
           </div>
         </div>
 
-        {/* Character Animations */}
+        {/* LANDSCAPE LAYOUT: Detective (left) - Text (middle) - Suspect (right) */}
         <div className={styles.LLM_Characters_Container}>
           {/* Detective on left */}
           <div className={styles.LLM_Character_Left}>
@@ -547,6 +638,42 @@ function LLMInterrogation(props: LLMInterrogationProps) {
             <div className={styles.LLM_Character_Label}>Detective</div>
           </div>
 
+          {/* Response Section - IN THE MIDDLE */}
+          <div className={styles.LLM_Response_Container}>
+            {loading && currentQuestion ? (
+              // Show detective's question while waiting for response
+              <>
+                <div className={styles.LLM_Response_Text}>
+                  {currentQuestion}
+                </div>
+                <div className={styles.LLM_Loading} style={{ marginTop: '1em', fontSize: '110%' }}>
+                  {suspectName} is thinking...
+                </div>
+              </>
+            ) : loading ? (
+              // Initial loading
+              <div className={styles.LLM_Loading}>
+                {suspectName} is thinking...
+              </div>
+            ) : (
+              // Show suspect's response
+              <>
+                <div className={`${styles.LLM_Emotional_State} ${styles[`LLM_State_${emotionalState}`]}`}>
+                  {emotionalState}
+                </div>
+                <div className={styles.LLM_Response_Text}>
+                  {response || 'No response yet...'}
+                </div>
+              </>
+            )}
+            {/* Debug info */}
+            {!loading && !response && (
+              <div style={{ color: 'red', marginTop: '1em', fontSize: '14px' }}>
+                DEBUG: Loading={String(loading)}, Response length={response?.length || 0}, IsInitialized={String(isInitialized)}
+              </div>
+            )}
+          </div>
+
           {/* Suspect on right */}
           <div className={styles.LLM_Character_Right}>
             <img
@@ -556,30 +683,6 @@ function LLMInterrogation(props: LLMInterrogationProps) {
             />
             <div className={styles.LLM_Character_Label}>{suspectName}</div>
           </div>
-        </div>
-
-        {/* Response Section */}
-        <div className={styles.LLM_Response_Container}>
-          {loading ? (
-            <div className={styles.LLM_Loading}>
-              {suspectName} is responding...
-            </div>
-          ) : (
-            <>
-              <div className={`${styles.LLM_Emotional_State} ${styles[`LLM_State_${emotionalState}`]}`}>
-                {emotionalState}
-              </div>
-              <div className={styles.LLM_Response_Text}>
-                {response || 'No response yet...'}
-              </div>
-            </>
-          )}
-          {/* Debug info */}
-          {!loading && !response && (
-            <div style={{ color: 'red', marginTop: '1em', fontSize: '14px' }}>
-              DEBUG: Loading={String(loading)}, Response length={response?.length || 0}, IsInitialized={String(isInitialized)}
-            </div>
-          )}
         </div>
 
         {/* Questions Section - Compact Layout */}
@@ -608,10 +711,10 @@ function LLMInterrogation(props: LLMInterrogationProps) {
               </form>
             </div>
 
-            {/* Suggested Questions - Show only first 2 */}
+            {/* Suggested Questions - Show first 3 */}
             {suggestions.length > 0 && (
               <div className={styles.LLM_Suggestions_Grid}>
-                {suggestions.slice(0, 2).map((suggestion, index) => (
+                {suggestions.slice(0, 3).map((suggestion, index) => (
                   <button
                     key={index}
                     className={styles.LLM_Suggestion_Button}

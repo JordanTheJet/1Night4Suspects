@@ -13,6 +13,9 @@ The AI will suggest strategic follow-up questions.;
 You can also type custom questions at any time.;
 Watch Roman's stress and trust levels - they affect his cooperation and willingness to reveal the truth.;
 Roman is extremely controlled and intelligent - breaking through his defenses requires skill.;
+;
+He takes his seat with precise movements and immediately checks his watch. Every five minutes, he'll check it again as if timing your incompetence.;
+;
 llmInterrogate:Roman Adler;
 
 ; After interrogation ends, return to hub

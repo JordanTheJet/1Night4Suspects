@@ -139,20 +139,44 @@ export async function addSpineFigureImpl(
 
         /**
          * 重设大小
+         * INTERROGATION MODE: Make left/right Spine figures larger (40% of screen width)
          */
         const originalWidth = figureSpine.width;
         const originalHeight = figureSpine.height;
-        const scaleX = this.stageWidth / originalWidth;
-        const scaleY = this.stageHeight / originalHeight;
-        const targetScale = Math.min(scaleX, scaleY);
+
+        // Different scaling for interrogation mode (left/right positions)
+        let targetScale: number;
+        let targetWidth: number;
+        let targetHeight: number;
+
+        if (presetPosition === 'left' || presetPosition === 'right') {
+          // INTERROGATION MODE: Scale to 40% of stage width
+          const desiredWidth = this.stageWidth * 0.4;
+          targetScale = desiredWidth / originalWidth;
+          targetWidth = desiredWidth;
+          targetHeight = originalHeight * targetScale;
+
+          // If height exceeds stage height, scale down to fit
+          if (targetHeight > this.stageHeight) {
+            targetScale = this.stageHeight / originalHeight;
+            targetWidth = originalWidth * targetScale;
+            targetHeight = this.stageHeight;
+          }
+        } else {
+          // CENTER POSITION: Use original logic (scale to fit)
+          const scaleX = this.stageWidth / originalWidth;
+          const scaleY = this.stageHeight / originalHeight;
+          targetScale = Math.min(scaleX, scaleY);
+          targetWidth = originalWidth * targetScale;
+          targetHeight = originalHeight * targetScale;
+        }
+
         const figureSprite = new PIXI.Sprite();
         figureSprite.addChild(figureSpine);
         figureSprite.scale.x = targetScale;
         figureSprite.scale.y = targetScale;
         figureSprite.anchor.set(0.5);
         figureSprite.position.y = this.stageHeight / 2;
-        const targetWidth = originalWidth * targetScale;
-        const targetHeight = originalHeight * targetScale;
         thisFigureContainer.setBaseY(this.stageHeight / 2);
         if (targetHeight < this.stageHeight) {
           thisFigureContainer.setBaseY(this.stageHeight / 2 + (this.stageHeight - targetHeight) / 2);

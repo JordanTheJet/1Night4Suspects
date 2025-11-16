@@ -103,15 +103,13 @@ export function getFraudSchemeDetails(): string {
 - He has no knowledge of the staged disappearance plan
 
 **THE UNKNOWN THIRD PARTY:**
-- Burner phone texts: "2 AM pickup at the overlook" from unknown number
-- Marcus saw: Mystery car arriving at overlook after midnight
-- Identity: Unknown (not Harper, not Marcus, not Roman)
-- Possible explanations:
-  - Someone helping Elias escape (accomplice)
-  - The gambling debt collectors finding Elias
-  - Another betrayed party seeking revenge
-  - Someone else Elias owed money to
-- This person/people represent wild card in the situation
+- Burner phone texts: "midnight pickup at the overlook" from unknown number
+- Marcus saw: Mystery car arriving at overlook at 12:15 AM (15 minutes late)
+- Identity: The mob/debt collectors finding Elias
+- This is who actually killed Elias - they came for him at the cliff
+- Marcus left just before they arrived (around 12:10-12:15 AM)
+- Elias was desperate and waiting for them, hoping to negotiate
+- They killed him instead
 
 **WHAT WENT WRONG:**
 - Harper never received "Crimson" confirmation code

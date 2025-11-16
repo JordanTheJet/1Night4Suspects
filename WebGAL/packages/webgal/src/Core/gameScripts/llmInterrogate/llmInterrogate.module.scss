@@ -13,11 +13,13 @@
 }
 
 .LLM_Container {
-  width: 90%;
-  max-width: 1200px;
+  width: 100%; // Full width - no blank spaces on sides
+  max-width: none; // Remove width limit
   display: flex;
   flex-flow: column;
   gap: 0.75em;
+  padding: 0 1em; // Small padding to prevent edge touching
+  box-sizing: border-box;
 }
 
 .LLM_Header {
@@ -42,33 +44,44 @@
   align-items: center;
 }
 
-// Character Animation Styles
+// LANDSCAPE LAYOUT: Portraits on sides, text in middle
 .LLM_Characters_Container {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: stretch;
   padding: 1em 2em;
   background: rgba(0, 0, 0, 0.3);
   border-radius: 8px;
-  min-height: 300px; // Reduced from 400px to save vertical space
   gap: 2em;
+  min-height: 500px;
 }
 
-.LLM_Character_Left,
+.LLM_Character_Left {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5em;
+  flex: 0 0 auto; // Don't grow, don't shrink
+  width: 20%; // Narrower portraits for wider text column
+  max-width: 350px; // Cap maximum width on very large screens
+}
+
 .LLM_Character_Right {
   display: flex;
   flex-flow: column;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.5em;
-  flex: 1;
-  max-width: 400px;
+  flex: 0 0 auto; // Don't grow, don't shrink
+  width: 20%; // Narrower portraits for wider text column
+  max-width: 350px; // Cap maximum width on very large screens
 }
 
 .LLM_Character_Image {
-  max-height: 280px; // Reduced from 350px to save vertical space
-  max-width: 100%;
-  height: auto;
-  width: auto;
+  height: 480px; // Force images to be 480px tall (scaled up from original size)
+  width: auto; // Maintain aspect ratio
+  max-width: 100%; // Don't overflow container
   object-fit: contain;
   transition: opacity 0.5s ease-in-out, transform 0.3s ease;
   filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
@@ -79,16 +92,17 @@
 }
 
 .LLM_Character_Label {
-  font-size: 120%;
+  font-size: 110%;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.9);
   text-transform: uppercase;
-  letter-spacing: 2px;
-  padding: 0.5em 1em;
+  letter-spacing: 1px;
+  padding: 0.4em 0.8em;
   background: rgba(142, 53, 74, 0.6);
   border-radius: 6px;
   border: 2px solid rgba(142, 53, 74, 0.8);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
 }
 
 .LLM_Stat {
@@ -214,12 +228,20 @@
   background: linear-gradient(90deg, #4ecdc4, #2196F3);
 }
 
+// Middle section for text - takes remaining ~60% of screen width
 .LLM_Response_Container {
+  flex: 1; // Grow to fill space between portraits (will be ~60% width)
   background: rgba(255, 255, 255, 0.95);
   border-radius: 8px;
-  padding: 2em;
+  padding: 2em 3em; // More horizontal padding for better readability
   border: 3px solid #8E354A;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  min-height: 400px;
+  overflow-y: auto;
+  margin: 0 1em; // Space between portraits and text
 }
 
 .LLM_Emotional_State {
@@ -260,6 +282,43 @@
   background: rgba(156, 39, 176, 0.2);
   color: #6A1B9A;
   border: 2px solid #6A1B9A;
+}
+
+// Roman's emotional states
+.LLM_State_neutral {
+  background: rgba(158, 158, 158, 0.2);
+  color: #616161;
+  border: 2px solid #616161;
+}
+
+.LLM_State_cold {
+  background: rgba(96, 125, 139, 0.2);
+  color: #455A64;
+  border: 2px solid #455A64;
+}
+
+.LLM_State_calculating {
+  background: rgba(63, 81, 181, 0.2);
+  color: #303F9F;
+  border: 2px solid #303F9F;
+}
+
+.LLM_State_controlled {
+  background: rgba(103, 58, 183, 0.2);
+  color: #512DA8;
+  border: 2px solid #512DA8;
+}
+
+.LLM_State_sharp {
+  background: rgba(233, 30, 99, 0.2);
+  color: #C2185B;
+  border: 2px solid #C2185B;
+}
+
+.LLM_State_tense {
+  background: rgba(255, 87, 34, 0.2);
+  color: #E64A19;
+  border: 2px solid #E64A19;
 }
 
 .LLM_Response_Text {

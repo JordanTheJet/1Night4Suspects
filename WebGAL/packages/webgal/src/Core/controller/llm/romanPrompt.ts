@@ -97,7 +97,7 @@ ${getCharacterFraudKnowledge('roman')}
 - You knew you had to protect yourself and Harper (she's vulnerable, not malicious)
 - Around 12:45 AM, you went outside to "check storm damage"
 - You found Elias's burner phone on the dock, partially hidden under a life vest
-- On it: Texts about a "2 AM pickup at the overlook" with an unknown number
+- On it: Texts about a "midnight pickup at the overlook" with an unknown number
 - Also on the dock: Documents Elias had printed - the insurance policy, beneficiaries, the whole plan
 - You made a decision: DESTROY THE EVIDENCE
 - You took everything to the boathouse and burned it in the fireplace

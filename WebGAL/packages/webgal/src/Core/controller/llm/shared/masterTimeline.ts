@@ -96,7 +96,7 @@ export function getMasterTimeline(): string {
 **12:45 AM - ROMAN'S EVIDENCE DISCOVERY**
 - Roman goes outside (monitoring situation)
 - Finds items on dock that Elias left behind:
-  - Burner phone with texts about "2 AM pickup at overlook"
+  - Burner phone with texts about "midnight pickup at overlook"
   - Insurance policy documents
   - Fraud scheme details
 - Roman realizes the full scope of what's happening

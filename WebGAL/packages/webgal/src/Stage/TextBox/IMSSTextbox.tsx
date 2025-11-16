@@ -5,6 +5,8 @@ import { ITextboxProps } from './types';
 import useApplyStyle from '@/hooks/useApplyStyle';
 import { css } from '@emotion/css';
 import { textSize } from '@/store/userDataInterface';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
 export default function IMSSTextbox(props: ITextboxProps) {
   const {
@@ -27,6 +29,10 @@ export default function IMSSTextbox(props: ITextboxProps) {
   } = props;
 
   const applyStyle = useApplyStyle('Stage/TextBox/textbox.scss');
+
+  // Detect interrogation mode: when both left and right figures are active
+  const stageState = useSelector((state: RootState) => state.stage);
+  const isInterrogationMode = stageState.figNameLeft !== '' && stageState.figNameRight !== '';
 
   useEffect(() => {
     function settleText() {
@@ -200,7 +206,11 @@ export default function IMSSTextbox(props: ITextboxProps) {
               ' ' +
               (miniAvatar === ''
                 ? applyStyle('TextBox_main_miniavatarOff', styles.TextBox_main_miniavatarOff)
-                : undefined)
+                : undefined) +
+              ' ' +
+              (isInterrogationMode
+                ? applyStyle('TextBox_main_interrogation', styles.TextBox_main_interrogation)
+                : '')
             }
             style={{
               opacity: `${textboxOpacity / 100}`,
@@ -213,7 +223,11 @@ export default function IMSSTextbox(props: ITextboxProps) {
               ' ' +
               (miniAvatar === ''
                 ? applyStyle('TextBox_main_miniavatarOff', styles.TextBox_main_miniavatarOff)
-                : undefined)
+                : undefined) +
+              ' ' +
+              (isInterrogationMode
+                ? applyStyle('TextBox_main_interrogation', styles.TextBox_main_interrogation)
+                : '')
             }
             style={{
               fontFamily: font,

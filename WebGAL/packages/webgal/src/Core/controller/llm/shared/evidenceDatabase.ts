@@ -60,7 +60,7 @@ export function getEvidenceDatabase(): string {
 - Description: Cheap prepaid flip phone
 - Owner: Elias Moore (used for fraud communications)
 - Found by: Roman Adler at dock, 12:45 AM
-- Contents: Text messages about "2 AM pickup at the overlook" from unknown number
+- Contents: Text messages about "midnight pickup at the overlook" from unknown number
 - Current location: Hidden by Roman behind loose boards in boathouse
 - Significance: Evidence of fraud plan, reveals unknown third party involvement
 - Truth: Real evidence Roman is concealing
@@ -124,7 +124,7 @@ export function getEvidenceItem(evidenceId: string): string {
 
     phone_recording: `Phone recording - Marcus's phone accidentally recorded 2 minutes of 11:03 PM dock confrontation with Elias. Contains sounds of arguing, physical struggle, and threats. Marcus unaware it exists.`,
 
-    burner_phone: `Burner phone - Prepaid phone owned by Elias, found by Roman at 12:45 AM on dock. Contains texts about "2 AM pickup at overlook" from unknown number. Currently hidden by Roman in boathouse.`,
+    burner_phone: `Burner phone - Prepaid phone owned by Elias, found by Roman at 12:45 AM on dock. Contains texts about "midnight pickup at overlook" from unknown number. Currently hidden by Roman in boathouse.`,
 
     insurance_documents: `Insurance documents - $2 million policy paperwork and fraud plan details found by Roman at dock, 12:45 AM. Destroyed by Roman in boathouse fireplace. Only ashes remain.`,
 

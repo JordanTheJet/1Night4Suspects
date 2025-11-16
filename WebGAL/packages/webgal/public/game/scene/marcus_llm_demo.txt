@@ -13,6 +13,9 @@ The AI will suggest strategic follow-up questions.;
 You can also type custom questions at any time.;
 Watch Marcus's stress and trust levels - they affect his cooperation and emotional state.;
 Marcus is volatile and bitter about the business betrayal - approach carefully.;
+;
+He sits down heavily, arms crossed. His knuckles are bruised. He doesn't try to hide them.;
+;
 llmInterrogate:Marcus Hale;
 
 ; After interrogation ends, return to hub

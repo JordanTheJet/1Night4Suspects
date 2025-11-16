@@ -578,19 +578,43 @@ export default class PixiStage {
         if (texture && this.getStageObjByUuid(figureUuid)) {
           /**
            * 重设大小
+           * INTERROGATION MODE: Make left/right figures larger (40% of screen width)
            */
           const originalWidth = texture.width;
           const originalHeight = texture.height;
-          const scaleX = this.stageWidth / originalWidth;
-          const scaleY = this.stageHeight / originalHeight;
-          const targetScale = Math.min(scaleX, scaleY);
+
+          // Different scaling for interrogation mode (left/right positions)
+          let targetScale: number;
+          let targetWidth: number;
+          let targetHeight: number;
+
+          if (presetPosition === 'left' || presetPosition === 'right') {
+            // INTERROGATION MODE: Scale to 40% of stage width
+            const desiredWidth = this.stageWidth * 0.4;
+            targetScale = desiredWidth / originalWidth;
+            targetWidth = desiredWidth;
+            targetHeight = originalHeight * targetScale;
+
+            // If height exceeds stage height, scale down to fit
+            if (targetHeight > this.stageHeight) {
+              targetScale = this.stageHeight / originalHeight;
+              targetWidth = originalWidth * targetScale;
+              targetHeight = this.stageHeight;
+            }
+          } else {
+            // CENTER POSITION: Use original logic (scale to fit)
+            const scaleX = this.stageWidth / originalWidth;
+            const scaleY = this.stageHeight / originalHeight;
+            targetScale = Math.min(scaleX, scaleY);
+            targetWidth = originalWidth * targetScale;
+            targetHeight = originalHeight * targetScale;
+          }
+
           const figureSprite = new PIXI.Sprite(texture);
           figureSprite.scale.x = targetScale;
           figureSprite.scale.y = targetScale;
           figureSprite.anchor.set(0.5);
           figureSprite.position.y = this.stageHeight / 2;
-          const targetWidth = originalWidth * targetScale;
-          const targetHeight = originalHeight * targetScale;
           thisFigureContainer.setBaseY(this.stageHeight / 2);
           if (targetHeight < this.stageHeight) {
             thisFigureContainer.setBaseY(this.stageHeight / 2 + (this.stageHeight - targetHeight) / 2);
@@ -690,11 +714,32 @@ export default class PixiStage {
             ]);
 
             models.forEach((model) => {
-              const scaleX = stageWidth / model.width;
-              const scaleY = stageHeight / model.height;
-              const targetScale = Math.min(scaleX, scaleY);
-              const targetWidth = model.width * targetScale;
-              const targetHeight = model.height * targetScale;
+              // INTERROGATION MODE: Make left/right Live2D figures larger (40% of screen width)
+              let targetScale: number;
+              let targetWidth: number;
+              let targetHeight: number;
+
+              if (pos === 'left' || pos === 'right') {
+                // INTERROGATION MODE: Scale to 40% of stage width
+                const desiredWidth = stageWidth * 0.4;
+                targetScale = desiredWidth / model.width;
+                targetWidth = desiredWidth;
+                targetHeight = model.height * targetScale;
+
+                // If height exceeds stage height, scale down to fit
+                if (targetHeight > stageHeight) {
+                  targetScale = stageHeight / model.height;
+                  targetWidth = model.width * targetScale;
+                  targetHeight = stageHeight;
+                }
+              } else {
+                // CENTER POSITION: Use original logic
+                const scaleX = stageWidth / model.width;
+                const scaleY = stageHeight / model.height;
+                targetScale = Math.min(scaleX, scaleY);
+                targetWidth = model.width * targetScale;
+                targetHeight = model.height * targetScale;
+              }
               model.scale.x = targetScale;
               model.scale.y = targetScale;
               model.anchor.set(0.5);

@@ -301,7 +301,7 @@ label:roman_protection_motive;
 
   showEvidence:hidden_burner_phone;
 
-  detective "A burner phone hidden behind loose boards in your boathouse. Elias's burner phone. With texts arranging a 2 AM pickup at the overlook. You want to explain how it got there?";
+  detective "A burner phone hidden behind loose boards in your boathouse. Elias's burner phone. With texts arranging a midnight pickup at the overlook. You want to explain how it got there?";
 
   roman:roman_quiet.png "[long silence] ...I found it.";
   modifyStat:roman_stress +40;
@@ -395,7 +395,7 @@ label:roman_final_accusatory;
 
 label:roman_final_investigative;
   modifyStat:roman_trust +30;
-  roman:roman_helpful.png "Besides us? Whoever was supposed to pick Elias up at 2 AM. That's the missing piece. Find them, and you'll know what really happened. Check his regular phone records—see who he was closest to outside our group.";
+  roman:roman_helpful.png "Besides us? Whoever was supposed to pick Elias up at midnight. That's the missing piece. Find them, and you'll know what really happened. Check his regular phone records—see who he was closest to outside our group.";
   modifyStat:roman_trust +35;
   jump:roman_final_statement;
 

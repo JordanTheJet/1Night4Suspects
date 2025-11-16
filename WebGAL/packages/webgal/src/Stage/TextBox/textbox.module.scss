@@ -38,11 +38,67 @@ $height: 330px;
   flex-flow: column;
   align-items: flex-start;
   letter-spacing: 0.2em;
-  transition: left 0.33s;
+  transition: left 0.33s, right 0.33s, width 0.33s, padding 0.33s;
 }
 
 .TextBox_main_miniavatarOff {
   left: 25px;
+}
+
+// INTERROGATION MODE: Centered dialogue box between characters
+.TextBox_main_interrogation {
+  left: 25%;
+  right: 25%;
+  width: auto;
+  max-width: 50%;
+  min-width: 40%;
+  padding: 2em 3em 2em 3em;
+  border-radius: 20px;
+  text-align: center;
+  align-items: center;
+  bottom: 15%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  // Center the text content
+  .text {
+    text-align: center;
+    width: 100%;
+  }
+
+  // Hide mini-avatar in interrogation mode
+  .miniAvatarContainer {
+    display: none;
+  }
+
+  // Reposition character name for interrogation mode
+  .TextBox_showName {
+    left: 50%;
+    transform: translateX(-50%);
+    top: -70px;
+  }
+}
+
+// Responsive adjustments for interrogation mode
+@media (max-width: 1024px) {
+  .TextBox_main_interrogation {
+    left: 20%;
+    right: 20%;
+    max-width: 60%;
+    padding: 1.5em 2.5em;
+    bottom: 12%;
+  }
+}
+
+@media (max-width: 768px) {
+  .TextBox_main_interrogation {
+    left: 15%;
+    right: 15%;
+    max-width: 70%;
+    min-width: 60%;
+    padding: 1.5em 2em;
+    bottom: 10%;
+    font-size: 90%;
+  }
 }
 
 .TextBox_Background {
