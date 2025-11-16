@@ -40,6 +40,7 @@ export enum commandType {
   applyStyle,
   wait,
   llmInterrogate, // LLM-powered interrogation
+  llmApiCheck, // LLM API connection check
 }
 
 /**
