@@ -108,10 +108,8 @@ export class HarperInterrogationState {
       evidencePresented: evidenceId
     });
 
-    // Keep only last 10 turns for context (to avoid token limit)
-    if (this.state.conversationHistory.length > 10) {
-      this.state.conversationHistory = this.state.conversationHistory.slice(-10);
-    }
+    // No history limit - keep all conversation for full context
+    // Claude's 200K token window can easily handle extended interrogations
   }
 
   /**
@@ -196,6 +194,44 @@ export class HarperInterrogationState {
   getStatsContext(): string {
     const { stress, trust, lies, contradictions } = this.state.stats;
     return `Stress: ${stress}/100, Trust: ${trust}/100, Lies told: ${lies}, Contradictions caught: ${contradictions}`;
+  }
+
+  /**
+   * Get conversation metrics for monitoring
+   */
+  getConversationMetrics(): {
+    totalTurns: number;
+    detectiveQuestions: number;
+    suspectResponses: number;
+    estimatedTokens: number;
+    contextUsagePercent: number;
+  } {
+    const detectiveQuestions = this.state.conversationHistory.filter(t => t.speaker === 'detective').length;
+    const suspectResponses = this.state.conversationHistory.filter(t => t.speaker === 'suspect').length;
+
+    // Rough token estimation: ~100 tokens per turn average
+    const historyTokens = this.state.conversationHistory.length * 100;
+    // Base system prompt (universal background + timeline + evidence + character prompt + instructions)
+    const systemPromptTokens = 6500;
+    const estimatedTokens = systemPromptTokens + historyTokens;
+
+    // Claude Haiku has 200K context window
+    const contextUsagePercent = (estimatedTokens / 200000) * 100;
+
+    return {
+      totalTurns: this.state.conversationHistory.length,
+      detectiveQuestions,
+      suspectResponses,
+      estimatedTokens,
+      contextUsagePercent
+    };
+  }
+
+  /**
+   * Get current stats (for external access)
+   */
+  getStats(): SuspectStats {
+    return { ...this.state.stats };
   }
 
   /**

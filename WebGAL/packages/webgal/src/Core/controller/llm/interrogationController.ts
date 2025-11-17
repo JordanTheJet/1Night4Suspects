@@ -113,6 +113,17 @@ export class InterrogationController {
       // Get current state
       const state = this.currentState.getState();
 
+      // Log conversation metrics
+      const metrics = this.currentState.getConversationMetrics();
+      console.log(`📊 [Interrogation Metrics] ${this.currentSuspect}:`, {
+        turns: metrics.totalTurns,
+        questions: metrics.detectiveQuestions,
+        responses: metrics.suspectResponses,
+        estimatedTokens: `${metrics.estimatedTokens.toLocaleString()} / 200,000 (${metrics.contextUsagePercent.toFixed(1)}%)`,
+        stress: state.stats.stress,
+        trust: state.stats.trust
+      });
+
       // Build system prompt with current context - includes instruction for suggestions
       const promptBuilder = this.getSystemPromptBuilder();
       const systemPrompt = promptBuilder(state, true); // true = include suggestions

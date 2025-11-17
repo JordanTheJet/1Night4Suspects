@@ -1,6 +1,6 @@
 import { ISentence } from '@/Core/controller/scene/sceneInterface';
 import { IPerform } from '@/Core/Modules/perform/performInterface';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import React, { useState, useEffect } from 'react';
 import styles from './llmInterrogate.module.scss';
 import { webgalStore } from '@/store/store';
@@ -21,6 +21,8 @@ import { sceneParser } from '@/Core/parser/sceneParser';
 let isLLMInterrogationActive = false;
 // Shared ref to track mounting state - accessed by stopFunction before React cleanup
 let sharedIsMountedRef: { current: boolean } | null = null;
+// Store the React 18 root instance
+let reactRoot: ReactDOM.Root | null = null;
 
 export const llmInterrogate = (sentence: ISentence): IPerform => {
   console.log('🎮 llmInterrogate command called!');
@@ -36,11 +38,17 @@ export const llmInterrogate = (sentence: ISentence): IPerform => {
 
   if (container) {
     isLLMInterrogationActive = true;
-    ReactDOM.render(
+
+    // Create React 18 root if it doesn't exist
+    if (!reactRoot) {
+      reactRoot = ReactDOM.createRoot(container);
+    }
+
+    // Render using React 18 API
+    reactRoot.render(
       <Provider store={webgalStore}>
         <LLMInterrogation suspectName={suspectName} apiKey={apiKey} />
-      </Provider>,
-      container,
+      </Provider>
     );
   }
 
@@ -63,21 +71,15 @@ export const llmInterrogate = (sentence: ISentence): IPerform => {
         console.log('✅ Set sharedIsMountedRef to false - blocking any pending state updates');
       }
 
-      // Defensive cleanup: Use setTimeout to ensure React finishes current render cycle
-      const container = document.getElementById('chooseContainer');
-      if (container) {
-        // Use requestAnimationFrame to defer cleanup until after paint
-        requestAnimationFrame(() => {
-          try {
-            ReactDOM.render(<div />, container);
-          } catch (err) {
-            console.warn('⚠️ Cleanup warning (safe to ignore):', err);
-            // Fallback: directly clear innerHTML if React unmount fails
-            if (container) {
-              container.innerHTML = '';
-            }
-          }
-        });
+      // React 18: Properly unmount using root.unmount()
+      if (reactRoot) {
+        try {
+          reactRoot.unmount();
+          reactRoot = null;
+          console.log('✅ React root unmounted successfully');
+        } catch (err) {
+          console.warn('⚠️ Cleanup warning (safe to ignore):', err);
+        }
       }
     },
     blockingNext: () => true,
