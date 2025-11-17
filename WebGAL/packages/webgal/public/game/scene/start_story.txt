@@ -38,4 +38,4 @@ Someone's lying. Maybe everyone.;
 ;
 STORY MODE | Experience a meticulously crafted noir narrative;
 ;
-choose:Interrogate Harper Lin:harper_intro.txt|Interrogate Marcus Hale:marcus_intro.txt|Interrogate Roman Adler:roman_intro.txt|Review Evidence Board:evidence_board_story.txt|Make Your Accusation:accusation_and_endings_story.txt;
+choose:Interrogate Harper Lin:harper_intro.txt|Interrogate Marcus Hale:marcus_intro.txt|Interrogate Roman Adler:roman_intro.txt|Make Your Accusation:accusation_and_endings_story.txt;

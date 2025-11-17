@@ -38,4 +38,4 @@ Someone's lying. Maybe everyone.;
 ;
 AI INTERROGATION MODE | Dynamic responses powered by advanced AI | Every question matters;
 ;
-choose:Interrogate Harper Lin:harper_llm_demo.txt|Interrogate Marcus Hale:marcus_llm_demo.txt|Interrogate Roman Adler:roman_llm_demo.txt|Review Evidence Board:evidence_board_ai.txt|Make Your Accusation:accusation_and_endings_ai.txt;
+choose:Interrogate Harper Lin:harper_llm_demo.txt|Interrogate Marcus Hale:marcus_llm_demo.txt|Interrogate Roman Adler:roman_llm_demo.txt|Make Your Accusation:accusation_and_endings_ai.txt;

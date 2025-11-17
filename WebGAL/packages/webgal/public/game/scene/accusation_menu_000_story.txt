@@ -1,0 +1,6 @@
+; No suspects interrogated yet
+; Only show Cold Case and Return options
+You haven't interrogated anyone yet.;
+You need to gather evidence before making an accusation.;
+;
+choose:Insufficient Evidence (Cold Case):ending_cold_case.txt|Return to Interrogations:hub_story.txt;

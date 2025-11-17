@@ -23,4 +23,5 @@ Marcus:I want a lawyer.;
 Detective:That's your right. We'll continue this later.;
 ;
 Marcus has become defensive. More evidence may be needed.;
+setVar:marcus_interrogated=true;
 choose:Return to interrogation hub:hub_story.txt;

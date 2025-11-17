@@ -1,0 +1,5 @@
+; All three suspects interrogated
+; Show: All options including "Accuse the Mob"
+Available accusation options:;
+;
+choose:Accuse Harper Lin:ending_harper.txt|Accuse Marcus Hale:ending_marcus.txt|Accuse Roman Adler:ending_roman.txt|Accuse the Mob:ending_mob.txt|Insufficient Evidence (Cold Case):ending_cold_case.txt|Return to Interrogations:hub_ai.txt;

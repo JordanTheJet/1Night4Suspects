@@ -1,0 +1,5 @@
+; Harper and Marcus interrogated
+; Show: Accuse Harper, Accuse Marcus, Cold Case, Return
+Available accusation options:;
+;
+choose:Accuse Harper Lin:ending_harper.txt|Accuse Marcus Hale:ending_marcus.txt|Insufficient Evidence (Cold Case):ending_cold_case.txt|Return to Interrogations:hub_ai.txt;

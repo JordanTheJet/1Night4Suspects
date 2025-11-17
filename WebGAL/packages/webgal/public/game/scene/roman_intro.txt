@@ -19,4 +19,5 @@ Detective:We'll be in touch, Mr. Adler.;
 Roman:I'll be here. I want this resolved as much as you do.;
 ;
 Roman is cooperating, but something feels rehearsed.;
+setVar:roman_interrogated=true;
 choose:Return to interrogation hub:hub_story.txt;

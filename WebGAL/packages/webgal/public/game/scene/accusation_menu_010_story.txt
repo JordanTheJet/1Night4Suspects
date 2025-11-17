@@ -1,0 +1,5 @@
+; Only Marcus interrogated
+; Show: Accuse Marcus, Cold Case, Return
+Available accusation options:;
+;
+choose:Accuse Marcus Hale (Manslaughter):ending_marcus.txt|Insufficient Evidence (Cold Case):ending_cold_case.txt|Return to Interrogations:hub_story.txt;

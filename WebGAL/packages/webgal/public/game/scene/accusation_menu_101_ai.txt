@@ -1,0 +1,5 @@
+; Harper and Roman interrogated
+; Show: Accuse Harper, Accuse Roman, Cold Case, Return
+Available accusation options:;
+;
+choose:Accuse Harper Lin:ending_harper.txt|Accuse Roman Adler:ending_roman.txt|Insufficient Evidence (Cold Case):ending_cold_case.txt|Return to Interrogations:hub_ai.txt;

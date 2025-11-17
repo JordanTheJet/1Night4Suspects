@@ -23,4 +23,5 @@ Harper:Can I go?;
 Detective:Not yet. Stay here.;
 ;
 You can now interrogate other suspects.;
+setVar:harper_interrogated=true;
 choose:Return to interrogation hub:hub_story.txt;
