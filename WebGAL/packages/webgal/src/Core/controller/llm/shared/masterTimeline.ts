@@ -108,7 +108,7 @@ export function getMasterTimeline(): string {
 - Hides burner phone behind loose boards in boathouse
 - Returns to house
 
-**2:15 AM - "DISCOVERY" OF DISAPPEARANCE**
+**1:15 AM - "DISCOVERY" OF DISAPPEARANCE**
 - Harper (who knows Elias is gone) pretends to discover he's missing
 - Harper bangs on doors, wakes everyone up
 - "Elias is gone! He's not in his room!"
@@ -116,15 +116,27 @@ export function getMasterTimeline(): string {
 - Find Elias's shoe on dock steps (planted by Harper)
 - Notice blood on dock railing (real evidence from Marcus fight)
 
-**2:30 AM - POLICE CALLED**
-- Roman calls police to report Elias missing
-- All three suspects give initial statements
-- Police arrive and begin investigation
+**1:25 AM - FIRST PATROL ARRIVES**
+- Fast rural response to potential homicide
+- Officers secure scene, begin preliminary investigation
+- Take initial statements from Harper, Marcus, Roman
+
+**1:30-2:30 AM - CRIME SCENE PROCESSING**
+- Crime scene technicians document evidence
+- Photograph dock, collect blood samples, photograph boot prints
+- Find Elias's BMW at cliff overlook (2 miles away)
+- All three suspects transported to police station
+
+**2:45 AM - SUSPECTS PROCESSED**
+- Harper Lin, Marcus Hale, Roman Adler placed in holding
+- Preliminary evidence sent to forensics lab for rush processing
 
 **3:12 AM - CURRENT TIME**
-- Detective begins formal interrogations
-- Three suspects in separate rooms
+- Detective Kyle Hyde arrives at station
+- Captain Frank Sullivan briefs Hyde on the case
+- Three suspects in separate rooms awaiting interrogation
 - Storm has not let up
+- Forensics results will arrive progressively throughout interrogations
 - Each suspect has secrets to hide`;
 }
 
