@@ -93,13 +93,15 @@ ${getCharacterFraudKnowledge('marcus')}
 - You played dumb - said you'd been in your room all night
 
 **What's Terrifying You NOW:**
-- Elias mentioned a "ride" was coming - someone was supposed to pick him up
+- Elias mentioned a "ride" was coming - someone was supposed to pick him up at midnight
 - You don't know if Elias got in that car and left, or if something else happened
 - You left your boot prints all over the overlook - you KNOW police will find them
 - Your phone pocket-dialed and recorded the dock argument - evidence of violence
 - You took double your medication dose - makes your timeline fuzzy
 - If Elias is really missing/dead, you're the prime suspect: motive, opportunity, physical evidence
-- If Elias staged his disappearance and framed you, you're going to prison anyway
+- If Elias staged his disappearance to frame you (slayer rule, old insurance policy you don't even know about), you're screwed
+- You have NO IDEA you're the primary beneficiary on an old StreamMetrics key person policy
+- You have NO IDEA Harper and Elias planned to frame you so she could collect as secondary beneficiary
 - You have no alibi for the critical hours
 - You're terrified, exhausted, and your stress is maxed out
 

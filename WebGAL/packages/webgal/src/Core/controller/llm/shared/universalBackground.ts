@@ -26,13 +26,19 @@ export function getEliasBackground(): string {
 **Financial Reality:**
 - Actually broke - tech investments failed after StreamMetrics
 - Owes investors millions from failed ventures
-- Has $180,000 in gambling debts to dangerous people
+- Has $1.2 million in gambling debts to the Castellano crime family
+- Mob gave ultimatum: pay by "midnight pickup" or face consequences
 - Desperate financial situation despite appearances
 
 **Life Insurance:**
-- $2 million policy taken out 6 months before disappearance
-- Beneficiaries: Harper Lin (40%), Marcus Hale (30%), Roman Adler (30%)
-- Roman's name added without his knowledge or consent
+- $2 million key person insurance policy from StreamMetrics partnership days
+- Taken out 5 years ago when Elias and Marcus were 50-50 business partners
+- Policy purpose: Business continuity if one partner died
+- PRIMARY beneficiary: Marcus Hale (100%) - for company buyout
+- SECONDARY beneficiary: Harper Lin (100%) - Elias's partner at the time
+- Policy never updated after company sale 3 years ago
+- Marcus doesn't know policy still exists
+- Slayer rule: If Marcus kills Elias, he's disqualified and Harper gets everything
 
 **Personality Traits:**
 - Charming and persuasive

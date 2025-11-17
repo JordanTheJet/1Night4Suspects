@@ -11,6 +11,14 @@ Marcus:You want the short version or the therapy session? He stole my company. S
 Detective:That must have been difficult.;
 changeFigure:marcus_bitter.png -next;
 Marcus:Difficult? It destroyed my life. But that was three years ago. I came this weekend because... I don't know. Roman said Elias wanted to apologize or something. Fat lot of good that did.;
+Detective:And you hadn't been in contact with Elias since the sale?;
+changeFigure:marcus_nervous.png -next;
+Marcus:[hesitates] ...Not until recently.;
+Detective:Recently? When?;
+Marcus:Look, it doesn't matter. He reached out a couple weeks ago. Wanted to "talk." I told him I'd be at the reunion. That's it.;
+Detective:What did he want to talk about?;
+changeFigure:marcus_defensive.png -next;
+Marcus:I said it doesn't matter. Can we move on?;
 Detective:You said you went to your room after the argument. Did you stay there?;
 Marcus:...Yes. I was tired. Emotionally drained. I just wanted to sleep and get out of there in the morning.;
 Detective:We found boot prints at the overlook. Size 11. Your size.;
