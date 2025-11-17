@@ -54,10 +54,22 @@ export function getMasterTimeline(): string {
 - Elias tells Marcus to "get lost before my ride arrives"
 - Marcus storms off back toward house
 
+**11:05 PM - MARCUS RETURNS TO HOUSE**
+- Marcus storms back inside, breathing heavily
+- Goes to his room, paces, tries to calm down
+- Takes second Lorazepam pill
+
+**11:05-11:15 PM - ELIAS WAITS AT DOCK**
+- Elias remains at dock alone, nursing his bleeding hand
+- Checks his burner phone for Harper's confirmation
+- Prepares for the final phase of the fraud scheme
+
 **11:15 PM - HARPER-ELIAS MEETING**
-- Harper meets Elias at dock as previously planned
+- Harper arrives at dock as previously planned
+- She immediately notices Elias's bleeding hand and asks what happened
+- Elias dismisses it: "Marcus got physical. Doesn't matter. Works for us."
 - They discuss final details of insurance fraud scheme
-- Harper sees Elias's bleeding hand (from earlier Marcus confrontation)
+- Harper is nervous about Marcus's involvement complicating things
 - Harper helps Elias stage disappearance scene:
   - Drops Elias's shoe on dock steps
   - Incorporates existing blood on railing into staging narrative

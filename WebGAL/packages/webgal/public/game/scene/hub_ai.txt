@@ -5,4 +5,4 @@ THREE SUSPECTS IN CUSTODY | Harper Lin, age 31 - The Ex-Lover | Marcus Hale, age
 The clock is ticking. Dawn breaks at 7 AM.;
 ;
 What do you want to do next?;
-choose:Interrogate Harper Lin:harper_llm_demo.txt|Interrogate Marcus Hale:marcus_llm_demo.txt|Interrogate Roman Adler:roman_llm_demo.txt|Consult Captain Sullivan:captain_consultation.txt|Make Your Accusation:accusation_and_endings_ai.txt;
+choose:Interrogate Harper Lin:harper_llm_demo.txt|Interrogate Marcus Hale:marcus_llm_demo.txt|Interrogate Roman Adler:roman_llm_demo.txt|Consult Captain Sullivan:captain_consultation_llm.txt|Make Your Accusation:accusation_and_endings_ai.txt;

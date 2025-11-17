@@ -116,6 +116,8 @@ function LLMInterrogation(props: LLMInterrogationProps) {
         return { stress: 40, trust: 45, lies: 0, contradictions: 0 };
       case 'Roman Adler':
         return { stress: 25, trust: 40, lies: 0, contradictions: 0 };
+      case 'Captain Sullivan':
+        return { stress: 20, trust: 80, lies: 0, contradictions: 0 };
       case 'Harper Lin':
       default:
         return { stress: 35, trust: 25, lies: 0, contradictions: 0 };
@@ -253,9 +255,10 @@ function LLMInterrogation(props: LLMInterrogationProps) {
     isMounted.current = true;
     initializationStarted.current = true;
 
-    // Play interrogation music
+    // Play appropriate music based on who we're talking to
     const basePath = import.meta.env.DEV ? '' : '.';
-    playBgm(`${basePath}/game/bgm/interrogation.mp3`, 1000, 100); // 1 second fade in, 50% volume
+    const bgmFile = suspectName === 'Captain Sullivan' ? 'suspicious.mp3' : 'interrogation.mp3';
+    playBgm(`${basePath}/game/bgm/${bgmFile}`, 1000, 100); // 1 second fade in, 100% volume
 
     // Only run once when component mounts
     if (apiKey) {
@@ -521,6 +524,36 @@ function LLMInterrogation(props: LLMInterrogationProps) {
         'composed': 'Marcus_Calm.webp'
       };
       defaultState = 'Marcus_defensive.webp';
+    } else if (suspectPrefix === 'captain') {
+      primaryStates = {
+        'serious': 'captain_serious.webp',
+        'thoughtful': 'captain_asking.webp',
+        'stern': 'captain_stern.webp',
+        'analytical': 'captain_serious.webp',
+        'encouraging': 'captain_jovial.webp',
+        'supportive': 'captain_jovial.webp',
+        'concerned': 'captain_disappointed.webp',
+        'skeptical': 'captain_disagree.webp',
+        'surprised': 'captain_surprised.webp'
+      };
+      fallbackStates = {
+        'firm': 'captain_stern.webp',
+        'gruff': 'captain_annoyed.webp',
+        'confident': 'captain_jovial.webp',
+        'patient': 'captain_serious.webp',
+        'direct': 'captain_stern.webp',
+        'knowing': 'captain_jovial.webp',
+        'weary': 'captain_disappointed.webp',
+        'protective': 'captain_serious.webp',
+        'intense': 'captain_stern.webp',
+        'focused': 'captain_serious.webp',
+        'cynical': 'captain_annoyed.webp',
+        'doubtful': 'captain_disagree.webp',
+        'frustrated': 'captain_angry.webp',
+        'shocked': 'captain_shocked.webp',
+        'somber': 'captain_sad.webp'
+      };
+      defaultState = 'captain_serious.webp';
     } else { // roman
       primaryStates = {
         'calm': 'Roman_calm.webp',

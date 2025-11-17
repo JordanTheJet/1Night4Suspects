@@ -1,0 +1,45 @@
+; ====================================
+; Captain Sullivan - AI Consultation Mode
+; ====================================
+; Get strategic guidance from your veteran mentor
+; Captain Sullivan provides investigation insights based on evidence
+; He teaches through questions and shares experience-based hunches
+
+changeBg:captain_office.png -next;
+EXPERIMENTAL MODE | AI-POWERED CONSULTATION;
+Captain Sullivan is available to provide guidance on your investigation.;
+He has reviewed the case file, forensics reports, and witness statements.;
+Ask him about suspects, evidence, strategy, or investigative approaches.;
+Captain Sullivan will guide you like a real mentor detective.;
+;
+You knock on the door of his office. The smell of burnt coffee hits you.;
+;
+changeFigure:captain_serious.webp -position=center;
+;
+Captain Sullivan looks up from a case file, reading glasses perched on his nose.;
+;
+He gestures to the chair across from his desk.;
+;
+Captain Sullivan says, "Come in, Hyde. You look like you need coffee. Or whiskey. Probably both.";
+;
+Captain Sullivan says, "Talk to me. What are you thinking about this case?";
+;
+The veteran detective leans back, ready to listen.;
+;
+llmInterrogate:Captain Sullivan;
+
+; After consultation ends, return to hub
+changeBg:police_station_hallway.png -next;
+;
+CONSULTATION COMPLETE;
+;
+You leave Captain Sullivan's office with new perspective on the case.;
+;
+Sometimes the best breakthrough comes from talking it through with someone who has been there before.;
+;
+His decades of experience give you angles you had not considered.;
+;
+What do you want to do next?;
+;
+setVar:captain_consulted=true;
+choose:Return to Investigation Hub:hub_ai.txt|Make Your Accusation:accusation_and_endings_ai.txt;

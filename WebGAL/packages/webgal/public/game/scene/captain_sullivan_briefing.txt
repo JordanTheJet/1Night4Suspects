@@ -1,11 +1,11 @@
 bgm:walking.mp3 -volume=40;
 changeBg:police_station_hallway.png -next;
 ;
-3:12 AM — ROBBERY-HOMICIDE DIVISION;
+3.12 AM — ROBBERY-HOMICIDE DIVISION;
 ;
 Captain Frank Sullivan stands by his office window, coffee mug in hand, watching the pre-dawn city.;
 ;
-changeFigure:captain_neutral.png -position=center;
+changeFigure:captain_serious.webp -position=center;
 ;
 Captain Sullivan:"Hyde. Good, you're here. We've got a situation.";
 ;
@@ -17,7 +17,7 @@ Captain Sullivan:"Patrol made excellent time — secured the scene by 1:30 AM. C
 ;
 Captain Sullivan:"We've got three suspects in custody now. Brought them in around 2:30, processed by 2:45.";
 ;
-changeFigure:captain_serious.png -position=center;
+changeFigure:captain_serious.webp -position=center;
 ;
 Captain Sullivan:"The victim is Elias Moore — 32, tech entrepreneur. Gambling problem, business betrayals, ex-lover drama.";
 ;
@@ -29,7 +29,7 @@ Captain Sullivan:"Marcus Hale — former business partner. Elias screwed him out
 ;
 Captain Sullivan:"Roman Adler — the host. Investment banker, old money. Too calm, too helpful. Security cameras mysteriously disabled.";
 ;
-changeFigure:captain_stern.png -position=center;
+changeFigure:captain_stern.webp -position=center;
 ;
 Captain Sullivan:"You've got until 7 AM, Detective. Dawn breaks, lawyers wake up, and this whole thing gets complicated.";
 ;
@@ -37,13 +37,13 @@ Captain Sullivan:"Forensics is rushing everything — blood typing, phone extrac
 ;
 Captain Sullivan:"I'll keep you updated. You focus on breaking these suspects.";
 ;
-changeFigure:captain_neutral.png -position=center;
+changeFigure:captain_serious.webp -position=center;
 ;
 Captain Sullivan:"This is your case, Hyde. I'm just here to make sure you have what you need.";
 ;
 Captain Sullivan:"Trust your instincts. And remember | everyone's guilty of something. Your job is figuring out what.";
 ;
-changeFigure:none.png;
+changeFigure:captain_disappointed.webp;
 ;
 Captain Sullivan turns back to the window.;
 The pre-dawn darkness feels heavy with secrets.;

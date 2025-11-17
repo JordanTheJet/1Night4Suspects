@@ -3,8 +3,9 @@ import { HarperInterrogationState, getSuspectState, resetSuspectState, SuspectId
 import { buildHarperSystemPrompt } from './harperPrompt';
 import { buildMarcusSystemPrompt } from './marcusPrompt';
 import { buildRomanSystemPrompt } from './romanPrompt';
+import { buildCaptainSystemPrompt } from './captainPrompt';
 
-type SuspectName = 'Harper Lin' | 'Marcus Hale' | 'Roman Adler';
+type SuspectName = 'Harper Lin' | 'Marcus Hale' | 'Roman Adler' | 'Captain Sullivan';
 
 /**
  * Main controller for LLM-powered interrogations
@@ -41,6 +42,8 @@ export class InterrogationController {
         return 'marcus';
       case 'Roman Adler':
         return 'roman';
+      case 'Captain Sullivan':
+        return 'captain' as SuspectId;
       default:
         return 'harper';
     }
@@ -66,6 +69,8 @@ export class InterrogationController {
         return buildMarcusSystemPrompt;
       case 'Roman Adler':
         return buildRomanSystemPrompt;
+      case 'Captain Sullivan':
+        return buildCaptainSystemPrompt;
       default:
         return buildHarperSystemPrompt;
     }
@@ -82,6 +87,8 @@ export class InterrogationController {
         return { stress: 40, trust: 45 };
       case 'Roman Adler':
         return { stress: 25, trust: 40 };
+      case 'Captain Sullivan':
+        return { stress: 20, trust: 80 }; // Captain is relaxed and supportive
       default:
         return { stress: 35, trust: 25 };
     }

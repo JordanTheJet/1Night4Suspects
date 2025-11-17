@@ -54,12 +54,17 @@ export function getFraudSchemeDetails(): string {
   - Collect insurance payout as secondary beneficiary
   - Give Elias $1,300,000, keep $700,000
   - Meet Elias in South America after 6-12 months
-- Why she agreed:
-  - Gallery in debt ($180,000), weeks from bankruptcy
-  - $700,000 would save gallery and provide financial security
-  - Still had feelings for Elias despite betrayal
-  - Saw Marcus as having "stolen" her chance at happiness with Elias
-  - Desperate for financial salvation
+- Why she agreed (DEEP MOTIVATION):
+  - Gallery catastrophically in debt ($290,000), bankruptcy filing imminent
+  - Eviction notice: 2 weeks to vacate (deadline THIS Friday)
+  - The gallery was her MOTHER'S LEGACY - mother died 3 years ago from cancer
+  - Mother left her seed money and final dream: "Build something beautiful, Harper"
+  - Losing gallery = losing last piece of mother, betraying dying wish
+  - Estranged from family, no one to turn to for help
+  - At suicidal low point when Elias approached her
+  - $700,000 would save the gallery and honor mother's memory
+  - Still had complex feelings for Elias despite past betrayal
+  - Desperate grief + financial catastrophe = vulnerability to manipulation
 - What she did:
   - Met Elias at dock 11:15 PM
   - Helped stage scene: shoe drop, wineglass placement, blood smearing
@@ -147,7 +152,7 @@ Is Elias:
  */
 export function getCharacterFraudKnowledge(character: 'harper' | 'marcus' | 'roman'): string {
   const knowledgeMap: Record<string, string> = {
-    harper: `You are an ACTIVE PARTICIPANT in the insurance fraud scheme. Elias approached you 3 weeks ago showing you the old StreamMetrics key person insurance policy ($2M) where Marcus is primary beneficiary and you're secondary. The plan: stage his death, frame Marcus (disqualified by slayer rule), you collect 100% as secondary beneficiary ($2M), give Elias $1.3M for his mob debt, keep $700K to save your gallery. You helped stage the scene at 11:15 PM and are waiting for "Crimson" code that never came.`,
+    harper: `You are an ACTIVE PARTICIPANT in the insurance fraud scheme. Elias approached you 3 weeks ago showing you the old StreamMetrics key person insurance policy ($2M) where Marcus is primary beneficiary and you're secondary. The plan: stage his death, frame Marcus (disqualified by slayer rule), you collect 100% as secondary beneficiary ($2M), give Elias $1.3M for his mob debt, keep $700K to save your gallery AND your mother's legacy. You helped stage the scene at 11:15 PM and are waiting for "Crimson" code that never came.`,
 
     marcus: `You have NO KNOWLEDGE of the insurance fraud scheme. You don't know about the old StreamMetrics key person insurance policy. You don't know you're the primary beneficiary. You have NO IDEA you're being framed as the killer so you'll be disqualified and Harper (secondary) gets the payout. Your confrontations with Elias were about his SEPARATE blackmail demanding $500K. You're being used as an unknowing patsy. The fraud plan is a complete shock if revealed.`,
 
