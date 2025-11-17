@@ -2,7 +2,7 @@ import { ISentence } from '@/Core/controller/scene/sceneInterface';
 import { IPerform } from '@/Core/Modules/perform/performInterface';
 import { changeScene } from '@/Core/controller/scene/changeScene';
 import { jmp } from '@/Core/gameScripts/label/jmp';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import React from 'react';
 import styles from './choose.module.scss';
 import { webgalStore } from '@/store/store';
@@ -14,6 +14,9 @@ import { whenChecker } from '@/Core/controller/gamePlay/scriptExecutor';
 import useEscape from '@/hooks/useEscape';
 import useApplyStyle from '@/hooks/useApplyStyle';
 import { Provider } from 'react-redux';
+
+// Store the React 18 root instance for the choose component
+let chooseReactRoot: ReactDOM.Root | null = null;
 
 class ChooseOption {
   /**
@@ -61,20 +64,39 @@ export const choose = (sentence: ISentence): IPerform => {
   // Add timestamp to force React to re-render all options on every invocation
   const renderTimestamp = Date.now();
 
-  // eslint-disable-next-line react/no-deprecated
-  ReactDOM.render(
-    <Provider store={webgalStore}>
-      <Choose chooseOptions={chooseOptions} renderKey={renderTimestamp} />
-    </Provider>,
-    document.getElementById('chooseContainer'),
-  );
+  const container = document.getElementById('chooseContainer');
+  if (container) {
+    // Create React 18 root if it doesn't exist
+    if (!chooseReactRoot) {
+      chooseReactRoot = ReactDOM.createRoot(container);
+    }
+
+    // Render using React 18 API
+    chooseReactRoot.render(
+      <Provider store={webgalStore}>
+        <Choose chooseOptions={chooseOptions} renderKey={renderTimestamp} />
+      </Provider>
+    );
+  }
+
   return {
     performName: 'choose',
     duration: 1000 * 60 * 60 * 24,
     isHoldOn: false,
     stopFunction: () => {
-      // eslint-disable-next-line react/no-deprecated
-      ReactDOM.render(<div />, document.getElementById('chooseContainer'));
+      // React 18: Properly unmount using root.unmount()
+      if (chooseReactRoot) {
+        try {
+          const containerAtUnmount = document.getElementById('chooseContainer');
+          if (containerAtUnmount && containerAtUnmount.parentNode) {
+            chooseReactRoot.unmount();
+          }
+          chooseReactRoot = null;
+        } catch (err) {
+          console.warn('⚠️ Choose cleanup warning:', err);
+          chooseReactRoot = null;
+        }
+      }
     },
     blockingNext: () => true,
     blockingAuto: () => true,

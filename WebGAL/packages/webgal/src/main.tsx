@@ -1,5 +1,5 @@
 import { StrictMode } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.scss';
 import './assets/style/animation.scss';
@@ -28,14 +28,17 @@ i18n
   })
   .then(() => console.log('WebGAL i18n Ready!'));
 
-// eslint-disable-next-line react/no-deprecated
-ReactDOM.render(
-  <StrictMode>
-    <Trans>
-      <Provider store={webgalStore}>
-        <App />
-      </Provider>
-    </Trans>
-  </StrictMode>,
-  document.querySelector('#root'),
-);
+// React 18: Use createRoot instead of render
+const rootElement = document.querySelector('#root');
+if (rootElement) {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    <StrictMode>
+      <Trans>
+        <Provider store={webgalStore}>
+          <App />
+        </Provider>
+      </Trans>
+    </StrictMode>,
+  );
+}

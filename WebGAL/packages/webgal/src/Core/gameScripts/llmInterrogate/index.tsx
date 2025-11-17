@@ -74,11 +74,19 @@ export const llmInterrogate = (sentence: ISentence): IPerform => {
       // React 18: Properly unmount using root.unmount()
       if (reactRoot) {
         try {
-          reactRoot.unmount();
+          // Re-query the container at unmount time
+          const containerAtUnmount = document.getElementById('chooseContainer');
+          if (containerAtUnmount && containerAtUnmount.parentNode) {
+            reactRoot.unmount();
+            console.log('✅ React root unmounted successfully');
+          } else {
+            console.log('⚠️ Container already removed from DOM, skipping unmount');
+          }
           reactRoot = null;
-          console.log('✅ React root unmounted successfully');
         } catch (err) {
           console.warn('⚠️ Cleanup warning (safe to ignore):', err);
+          // If unmount fails, just clear the reference
+          reactRoot = null;
         }
       }
     },
@@ -399,9 +407,8 @@ function LLMInterrogation(props: LLMInterrogationProps) {
     console.log('🏁 Ending interrogation');
     playSeClick();
 
-    // Mark as inactive before unmounting
-    isLLMInterrogationActive = false;
-
+    // DON'T set isLLMInterrogationActive to false here - let stopFunction handle it
+    // This ensures proper cleanup happens in stopFunction
     WebGAL.gameplay.performController.unmountPerform('llmInterrogate');
     nextSentence();
   };
@@ -410,9 +417,7 @@ function LLMInterrogation(props: LLMInterrogationProps) {
     console.log('📖 Switching to story mode');
     playSeClick();
 
-    // Mark as inactive before unmounting
-    isLLMInterrogationActive = false;
-
+    // DON'T set isLLMInterrogationActive to false here - let stopFunction handle it
     WebGAL.gameplay.performController.unmountPerform('llmInterrogate');
 
     // Switch to story mode hub
