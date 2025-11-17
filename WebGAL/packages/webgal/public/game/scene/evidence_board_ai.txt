@@ -12,7 +12,7 @@ DIGITAL EVIDENCE;
 ;
 BURNER PHONE (Hidden by Roman);
 Found at the dock, hidden in the boathouse;
-Contains a text message: "Midnight pickup. Overlook. Don't be late.";
+Contains a text message | "Midnight pickup. Overlook. Don't be late.";
 Unknown sender | no other messages | prepaid phone;
 ;
 FINANCIAL EVIDENCE;
