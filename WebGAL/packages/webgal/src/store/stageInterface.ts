@@ -198,6 +198,7 @@ export interface IStageState {
     src: string; // 背景音乐 文件地址（相对或绝对）
     enter: number; // 背景音乐 淡入或淡出的毫秒数
     volume: number; // 背景音乐 音量调整（0 - 100）
+    loop: boolean; // 背景音乐 是否循环播放
   };
   uiSe: string; // 用户界面音效 文件地址（相对或绝对）
   miniAvatar: string; // 小头像 文件地址（相对或绝对）

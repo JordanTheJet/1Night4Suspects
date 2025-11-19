@@ -1,7 +1,7 @@
 import { ISentence } from '@/Core/controller/scene/sceneInterface';
 import { IPerform } from '@/Core/Modules/perform/performInterface';
 import { playBgm } from '@/Core/controller/stage/playBgm';
-import { getNumberArgByKey, getStringArgByKey } from '@/Core/util/getSentenceArg';
+import { getBooleanArgByKey, getNumberArgByKey, getStringArgByKey } from '@/Core/util/getSentenceArg';
 import { webgalStore } from '@/store/store';
 import { unlockBgmInUserData } from '@/store/userDataReducer';
 
@@ -17,12 +17,13 @@ export const bgm = (sentence: ISentence): IPerform => {
   enter = Math.max(0, enter); // 限制淡入时间在 0 以上
   let volume = getNumberArgByKey(sentence, 'volume') ?? 100; // 获取bgm的音量比
   volume = Math.max(0, Math.min(volume, 100)); // 限制音量在 0-100 之间
+  const loop = getBooleanArgByKey(sentence, 'loop') ?? true; // 获取bgm是否循环（默认循环）
 
   if (name !== '') {
     webgalStore.dispatch(unlockBgmInUserData({ name, url, series }));
   }
 
-  playBgm(url, enter, volume);
+  playBgm(url, enter, volume, loop);
 
   return {
     performName: 'none',

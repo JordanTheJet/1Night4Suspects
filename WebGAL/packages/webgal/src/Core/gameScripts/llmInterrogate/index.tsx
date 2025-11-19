@@ -258,7 +258,7 @@ function LLMInterrogation(props: LLMInterrogationProps) {
     // Play appropriate music based on who we're talking to
     const basePath = import.meta.env.DEV ? '' : '.';
     const bgmFile = suspectName === 'Captain Sullivan' ? 'suspicious.mp3' : 'interrogation.mp3';
-    playBgm(`${basePath}/game/bgm/${bgmFile}`, 1000, 100); // 1 second fade in, 100% volume
+    playBgm(`${basePath}/game/bgm/${bgmFile}`, 1000, 100, true); // 1 second fade in, 100% volume, loop enabled
 
     // Only run once when component mounts
     if (apiKey) {

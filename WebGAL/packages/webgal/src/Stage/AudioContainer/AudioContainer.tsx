@@ -13,6 +13,7 @@ export const AudioContainer = () => {
   const vocalVol = mainVol * 0.01 * userDataState.optionData.vocalVolume * 0.01 * stageStore.vocalVolume * 0.01;
   const bgmVol = mainVol * 0.01 * userDataState.optionData.bgmVolume * 0.01 * stageStore.bgm.volume * 0.01;
   const bgmEnter = stageStore.bgm.enter;
+  const bgmLoop = stageStore.bgm.loop;
   const uiSoundEffects = stageStore.uiSe;
   const seVol = mainVol * 0.01 * (userDataState.optionData?.seVolume ?? 100) * 0.01;
   const uiSeVol = mainVol * 0.01 * (userDataState.optionData.uiSeVolume ?? 50) * 0.01;
@@ -121,7 +122,7 @@ export const AudioContainer = () => {
         key={isShowTitle.toString() + titleBgm}
         id="currentBgm"
         src={isShowTitle ? titleBgm : stageStore.bgm.src}
-        loop={true}
+        loop={bgmLoop}
         autoPlay={isEnterGame}
       />
       <audio id="currentVocal" src={stageStore.playVocal} />
